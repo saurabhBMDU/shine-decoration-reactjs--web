@@ -67,48 +67,48 @@ function Excusivecategory() {
   };
   return (
     <>
-      <section class="container py-4">
+      <section className="container-fluid py-4">
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Exclisive Product</h2>
+          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Exclusive Product</h2>
         </div>
-        <Slider ref={slider} {...setting} className=" d-flex justify-content-center">
+        <Slider ref={slider} {...setting} className="">
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/squareplates_1_360x.jpg?v=1709638222" alt="" style={{ height: "474px" }} />
-              <div class="slide-text">
-                <p class="">Plates</p>
+              <div className="slide-text">
+                <p className="">Plates</p>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://img.freepik.com/free-photo/still-life-glass-cups_23-2149646399.jpg?t=st=1715929850~exp=1715933450~hmac=4154e1154180ba972c613e1705bfeee4db6553074f51d61c6c60f1377022ebc5&w=360" alt="" style={{ height: "474px" }} />
-              <div class="slide-text">
-                <p class="">Glass</p>
+              <div className="slide-text">
+                <p className="">Glass</p>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://images.pexels.com/photos/5302893/pexels-photo-5302893.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" style={{ height: "474px" }} />
-              <div class="slide-text">
-                <p class="">Plates</p>
+              <div className="slide-text">
+                <p className="">Plates</p>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/DSC6230_360x.jpg?v=1680939115" alt="" style={{ height: "474px" }} />
-              <div class="slide-text">
-                <p class="">Plates</p>
+              <div className="slide-text">
+                <p className="">Plates</p>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/candlestand_2_b5f5ef30-3158-4412-9ab5-9d53f466d6c8_360x.webp?v=1696861513" alt="" style={{ height: "474px" }} />
-              <div class="slide-text">
-                <p class="">Flower</p>
+              <div className="slide-text">
+                <p className="">Flower</p>
               </div>
             </div>
           </div>

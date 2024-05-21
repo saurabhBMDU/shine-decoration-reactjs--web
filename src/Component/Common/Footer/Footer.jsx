@@ -17,7 +17,7 @@ function Footer() {
       <footer className="gi-footer m-t-40">
         <div className="footer-container">
           <div className="footer-top padding-tb-80">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row m-minus-991">
                 <div className="col-sm-12 col-lg-3 gi-footer-cat wow fadeInUp">
                   <div className="gi-footer-widget gi-footer-company">
@@ -38,17 +38,10 @@ function Footer() {
                     <h4 className="gi-footer-heading">Category</h4>
                     <div className="gi-footer-links gi-footer-dropdown">
                       <ul className="align-itegi-center">
-                        <li className="gi-footer-link"><Link to="shop-left-sidebar-col-3.html">Dairy &
-                          Milk</Link></li>
-                        <li className="gi-footer-link"><Link to="shop-banner-left-sidebar-col-3.html">Snack &
-                          Spice</Link></li>
-                        <li className="gi-footer-link"><Link to="shop-full-width-col-5.html">Fast Food</Link>
+                        <li className="gi-footer-link"><Link to="/">Bone China</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Wooden</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Ceramic</Link>
                         </li>
-                        <li className="gi-footer-link"><Link to="shop-list-left-sidebar.html">Juice &
-                          Drinks</Link></li>
-                        <li className="gi-footer-link"><Link to="shop-list-full-col-2.html">Bakery</Link></li>
-                        <li className="gi-footer-link"><Link
-                          to="shop-banner-right-sidebar-col-4.html">Seafood</Link></li>
                       </ul>
                     </div>
                   </div>
@@ -58,13 +51,13 @@ function Footer() {
                     <h4 className="gi-footer-heading">Company</h4>
                     <div className="gi-footer-links gi-footer-dropdown">
                       <ul className="align-itegi-center">
-                        <li className="gi-footer-link"><Link to="about-us.html">About us</Link></li>
-                        <li className="gi-footer-link"><Link to="track-order.html">Delivery</Link></li>
-                        <li className="gi-footer-link"><Link to="privacy-policy.html">Legal Notice</Link></li>
-                        <li className="gi-footer-link"><Link to="terms-condition.html">Terms & conditions</Link>
+                        <li className="gi-footer-link"><Link to="/">About us</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Delivery</Link></li>
+                        <li className="gi-footer-link"><Link to="/productdetail">Product</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Terms & conditions</Link>
                         </li>
-                        <li className="gi-footer-link"><Link to="checkout.html">Secure payment</Link></li>
-                        <li className="gi-footer-link"><Link to="contact-us.html">Contact us</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Secure payment</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Contact us</Link></li>
                       </ul>
                     </div>
                   </div>
@@ -74,12 +67,12 @@ function Footer() {
                     <h4 className="gi-footer-heading">Account</h4>
                     <div className="gi-footer-links gi-footer-dropdown">
                       <ul className="align-itegi-center">
-                        <li className="gi-footer-link"><Link to="register.html">Sign In</Link></li>
-                        <li className="gi-footer-link"><Link to="cart.html">View Cart</Link></li>
-                        <li className="gi-footer-link"><Link to="privacy-policy.html">Return Policy</Link></li>
-                        <li className="gi-footer-link"><Link to="#">Become a Vendor</Link></li>
-                        <li className="gi-footer-link"><Link to="#">Affiliate Program</Link></li>
-                        <li className="gi-footer-link"><Link to="checkout.html">Payments</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Sign In</Link></li>
+                        <li className="gi-footer-link"><Link to="/">View Cart</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Return Policy</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Become a Vendor</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Affiliate Program</Link></li>
+                        <li className="gi-footer-link"><Link to="/">Payments</Link></li>
                       </ul>
                     </div>
                   </div>
@@ -130,7 +123,7 @@ function Footer() {
             </div>
           </div>
           <div className="footer-bottom">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row">
                 <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine decoration </Link>
                   all

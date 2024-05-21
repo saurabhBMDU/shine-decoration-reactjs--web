@@ -9,6 +9,7 @@ import Footer from '../Component/Common/Footer/Footer';
 import Login from '../Component/Auth/Login/login';
 import Register from '../Component/Auth/Register/register';
 import Shop from '../Component/Shop/shop';
+import Productdetail from '../Component/Productdetail/productdetail';
 
 function AppRouter() {
     return (
@@ -20,6 +21,7 @@ function AppRouter() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/shop' element={<Shop />} />
+                <Route path='/productdetail' element={<Productdetail />} />
                 <Route element={<NotFound />} />
             </Routes>
             <Footer />

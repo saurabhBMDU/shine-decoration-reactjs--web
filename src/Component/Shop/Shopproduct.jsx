@@ -67,44 +67,44 @@ function Shopproduct() {
   };
   return (
     <>
-      <section className="container py-1">
+      <section className="px-3 py-1">
         <div>
           <h2 className='fw-bold fs-3 px-2' style={{ color: "#6B6363" }}>Exclusive Product</h2>
         </div>
-        <Slider ref={slider} {...setting} className=" d-flex justify-content-center">
+        <Slider ref={slider} {...setting} className="">
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/DSC6396_360x.jpg?v=1686568571" alt="" style={{ height: "400px" }} />
-              <div class="info">
-                <aside class="px-2 py-1">Taper Candle Stand Gold Set Of 3</aside>
-                <span class="px-2">₹ 1,610</span>
+              <div className="info">
+                <aside className="px-2 py-1">Taper Candle Stand Gold Set Of 3</aside>
+                <span className="px-2">₹ 1,610</span>
               </div>
-              <div class="buttons1">
+              <div className="buttons1">
                 <span >Small</span>
                 <span>Medium</span>
                 <span>Large</span>
                 {/* <span>Customize</span> */}
               </div>
-              <div class="buttons" >
+              <div className="buttons" >
                 <button className='text-danger' style={{ borderRight: "#E1AB0A" }}>Add to Cart</button>
                 <button className='text-success' style={{ borderLeft: "#E1AB0A" }}>Buy Now</button>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/servingbowlset_4_360x.jpg?v=1713351955" alt="" style={{ height: "400px" }} />
-              <div class="info">
-                <aside class="px-2 py-1">Set Of 2 Dandelion Serving Bowls 1650ml</aside>
-                <span class="px-2">₹ 2,010</span>
+              <div className="info">
+                <aside className="px-2 py-1">Set Of 2 Dandelion Serving Bowls 1650ml</aside>
+                <span className="px-2">₹ 2,010</span>
               </div>
-              <div class="buttons1">
+              <div className="buttons1">
                 <span >Small</span>
                 <span>Medium</span>
                 <span>Large</span>
                 {/* <span>Customize</span> */}
               </div>
-              <div class="buttons" >
+              <div className="buttons" >
                 <button className='text-danger' style={{ borderRight: "#E1AB0A" }}>Add to Cart</button>
                 <button className='text-success' style={{ borderLeft: "#E1AB0A" }}>Buy Now</button>
               </div>
@@ -112,19 +112,19 @@ function Shopproduct() {
           </div>
 
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/CSC_1636_f2b6bc97-abed-4660-bab6-9c0d6b2def73_360x.jpg?v=1663678696" alt="" style={{ height: "400px" }} />
-              <div class="info">
-                <aside class="px-2 py-1">Gold Rim Crystal Bowls Tray Set Of 5 200ml</aside>
-                <span class="px-2">₹ 2,010</span>
+              <div className="info">
+                <aside className="px-2 py-1">Gold Rim Crystal Bowls Tray Set Of 5 200ml</aside>
+                <span className="px-2">₹ 2,010</span>
               </div>
-              <div class="buttons1">
+              <div className="buttons1">
                 <span >Small</span>
                 <span>Medium</span>
                 <span>Large</span>
                 {/* <span>Customize</span> */}
               </div>
-              <div class="buttons" >
+              <div className="buttons" >
                 <button className='text-danger' style={{ borderRight: "#E1AB0A" }}>Add to Cart</button>
                 <button className='text-success' style={{ borderLeft: "#E1AB0A" }}>Buy Now</button>
               </div>
@@ -132,19 +132,19 @@ function Shopproduct() {
           </div>
 
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/DSCF7539_360x.jpg?v=1679655059" alt="" style={{ height: "400px" }} />
-              <div class="info">
-                <aside class="px-2 py-1">Aloha Soup Bowl 280 ml Set Of 6</aside>
-                <span class="px-2">₹ 1,310</span>
+              <div className="info">
+                <aside className="px-2 py-1">Aloha Soup Bowl 280 ml Set Of 6</aside>
+                <span className="px-2">₹ 1,310</span>
               </div>
-              <div class="buttons1">
+              <div className="buttons1">
                 <span >Small</span>
                 <span>Medium</span>
                 <span>Large</span>
                 {/* <span>Customize</span> */}
               </div>
-              <div class="buttons" >
+              <div className="buttons" >
                 <button className='text-danger' style={{ borderRight: "#E1AB0A" }}>Add to Cart</button>
                 <button className='text-success' style={{ borderLeft: "#E1AB0A" }}>Buy Now</button>
               </div>
@@ -152,19 +152,19 @@ function Shopproduct() {
           </div>
 
           <div className="px-2">
-            <div class="slide-sec">
+            <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/WXNU85_1_360x.jpg?v=1657601866" alt="" style={{ height: "400px" }} />
-              <div class="info">
-                <aside class="px-2 py-1">Candle Stand</aside>
-                <span class="px-2">₹ 1,910</span>
+              <div className="info">
+                <aside className="px-2 py-1">Candle Stand</aside>
+                <span className="px-2">₹ 1,910</span>
               </div>
-              <div class="buttons1">
+              <div className="buttons1">
                 <span >Small</span>
                 <span>Medium</span>
                 <span>Large</span>
                 {/* <span>Customize</span> */}
               </div>
-              <div class="buttons" >
+              <div className="buttons" >
                 <button className='text-danger' style={{ borderRight: "#E1AB0A" }}>Add to Cart</button>
                 <button className='text-success' style={{ borderLeft: "#E1AB0A" }}>Buy Now</button>
               </div>

@@ -1,0 +1,57 @@
+/* Header.css */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 100%;
+    background: white;
+    padding-top: 60px;
+    transition: 0.3s;
+    z-index: 1000;
+    overflow-x: hidden;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    padding: 5px 16px;
+    padding: 10px 2px;
+}
+
+.sidebar nav ul li a {
+    color: rgb(40, 39, 39);
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #575757;
+}
+
+.close-btn {
+    position: absolute;
+    top: -14px;
+    right: 25px;
+    font-size: 36px;
+}
+
+@media (max-width: 992px) {
+    .header-top-right-inner {
+        display: none;
+    }
+
+    .gi-header-buttons .gi-site-menu-icon {
+        display: inline-block;
+    }
+}
+
+.category-dropdown .dropdown ul li a {
+    color: #575757;
+    font-size: 13px;
+    padding: 0px 6px;
+}

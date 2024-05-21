@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import './index.css';
 // import PopularCategory from './PopularCategory';
+import { NextArrow, PrevArrow } from './Arrow';
 import Excusivecategory from './Excusivecategory';
 
 function Home() {
@@ -16,6 +17,9 @@ function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    arrows: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     autoplaySpeed: 3000,
   };
 
@@ -80,7 +84,7 @@ function Home() {
 
   return (
     <>
-      <section className='container py-2'>
+      <section className='container-fluid py-2'>
         <div>
           <Slider ref={sliderone} {...settingone} className="">
             <div className=''>
@@ -96,7 +100,7 @@ function Home() {
       {/* <PopularCategory /> */}
       <Excusivecategory />
 
-      <section className="container py-4">
+      <section className="container-fluid py-4">
         <div>
           <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>New Product</h2>
         </div>
@@ -136,7 +140,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="container py-3">
+      <section className="container-fluid py-3">
         <div>
           <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Popular Product</h2>
         </div>
@@ -175,7 +179,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className='container py-4'>
+      <section className='container-fluid py-4'>
         <div>
           <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Shop by Occasion</h2>
         </div>

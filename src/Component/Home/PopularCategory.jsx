@@ -67,7 +67,7 @@ function PopularCategory() {
   };
 
   return (
-    <section className='container py-4'>
+    <section className='container-fluid py-4'>
       <div>
         <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Our Product</h2>
       </div>
