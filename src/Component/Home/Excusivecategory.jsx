@@ -69,7 +69,7 @@ function Excusivecategory() {
     <>
       <section className="container-fluid py-4">
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Exclusive Product</h2>
+          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Recently Viewed Store</h2>
         </div>
         <Slider ref={slider} {...setting} className="">
           <div className="px-2">

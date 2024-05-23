@@ -7,6 +7,9 @@ import './index.css';
 // import PopularCategory from './PopularCategory';
 import { NextArrow, PrevArrow } from './Arrow';
 import Excusivecategory from './Excusivecategory';
+import PopularCategory from './PopularCategory';
+import About from './About';
+import Testimonial from './Testimonial';
 
 function Home() {
 
@@ -97,12 +100,12 @@ function Home() {
         </div>
       </section>
 
-      {/* <PopularCategory /> */}
+      <PopularCategory />
       <Excusivecategory />
 
       <section className="container-fluid py-4">
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>New Product</h2>
+          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Glass Viewed</h2>
         </div>
         <div className="row">
           <div className="col-6 col-lg-3 mt-2">
@@ -142,7 +145,7 @@ function Home() {
 
       <section className="container-fluid py-3">
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Popular Product</h2>
+          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Ceramic Viewed</h2>
         </div>
         <div className="row">
           <div className="col-6 col-lg-3 mt-2">
@@ -363,6 +366,69 @@ function Home() {
           </Slider>
         </div>
       </section>
+      <section>
+        <div className='why-shine'>
+          <div className='container'>
+            <h2 className='text-center'>Why Shine Decoration</h2>
+          </div>
+          <div className="container">
+            <div className="row pt-4">
+              <div className="col-lg-4">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+              </div>
+              <div className="col-lg-4">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+              </div>
+              <div className="col-lg-4">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Testimonial />
+      <section className='py-3'>
+        <div className='shipping'>
+          <div className="container">
+            <div className="row pt-4">
+              <div className="col-lg-3">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>FREE SHIPPING</p>
+              </div>
+              <div className="col-lg-3">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>SAFE PAYMENT</p>
+              </div>
+              <div className="col-lg-3">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>ONTIME DELIVERY</p>
+              </div>
+              <div className="col-lg-3">
+                <div className='d-flex justify-content-center'>
+                  <img src="https://as1.ftcdn.net/v2/jpg/04/57/48/44/1000_F_457484457_VI3coEQISDa7zu2WuG5PhYF1Bkrla2Pt.jpg" alt="" style={{ width: "70px" }} />
+                </div>
+                <p className='text-center'>MADE IN INDIA</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <About />
     </>
   );
 }
