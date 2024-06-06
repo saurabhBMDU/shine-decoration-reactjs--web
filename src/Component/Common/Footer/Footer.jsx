@@ -15,7 +15,7 @@ function Footer() {
   return (
     <>
       <footer className="gi-footer m-t-40">
-        <div className="footer-container">
+        <div className="footer-container bg-black">
           <div className="footer-top padding-tb-80">
             <div className="container-fluid">
               <div className="row m-minus-991">

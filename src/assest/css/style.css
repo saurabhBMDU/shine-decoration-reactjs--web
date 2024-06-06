@@ -167,7 +167,7 @@ a {
 }
 
 .m-t-40 {
-    margin-top: 40px !important;
+    margin-top: 10px !important;
 }
 
 .m-t-15 {
@@ -2290,6 +2290,7 @@ Tools sidebar
 }
 
 .gi-header-bottom {
+    background-color: black;
     padding: 10px 0;
 }
 
@@ -3292,7 +3293,6 @@ div#gi-main-menu-desk {
     line-height: 1;
     color: #777;
     border-radius: 0;
-    background-color: transparent;
     border: none;
     letter-spacing: 0.6px;
 }
@@ -3322,7 +3322,6 @@ div#gi-main-menu-desk {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    border: 1px solid #eee;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -3871,7 +3870,7 @@ body.gi-menu-open:before {
     font-size: 14px;
     line-height: 27px;
     font-weight: 400;
-    color: #777;
+    color: white;
     display: inline-block;
     position: relative;
 }
@@ -3887,10 +3886,10 @@ body.gi-menu-open:before {
 }
 
 .gi-footer .footer-top .gi-footer-widget .gi-footer-heading {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 21px;
+    font-weight: 600;
     margin-bottom: 20px;
-    color: #4b5966;
+    color: white;
     letter-spacing: 0;
     position: relative;
     display: block;
@@ -3934,7 +3933,7 @@ body.gi-menu-open:before {
     font-size: 14px;
     line-height: 20px;
     padding: 0;
-    color: #777;
+    color: white;
     margin-bottom: 0;
     display: inline-block;
     position: relative;
@@ -3958,7 +3957,7 @@ body.gi-menu-open:before {
     margin: 0;
     font-size: 14px;
     font-weight: 400;
-    color: #777;
+    color: white;
 }
 
 .gi-footer .footer-top .gi-footer-contact .gi-footer-widget .gi-footer-links a {

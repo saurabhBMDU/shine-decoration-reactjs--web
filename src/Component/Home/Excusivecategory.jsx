@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from './Arrow';
+import { Link } from 'react-router-dom';
 import './index.css' // Import custom arrow components
 
 
@@ -69,49 +70,82 @@ function Excusivecategory() {
     <>
       <section className="container-fluid py-4">
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Recently Viewed Store</h2>
+          <h3>Recently Viewed Store</h3>
         </div>
         <Slider ref={slider} {...setting} className="">
           <div className="px-2">
-            <div className="slide-sec">
-              <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/squareplates_1_360x.jpg?v=1709638222" alt="" style={{ height: "474px" }} />
-              <div className="slide-text">
-                <p className="">Plates</p>
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div className="slide-sec">
-              <img src="https://img.freepik.com/free-photo/still-life-glass-cups_23-2149646399.jpg?t=st=1715929850~exp=1715933450~hmac=4154e1154180ba972c613e1705bfeee4db6553074f51d61c6c60f1377022ebc5&w=360" alt="" style={{ height: "474px" }} />
-              <div className="slide-text">
-                <p className="">Glass</p>
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/5302893/pexels-photo-5302893.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" style={{ height: "474px" }} />
-              <div className="slide-text">
-                <p className="">Plates</p>
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div className="slide-sec">
-              <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/DSC6230_360x.jpg?v=1680939115" alt="" style={{ height: "474px" }} />
-              <div className="slide-text">
-                <p className="">Plates</p>
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
           <div className="px-2">
-            <div className="slide-sec">
-              <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/candlestand_2_b5f5ef30-3158-4412-9ab5-9d53f466d6c8_360x.webp?v=1696861513" alt="" style={{ height: "474px" }} />
-              <div className="slide-text">
-                <p className="">Flower</p>
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
+          <div className="px-2">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
+              </div>
+            </div>
+          </div>
+
         </Slider>
       </section>
     </>

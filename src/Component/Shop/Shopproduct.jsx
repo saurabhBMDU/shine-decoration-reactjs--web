@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from '../Home/Arrow';
+import { Link } from 'react-router-dom';
 // import './index.css' // Import custom arrow components
 
 
@@ -76,7 +77,7 @@ function Shopproduct() {
             <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/DSC6396_360x.jpg?v=1686568571" alt="" style={{ height: "400px" }} />
               <div className="info">
-                <aside className="px-2 py-1">Taper Candle Stand Gold Set Of 3</aside>
+                <Link to="/productdetail"><aside className="px-2 py-1 text-dark">Taper Candle Stand Gold Set Of 3</aside></Link>
                 <span className="px-2">₹ 1,610</span>
               </div>
               <div className="buttons1">
@@ -95,7 +96,7 @@ function Shopproduct() {
             <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/files/servingbowlset_4_360x.jpg?v=1713351955" alt="" style={{ height: "400px" }} />
               <div className="info">
-                <aside className="px-2 py-1">Set Of 2 Dandelion Serving Bowls 1650ml</aside>
+                <Link to="/productdetail"> <aside className="px-2 py-1 text-dark">Set Of 2 Dandelion Serving Bowls 1650ml</aside></Link>
                 <span className="px-2">₹ 2,010</span>
               </div>
               <div className="buttons1">
@@ -115,7 +116,7 @@ function Shopproduct() {
             <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/CSC_1636_f2b6bc97-abed-4660-bab6-9c0d6b2def73_360x.jpg?v=1663678696" alt="" style={{ height: "400px" }} />
               <div className="info">
-                <aside className="px-2 py-1">Gold Rim Crystal Bowls Tray Set Of 5 200ml</aside>
+                <Link to="/productdetail"><aside className="px-2 py-1 text-dark">Gold Rim Crystal Bowls Tray Set Of 5 200ml</aside></Link>
                 <span className="px-2">₹ 2,010</span>
               </div>
               <div className="buttons1">
@@ -135,7 +136,7 @@ function Shopproduct() {
             <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/DSCF7539_360x.jpg?v=1679655059" alt="" style={{ height: "400px" }} />
               <div className="info">
-                <aside className="px-2 py-1">Aloha Soup Bowl 280 ml Set Of 6</aside>
+                <Link to="productdetail"><aside className="px-2 py-1 text-dar">Aloha Soup Bowl 280 ml Set Of 6</aside></Link>
                 <span className="px-2">₹ 1,310</span>
               </div>
               <div className="buttons1">
@@ -155,7 +156,7 @@ function Shopproduct() {
             <div className="slide-sec">
               <img src="https://cdn.shopify.com/s/files/1/2690/0106/products/WXNU85_1_360x.jpg?v=1657601866" alt="" style={{ height: "400px" }} />
               <div className="info">
-                <aside className="px-2 py-1">Candle Stand</aside>
+                <Link to='productdetail'><aside className="px-2 py-1 text-dark">Candle Stand</aside></Link>
                 <span className="px-2">₹ 1,910</span>
               </div>
               <div className="buttons1">

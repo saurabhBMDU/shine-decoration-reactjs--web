@@ -9,6 +9,7 @@ import { NextArrow, PrevArrow } from './Arrow';
 import Excusivecategory from './Excusivecategory';
 import PopularCategory from './PopularCategory';
 import About from './About';
+import Offer from './Offer';
 import Testimonial from './Testimonial';
 
 function Home() {
@@ -100,266 +101,194 @@ function Home() {
         </div>
       </section>
 
-      <PopularCategory />
+      {/* <PopularCategory /> */}
       <Excusivecategory />
 
       <section className="container-fluid py-4">
-        <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Glass Viewed</h2>
-        </div>
+        <h3>Recently Viewed Stores</h3>
         <div className="row">
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/4706134/pexels-photo-4706134.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Pitcher</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/6739703/pexels-photo-6739703.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Cup</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link></Link>
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/5302893/pexels-photo-5302893.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Plates</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/4502965/pexels-photo-4502965.jpeg?auto=compress&cs=tinysrgb&w=600D" alt="" />
-              <div className="slide-text">
-                <p className="">Plates</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container-fluid py-3">
-        <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Ceramic Viewed</h2>
-        </div>
+
+      <section className="container-fluid py-4">
+        <h3>Recently Viewed Stores</h3>
         <div className="row">
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/4706134/pexels-photo-4706134.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Pitcher</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/6739703/pexels-photo-6739703.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Cup</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/5302893/pexels-photo-5302893.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
-              <div className="slide-text">
-                <p className="">Plates</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
-          <div className="col-6 col-lg-3 mt-2">
-            <div className="slide-sec">
-              <img src="https://images.pexels.com/photos/4502965/pexels-photo-4502965.jpeg?auto=compress&cs=tinysrgb&w=600D" alt="" />
-              <div className="slide-text">
-                <p className="">Bowl</p>
+          <div className="col-lg-3">
+            <div class=" card-custom">
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+              <div class="card-body">
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <p class="text-danger">Green, Microwave Safe</p>
+                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       <section className='container-fluid py-4'>
         <div>
           <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Shop by Occasion</h2>
         </div>
         <div>
           <Slider ref={slider} {...setting} className="">
-            <div className="gi-product-content px-2">
-              <div className="gi-product-inner">
-                <div className="gi-pro-image-outer">
-                  <div className="gi-pro-image">
-                    <Link to="/shop" className="image">
-                      <span className="label veg">
-                        <span className="dot"></span>
-                      </span>
-                      <img className="main-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_1.jpg" alt="Product" />
-                      <img className="hover-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_2.jpg" alt="Product" />
-                    </Link>
-                    <span className="flags">
-                      <span className="sale">Sale</span>
-                    </span>
-                    <div className="gi-pro-actions">
-                      <Link className="gi-btn-group wishlist" title="Wishlist"><i className="fa-regular fa-heart"></i></Link>
-                      <Link to="" title="Add To Cart" className="gi-btn-group add-to-cart"><i className="fa-solid fa-cart-plus"></i></Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="gi-pro-content">
-                  <Link to="/shop">
-                    <h6 className="gi-pro-stitle">Dried Fruits</h6>
-                  </Link>
-                  <h5 className="gi-pro-title"><Link to="/shop">Mixed Nuts
-                    Berries Pack</Link></h5>
-                  <div className="gi-pro-rat-price">
-                    <span className="gi-price">
-                      <span className="new-price">$45.00</span>
-                      <span className="old-price">$56.00</span>
-                    </span>
-                  </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
               </div>
             </div>
-            <div className="gi-product-content px-2">
-              <div className="gi-product-inner">
-                <div className="gi-pro-image-outer">
-                  <div className="gi-pro-image">
-                    <Link to="/shop" className="image">
-                      <span className="label veg">
-                        <span className="dot"></span>
-                      </span>
-                      <img className="main-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_1.jpg" alt="Product" />
-                      <img className="hover-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_2.jpg" alt="Product" />
-                    </Link>
-                    <span className="flags">
-                      <span className="sale">Sale</span>
-                    </span>
-                    <div className="gi-pro-actions">
-                      <Link className="gi-btn-group wishlist" title="Wishlist"><i className="fa-regular fa-heart"></i></Link>
-                      <Link to="" title="Add To Cart" className="gi-btn-group add-to-cart"><i className="fa-solid fa-cart-plus"></i></Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="gi-pro-content">
-                  <Link to="/shop">
-                    <h6 className="gi-pro-stitle">Dried Fruits</h6>
-                  </Link>
-                  <h5 className="gi-pro-title"><Link to="/shop">Mixed Nuts
-                    Berries Pack</Link></h5>
-                  <div className="gi-pro-rat-price">
-                    <span className="gi-price">
-                      <span className="new-price">$45.00</span>
-                      <span className="old-price">$56.00</span>
-                    </span>
-                  </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
               </div>
             </div>
-            <div className="gi-product-content px-2">
-              <div className="gi-product-inner">
-                <div className="gi-pro-image-outer">
-                  <div className="gi-pro-image">
-                    <Link to="/shop" className="image">
-                      <span className="label veg">
-                        <span className="dot"></span>
-                      </span>
-                      <img className="main-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_1.jpg" alt="Product" />
-                      <img className="hover-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_2.jpg" alt="Product" />
-                    </Link>
-                    <span className="flags">
-                      <span className="sale">Sale</span>
-                    </span>
-                    <div className="gi-pro-actions">
-                      <Link className="gi-btn-group wishlist" title="Wishlist"><i className="fa-regular fa-heart"></i></Link>
-                      <Link to="" title="Add To Cart" className="gi-btn-group add-to-cart"><i className="fa-solid fa-cart-plus"></i></Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="gi-pro-content">
-                  <Link to="/shop">
-                    <h6 className="gi-pro-stitle">Dried Fruits</h6>
-                  </Link>
-                  <h5 className="gi-pro-title"><Link to="/shop">Mixed Nuts
-                    Berries Pack</Link></h5>
-                  <div className="gi-pro-rat-price">
-                    <span className="gi-price">
-                      <span className="new-price">$45.00</span>
-                      <span className="old-price">$56.00</span>
-                    </span>
-                  </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
               </div>
             </div>
-            <div className="gi-product-content px-2">
-              <div className="gi-product-inner">
-                <div className="gi-pro-image-outer">
-                  <div className="gi-pro-image">
-                    <Link to="/shop" className="image">
-                      <span className="label veg">
-                        <span className="dot"></span>
-                      </span>
-                      <img className="main-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_1.jpg" alt="Product" />
-                      <img className="hover-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_2.jpg" alt="Product" />
-                    </Link>
-                    <span className="flags">
-                      <span className="sale">Sale</span>
-                    </span>
-                    <div className="gi-pro-actions">
-                      <Link className="gi-btn-group wishlist" title="Wishlist"><i className="fa-regular fa-heart"></i></Link>
-                      <Link to="" title="Add To Cart" className="gi-btn-group add-to-cart"><i className="fa-solid fa-cart-plus"></i></Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="gi-pro-content">
-                  <Link to="/shop">
-                    <h6 className="gi-pro-stitle">Dried Fruits</h6>
-                  </Link>
-                  <h5 className="gi-pro-title"><Link to="/shop">Mixed Nuts
-                    Berries Pack</Link></h5>
-                  <div className="gi-pro-rat-price">
-                    <span className="gi-price">
-                      <span className="new-price">$45.00</span>
-                      <span className="old-price">$56.00</span>
-                    </span>
-                  </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
               </div>
             </div>
-            <div className="gi-product-content px-2">
-              <div className="gi-product-inner">
-                <div className="gi-pro-image-outer">
-                  <div className="gi-pro-image">
-                    <Link to="/shop" className="image">
-                      <span className="label veg">
-                        <span className="dot"></span>
-                      </span>
-                      <img className="main-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_1.jpg" alt="Product" />
-                      <img className="hover-image" src="https://maraviyainfotech.com/wrapbootstrap/grabit-html/grabit-html/assets/img/product-images/6_2.jpg" alt="Product" />
-                    </Link>
-                    <span className="flags">
-                      <span className="sale">Sale</span>
-                    </span>
-                    <div className="gi-pro-actions">
-                      <Link className="gi-btn-group wishlist" title="Wishlist"><i className="fa-regular fa-heart"></i></Link>
-                      <Link to="" title="Add To Cart" className="gi-btn-group add-to-cart"><i className="fa-solid fa-cart-plus"></i></Link>
-                    </div>
-                  </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
-                <div className="gi-pro-content">
-                  <Link to="/shop">
-                    <h6 className="gi-pro-stitle">Dried Fruits</h6>
-                  </Link>
-                  <h5 className="gi-pro-title"><Link to="/shop">Mixed Nuts
-                    Berries Pack</Link></h5>
-                  <div className="gi-pro-rat-price">
-                    <span className="gi-price">
-                      <span className="new-price">$45.00</span>
-                      <span className="old-price">$56.00</span>
-                    </span>
-                  </div>
+              </div>
+            </div>
+            <div className="px-2">
+              <div class=" card-custom">
+                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
+                <div class="card-body">
+                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                  <p class="text-danger">Green, Microwave Safe</p>
+                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
+                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
                 </div>
               </div>
             </div>
@@ -429,6 +358,7 @@ function Home() {
         </div>
       </section>
       <About />
+      <Offer />
     </>
   );
 }

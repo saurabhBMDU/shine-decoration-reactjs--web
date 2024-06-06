@@ -112,32 +112,38 @@ function Header() {
               <div className="gi-flex">
                 <div className="align-self-center gi-header-logo">
                   <div className="header-logo">
-                    <Link to="index.html"><img src="/img/shinedecoration-logo.png" alt="Site Logo" style={{ width: "180px", height: "60px" }} /></Link>
+                    <Link to="/"><img src="/img/shinedecoration-logo.png" alt="Site Logo" style={{ width: "180px", height: "60px" }} /></Link>
                   </div>
                 </div>
                 <div className="align-self-center gi-header-search">
-                  <div className="header-search">
+                  <div className="header-search ">
                     <form className="gi-search-group-form" action="#">
-                      <input className="form-control gi-search-bar" placeholder="Search Products..." type="text" />
-                      <button className="search_submit" type="submit" style={{ background: "#E1AB0A" }}><i className="fa-solid fa-magnifying-glass"></i></button>
+                      <input className="form-control gi-search-bar px-5" placeholder="Search Products..." type="text" />
+                      <div className='position-absolute' style={{ left: "1px" }}>
+                        <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
+                      </div>
+                      <div className="gi-header-action align-self-center">
+                        <Link to="/" className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
+                          <div className="px-2 d-flex justify-content-center  px-3" style={{ padding: "6px 0px" }}>
+                            {/* <i className="fa-solid fa-filter p-2" style={{ color: "#EDB70B" }}></i> */}
+                            <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px",top:"5px", height: "20px" }} />
+                            <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
+                          </div>
+                        </Link>
+                      </div>
                     </form>
+
                   </div>
                 </div>
                 <div className="gi-header-action align-self-center">
                   <div className="gi-header-bottons">
                     {/* <!-- Header User Start --> */}
-                    <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">
-                      <div className="gi-btn-desc">
-                        <i className="fa-solid fa-filter text-center py-2"></i>
-                        <span className="gi-btn-stitle">Filter</span>
-                      </div>
-                    </Link>
                     <div className="gi-acc-drop">
                       <Link to="/" className="gi-header-btn mt-1 gi-header-user dropdown-toggle gi-user-toggle"
                         title="Account">
                         <div className="gi-btn-desc">
-                          <i className="fa-regular fa-user text-center py-2"></i>
-                          <span className="gi-btn-stitle">Profile</span>
+                          <i className="fa-regular fa-user text-center py-2" style={{ color: "#EDB70B" }}></i>
+                          <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Profile</span>
                         </div>
                       </Link>
                       <ul className="gi-dropdown-menu">
@@ -147,14 +153,14 @@ function Header() {
                     </div>
                     <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
-                        <i className="fa-regular fa-heart text-center py-2"></i>
-                        <span className="gi-btn-stitle">wishlilst</span>
+                        <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B" }}></i>
+                        <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
                     <Link to="/" className="gi-header-btn gi-cart-toggle" title="Cart">
-                      <div className="gi-btn-desc mt-1">
-                        <i className="fa-solid fa-bag-shopping text-center py-2"></i>
-                        <span className="gi-btn-stitle">Cart</span>
+                      <div className="gi-btn-desc">
+                        <i className="fa-solid fa-bag-shopping text-center py-2" style={{ color: "#EDB70B" }}></i>
+                        <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>
                     </Link>
                   </div>
@@ -173,23 +179,35 @@ function Header() {
                     <div className="col-md-12 align-self-center">
                       <div className="gi-main-menu">
                         <ul className='my-2' >
-                          <li className="dropdown drop-list position-static" style={{ width: "130px", borderRight: "1px solid #E1AB0A" }}>
+                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
                             <div className='d-flex justify-content-center'>
-                              <img src="https://rukminim2.flixcart.com/flap/80/80/image/ab7e2b022a4587dd.jpg?q=100" alt="" style={{ width: "60px", borderRadius: "10px" }} />
+                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
                             </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center">Bone China</Link>
+                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
                           </li>
-                          <li className="dropdown drop-list" style={{ width: "130px", borderRight: "1px solid #E1AB0A" }} >
+                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
                             <div className='d-flex justify-content-center'>
-                              <img src="https://rukminim2.flixcart.com/flap/80/80/image/ab7e2b022a4587dd.jpg?q=100" alt="" style={{ width: "60px", borderRadius: "10px" }} />
+                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
                             </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center">Wooden</Link>
+                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
                           </li>
-                          <li className="dropdown drop-list " style={{ width: "130px" }}>
+                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
                             <div className='d-flex justify-content-center'>
-                              <img src="https://rukminim2.flixcart.com/flap/80/80/image/ab7e2b022a4587dd.jpg?q=100" alt="" style={{ width: "60px", borderRadius: "10px" }} />
+                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
                             </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center">Ceramic</Link>
+                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
+                          </li>
+                          <li className="dropdown drop-list" style={{ width: "140px", borderRight: "1px solid #EDB70B" }} >
+                            <div className='d-flex justify-content-center'>
+                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
+                            </div>
+                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Wooden</Link>
+                          </li>
+                          <li className="dropdown drop-list " style={{ width: "140px" }}>
+                            <div className='d-flex justify-content-center'>
+                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
+                            </div>
+                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Ceramic</Link>
                           </li>
                         </ul>
                       </div>
