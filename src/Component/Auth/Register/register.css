@@ -1,0 +1,28 @@
+.register-container {
+    background-image: url('https://c1.wallpaperflare.com/preview/472/26/406/table-wine-invite-food.jpg');
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
+
+.form-control {
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    background-color: #2575fc;
+    border-color: #2575fc;
+}
+
+.react-flags-select {
+    max-width: 120px;
+}

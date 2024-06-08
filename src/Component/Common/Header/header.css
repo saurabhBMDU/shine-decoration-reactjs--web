@@ -55,3 +55,20 @@
     font-size: 13px;
     padding: 0px 6px;
 }
+
+/* App.css */
+.sidebar {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+.sidebar.open {
+    right: 0;
+}

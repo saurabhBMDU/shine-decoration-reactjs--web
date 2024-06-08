@@ -14,6 +14,39 @@ import Testimonial from './Testimonial';
 
 function Home() {
 
+  const product = [
+    {
+      img: "/img/Rectangle 128.png",
+      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
+      titleth: "Green, Microwave Safe",
+      price: "490",
+    },
+    {
+      img: "/img/Rectangle 128.png",
+      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
+      titleth: "Green, Microwave Safe",
+      price: "490",
+    },
+    {
+      img: "/img/Rectangle 128.png",
+      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
+      titleth: "Green, Microwave Safe",
+      price: "490",
+    },
+    {
+      img: "/img/Rectangle 128.png",
+      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
+      titleth: "Green, Microwave Safe",
+      price: "490",
+    },
+    {
+      img: "/img/Rectangle 128.png",
+      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
+      titleth: "Green, Microwave Safe",
+      price: "490",
+    }
+  ]
+
   const sliderone = useRef();
   const settingone = {
     infinite: true,
@@ -33,7 +66,7 @@ function Home() {
     infinite: true,
     speed: 400,
     autoplay: true,
-    slidesToShow: 4,
+    slidesToShow: 5,
     arrows: false,
     slidesToScroll: 1,
 
@@ -42,7 +75,7 @@ function Home() {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 5,
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
@@ -109,13 +142,11 @@ function Home() {
         <div className="row">
           <div className="col-lg-3">
             <div class=" card-custom">
-              <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
+              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -123,24 +154,9 @@ function Home() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <Link></Link>
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -148,30 +164,9 @@ function Home() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section className="container-fluid py-4">
-        <h3>Recently Viewed Stores</h3>
-        <div className="row">
-          <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -179,35 +174,9 @@ function Home() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <p class="text-danger">Green, Microwave Safe</p>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -220,78 +189,23 @@ function Home() {
         </div>
         <div>
           <Slider ref={slider} {...setting} className="">
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
+            {product.map((shop, index) => {
+              const { title, img, price, titleth } = shop;
+              return (
+                <div className='col-md-3'>
+                  <div className="px-2">
+                    <div class=" card-custom">
+                      <img src={img} class="card-img-top" alt="Product" />
+                      <div class="card-body">
+                        <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>{title}</h6>
+                        <span class="text-danger" style={{ fontSize: "12px" }}>{titleth}</span>
+                        <p class="price" style={{ color: "#626161" }}>₹{price}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-                </div>
-              </div>
-            </div>
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-                </div>
-              </div>
-            </div>
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-                </div>
-              </div>
-            </div>
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 137.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-                </div>
-              </div>
-            </div>
-            <div className="px-2">
-              <div class=" card-custom">
-                <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-                <div class="card-body">
-                  <Link to='shop'> <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                  <p class="text-danger">Green, Microwave Safe</p>
-                  <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                  {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                  <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </Slider>
         </div>
       </section>

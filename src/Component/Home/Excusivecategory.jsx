@@ -14,7 +14,7 @@ function Excusivecategory() {
     infinite: true,
     speed: 400,
     autoplay: false,
-    slidesToShow: 4,
+    slidesToShow: 5,
     arrows: true, // Enable arrows
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -23,7 +23,7 @@ function Excusivecategory() {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 5,
           slidesToScroll: 1,
           autoplay: false,
           infinite: true,
@@ -77,11 +77,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -89,11 +87,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -101,11 +97,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -113,11 +107,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -125,11 +117,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>
@@ -137,11 +127,9 @@ function Excusivecategory() {
             <div class=" card-custom">
               <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
               <div class="card-body">
-                <h6 class="card-title" style={{ color: "#626161" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <p class="text-danger">Green, Microwave Safe</p>
+                <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
+                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
                 <p class="price" style={{ color: "#626161" }}>₹ 599</p>
-                {/* <button class="btn btn-heart"><i class="fas fa-heart"></i></button> */}
-                <Link href="#" class="d-block mt-2" style={{ color: "#626161" }}>Check Delivery Date and More Details</Link>
               </div>
             </div>
           </div>

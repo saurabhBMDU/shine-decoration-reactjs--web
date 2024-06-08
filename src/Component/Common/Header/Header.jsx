@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-import './header.css'
+import './header.css';
+import Sidebar from './sidebar'
 
 function Header() {
 
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [SidebarOpen, setSidebarOpen] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const location = useLocation();
@@ -24,6 +27,14 @@ function Header() {
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleToggleSidebar = () => {
+    setSidebarOpen(!SidebarOpen);
+  };
+
+  const handleCloseSidebar = () => {
+    setSidebarOpen(false);
   };
 
   return (
@@ -122,14 +133,16 @@ function Header() {
                       <div className='position-absolute' style={{ left: "1px" }}>
                         <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
                       </div>
-                      <div className="gi-header-action align-self-center">
-                        <Link to="/" className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
-                          <div className="px-2 d-flex justify-content-center  px-3" style={{ padding: "6px 0px" }}>
-                            {/* <i className="fa-solid fa-filter p-2" style={{ color: "#EDB70B" }}></i> */}
-                            <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px",top:"5px", height: "20px" }} />
-                            <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
-                          </div>
-                        </Link>
+                      <div>
+                        <div className="gi-header-action align-self-center">
+                          <button onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
+                            <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" }}>
+                              <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px", top: "5px", height: "20px" }} />
+                              <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
+                            </div>
+                          </button>
+                        </div>
+                        {/* <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} /> */}
                       </div>
                     </form>
 

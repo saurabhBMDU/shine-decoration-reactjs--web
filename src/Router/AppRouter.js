@@ -8,7 +8,9 @@ import Header from '../Component/Common/Header/Header';
 import Footer from '../Component/Common/Footer/Footer';
 import Login from '../Component/Auth/Login/login';
 import Register from '../Component/Auth/Register/register';
+import Viewcart from '../Component/Viewcart/viewcart';
 import Shop from '../Component/Shop/shop';
+import Checkout from '../Component/Checkout/checkout';
 import Productdetail from '../Component/Productdetail/productdetail';
 
 function AppRouter() {
@@ -20,7 +22,9 @@ function AppRouter() {
                 <Route path="/about" element={<About />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/cart' element={<Viewcart />} />
                 <Route path='/shop' element={<Shop />} />
+                <Route path='/checkout' element={<Checkout />} />
                 <Route path='/productdetail' element={<Productdetail />} />
                 <Route element={<NotFound />} />
             </Routes>
