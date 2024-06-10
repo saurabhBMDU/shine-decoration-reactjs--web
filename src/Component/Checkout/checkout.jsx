@@ -21,7 +21,7 @@ export default function viewcart() {
             </div>
             <div style={{ border: "1px solid #F1F3F6" }}>
               <div className="mb-3">
-                <div className='p-3' style={{ background: "#EDB70B" }}>
+                <div className='p-2' style={{ background: "#EDB70B" }}>
                   <span className='text-white'>ORDER SUMMERY</span>
                 </div>
                 <div className="row px-3">
@@ -40,11 +40,8 @@ export default function viewcart() {
                   </div>
                 </div>
               </div>
-              <div className="cad mb-3">
-
-              </div>
               <div className='d-flex justify-content-end card-button'>
-                <Link to="/checkout"><button className='btn btn-warning text-white'>CONTINUE</button></Link>
+                <Link to="/payment"><button className='btn btn-warning text-white'>CONTINUE</button></Link>
               </div>
             </div>
           </div>

@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Productimages from './Productimages';
 import '../Home/index';
 import Excusivecategory from '../Home/Excusivecategory';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 function Productdetail() {
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
+  };
+
+  const handleDecrease = () => {
+    setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+  };
   return (
     <>
       <section className="container-fluid py-5">
         <div className="row">
           <div className="col-lg-5">
-            <img src="https://nestasia.in/cdn/shop/files/lantern_11_ae0adc63-35cc-4f7d-911b-95119255a724.jpg?v=1712713864&width=600" alt="" className="img-fluid" />
-            <div>
-              <Productimages />
+            <div className='position-sticky top-0'>
+              <img src="https://nestasia.in/cdn/shop/files/lantern_11_ae0adc63-35cc-4f7d-911b-95119255a724.jpg?v=1712713864&width=600" alt="" className="img-fluid" />
+              <div>
+                <Productimages />
+              </div>
             </div>
           </div>
           <div className="col-lg-7 pl-3">
@@ -22,16 +37,24 @@ function Productdetail() {
                 <div className="d-flex justify-content-start">
                   <span className="fs-4" style={{ fontWeight: "500" }}>₹1,500</span>
                   <del className="px-2 py-1" style={{ fontWeight: "500", color: "gray" }}>₹1,910</del>
-                  <span className="px-2 py-1 text-success" style={{ fontWeight: "500" }}>13% off</span>
+                  <span className="px-2 py-2 text-success" style={{ fontWeight: "500", fontSize: "12px" }}>13% off</span>
                 </div>
-                <p>include of all taxes</p>
+                <p style={{ fontSize: "12px" }}>include of all taxes</p>
               </div>
               <div className="qty-container">
-                <button className="qty-btn-minus btn-light" type="button"><i class="fa fa-minus"></i></button>
-                <input type="text" name="qty" value="0" class="input-qty" />
-                <button className="qty-btn-plus btn-light" type="button"><i class="fa fa-plus"></i></button>
+                <button className="qty-btn-minus btn-light rounded bg-light" type="button" onClick={handleDecrease}>
+                  <FontAwesomeIcon icon={faMinus} />
+                </button>
+                <input
+                  type="text"
+                  value={quantity}
+                  className="input-qty text-center mx-2"
+                  readOnly
+                />
+                <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
               </div>
-
               <div className="py-3">
                 <div className="row">
                   <div className="col-lg-6">

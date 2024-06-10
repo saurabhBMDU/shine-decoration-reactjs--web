@@ -12,6 +12,7 @@ import Viewcart from '../Component/Viewcart/viewcart';
 import Shop from '../Component/Shop/shop';
 import Checkout from '../Component/Checkout/checkout';
 import Productdetail from '../Component/Productdetail/productdetail';
+import Payment from '../Component/Payment/payment';
 
 function AppRouter() {
     return (
@@ -26,6 +27,7 @@ function AppRouter() {
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/productdetail' element={<Productdetail />} />
+                <Route path='/payment' element={<Payment />} />
                 <Route element={<NotFound />} />
             </Routes>
             <Footer />

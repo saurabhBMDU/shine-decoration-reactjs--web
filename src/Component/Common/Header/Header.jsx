@@ -142,7 +142,7 @@ function Header() {
                             </div>
                           </button>
                         </div>
-                        {/* <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} /> */}
+                        <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
                       </div>
                     </form>
 
@@ -160,8 +160,8 @@ function Header() {
                         </div>
                       </Link>
                       <ul className="gi-dropdown-menu">
-                        <li><Link className="dropdown-item" to="/">Register</Link></li>
-                        <li><Link>Login</Link></li>
+                        <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                        <li><Link to={"/login"}>Login</Link></li>
                       </ul>
                     </div>
                     <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">

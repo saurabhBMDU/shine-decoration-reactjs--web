@@ -25,82 +25,41 @@ function Shop() {
       <section className='container-fluid py-2'>
         <div className="row">
           <div className="col-lg-2 pt-4 bg-white">
-            <div className='pt-3'>
-              <div onClick={toggleCategory} className="d-flex justify-content-between">
-                <h6 style={{ fontSize: "12px" }}>CATEGORIES</h6>
-                <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
-              </div>
-              {isOpen && (
-                <div>
-                  <div className="search-box">
-                    <input type="text" placeholder="Search..." style={{ height: "30px" }} className='w-100' />
-                    <button type="submit" style={{ fontSize: "12px" }}><i className="fa-solid fa-magnifying-glass text-black"></i></button>
-                  </div>
-                  <div className='p-2'>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Bone China" value="This is an inbox layout" />
-                      <label htmlFor="Bone China" className='px-2' style={{ fontSize: "15px" }}>Bone China</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Wooden" value="This is an inbox layout" />
-                      <label htmlFor="Wooden" className='px-2' style={{ fontSize: "15px" }}>Wooden</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Ceramic" value="This is an inbox layout" />
-                      <label htmlFor="Ceramic" className='px-2' style={{ fontSize: "15px" }}>Ceramic</label>
-                    </div>
-                  </div>
+            <div className='position-sticky top-0'>
+              <div className='pt-3'>
+                <div onClick={toggleCategory} className="d-flex justify-content-between">
+                  <h6 style={{ fontSize: "12px" }}>CATEGORIES</h6>
+                  <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
                 </div>
-              )}
-            </div>
-            <div className='pt-3'>
-              <div onClick={togglematerial} className="d-flex justify-content-between">
-                <h6 style={{ fontSize: "12px" }}>MATERIAL</h6>
-                <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isMaterial ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
-              </div>
-              {isMaterial && (
-                <>
-                  <div className="search-box">
-                    <input type="text" placeholder="Search..." style={{ height: "30px" }} className='w-100' />
-                    <button type="submit" style={{ fontSize: "12px" }}><i className="fa-solid fa-magnifying-glass text-black"></i></button>
-                  </div>
-                  <div className='p-2'>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Metal" value="This is an inbox layout" />
-                      <label for="Metal" className='px-2' style={{ fontSize: "15px" }}>Metal</label>
+                {isOpen && (
+                  <div>
+                    <div className="search-box">
+                      <input type="text" placeholder="Search..." style={{ height: "30px" }} className='w-100' />
+                      <button type="submit" style={{ fontSize: "12px" }}><i className="fa-solid fa-magnifying-glass text-black"></i></button>
                     </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Glass" value="This is an inbox layout" />
-                      <label for="Glass" className='px-2' style={{ fontSize: "15px" }}>Glass</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="PVC" value="This is an inbox layout" />
-                      <label for="PVC" className='px-2' style={{ fontSize: "15px" }}>PVC</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Resin" value="This is an inbox layout" />
-                      <label for="Resin" className='px-2' style={{ fontSize: "15px" }}>Resin</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Jute" value="This is an inbox layout" />
-                      <label for="Jute" className='px-2' style={{ fontSize: "15px" }}>Jute</label>
-                    </div>
-                    <div className="input-group">
-                      <input type="checkbox" name="options" id="Ceramic" value="This is an inbox layout" />
-                      <label for="Ceramic" className='px-2' style={{ fontSize: "15px" }}>Ceramic</label>
+                    <div className='p-2'>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Bone China" value="This is an inbox layout" />
+                        <label htmlFor="Bone China" className='px-2' style={{ fontSize: "15px" }}>Bone China</label>
+                      </div>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Wooden" value="This is an inbox layout" />
+                        <label htmlFor="Wooden" className='px-2' style={{ fontSize: "15px" }}>Wooden</label>
+                      </div>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Ceramic" value="This is an inbox layout" />
+                        <label htmlFor="Ceramic" className='px-2' style={{ fontSize: "15px" }}>Ceramic</label>
+                      </div>
                     </div>
                   </div>
-                </>
-              )}
-
-            </div>
-            <div className='pt-3'>
-              <div onClick={togglediscount} className="d-flex justify-content-between">
-                <h6 style={{ fontSize: "12px" }}>MATERIAL</h6>
-                <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isdiscount ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
+                )}
               </div>
-              {
-                isdiscount && (
+              <div className='pt-3'>
+                <div onClick={togglematerial} className="d-flex justify-content-between">
+                  <h6 style={{ fontSize: "12px" }}>MATERIAL</h6>
+                  <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isMaterial ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
+                </div>
+                {isMaterial && (
                   <>
                     <div className="search-box">
                       <input type="text" placeholder="Search..." style={{ height: "30px" }} className='w-100' />
@@ -108,23 +67,65 @@ function Shop() {
                     </div>
                     <div className='p-2'>
                       <div className="input-group">
-                        <input type="checkbox" name="options" id="10% & above" value="This is an inbox layout" />
-                        <label for="10% & above" className='px-2' style={{ fontSize: "15px" }}>
-                          10% & above
-                        </label>
+                        <input type="checkbox" name="options" id="Metal" value="This is an inbox layout" />
+                        <label for="Metal" className='px-2' style={{ fontSize: "15px" }}>Metal</label>
                       </div>
                       <div className="input-group">
-                        <input type="checkbox" name="options" id="20% & above" value="This is an inbox layout" />
-                        <label for="20% & above" className='px-2' style={{ fontSize: "15px" }}>20% & above</label>
+                        <input type="checkbox" name="options" id="Glass" value="This is an inbox layout" />
+                        <label for="Glass" className='px-2' style={{ fontSize: "15px" }}>Glass</label>
                       </div>
                       <div className="input-group">
-                        <input type="checkbox" name="options" id="30% & above" value="This is an inbox layout" />
-                        <label for="30% & above" className='px-2' style={{ fontSize: "15px" }}>30% & above</label>
+                        <input type="checkbox" name="options" id="PVC" value="This is an inbox layout" />
+                        <label for="PVC" className='px-2' style={{ fontSize: "15px" }}>PVC</label>
+                      </div>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Resin" value="This is an inbox layout" />
+                        <label for="Resin" className='px-2' style={{ fontSize: "15px" }}>Resin</label>
+                      </div>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Jute" value="This is an inbox layout" />
+                        <label for="Jute" className='px-2' style={{ fontSize: "15px" }}>Jute</label>
+                      </div>
+                      <div className="input-group">
+                        <input type="checkbox" name="options" id="Ceramic" value="This is an inbox layout" />
+                        <label for="Ceramic" className='px-2' style={{ fontSize: "15px" }}>Ceramic</label>
                       </div>
                     </div>
                   </>
-                )
-              }
+                )}
+              </div>
+              <div className='pt-3'>
+                <div onClick={togglediscount} className="d-flex justify-content-between">
+                  <h6 style={{ fontSize: "12px" }}>DISCOUNT</h6>
+                  <span style={{ fontSize: "12px" }}> <i className={`fa-solid ${isdiscount ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i></span>
+                </div>
+                {
+                  isdiscount && (
+                    <>
+                      <div className="search-box">
+                        <input type="text" placeholder="Search..." style={{ height: "30px" }} className='w-100' />
+                        <button type="submit" style={{ fontSize: "12px" }}><i className="fa-solid fa-magnifying-glass text-black"></i></button>
+                      </div>
+                      <div className='p-2'>
+                        <div className="input-group">
+                          <input type="checkbox" name="options" id="10% & above" value="This is an inbox layout" />
+                          <label for="10% & above" className='px-2' style={{ fontSize: "15px" }}>
+                            10% & above
+                          </label>
+                        </div>
+                        <div className="input-group">
+                          <input type="checkbox" name="options" id="20% & above" value="This is an inbox layout" />
+                          <label for="20% & above" className='px-2' style={{ fontSize: "15px" }}>20% & above</label>
+                        </div>
+                        <div className="input-group">
+                          <input type="checkbox" name="options" id="30% & above" value="This is an inbox layout" />
+                          <label for="30% & above" className='px-2' style={{ fontSize: "15px" }}>30% & above</label>
+                        </div>
+                      </div>
+                    </>
+                  )
+                }
+              </div>
             </div>
           </div>
           <div className="col-lg-10">
