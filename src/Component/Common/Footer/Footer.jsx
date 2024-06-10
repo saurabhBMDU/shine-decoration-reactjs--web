@@ -22,7 +22,7 @@ function Footer() {
                 <div className="col-sm-12 col-lg-3 gi-footer-cat wow fadeInUp">
                   <div className="gi-footer-widget gi-footer-company">
                     <img src="/img/shinedecoration-logo.png" className="gi-footer-logo" alt="footer logo" />
-                    <p className="gi-footer-detail">Grabit is the biggest market of grocery products. Get your
+                    <p className="gi-footer-detail">Shine-decoration is the biggest market of grocery products. Get your
                       daily
                       needs from our store.</p>
                     {/* <div className="gi-app-store">
