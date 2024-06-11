@@ -128,19 +128,19 @@ function Header() {
                 </div>
                 <div className="align-self-center gi-header-search">
                   <div className="header-search ">
-                    <form className="gi-search-group-form" action="#">
+                    <form className="gi-search-group-form">
                       <input className="form-control gi-search-bar px-5" placeholder="Search Products..." type="text" />
                       <div className='position-absolute' style={{ left: "1px" }}>
                         <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
                       </div>
                       <div>
                         <div className="gi-header-action align-self-center">
-                          <button onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
+                          <div onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
                             <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" }}>
                               <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px", top: "5px", height: "20px" }} />
                               <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
                       </div>

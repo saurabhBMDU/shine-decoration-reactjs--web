@@ -14,6 +14,7 @@ import Checkout from '../Component/Checkout/checkout';
 import Productdetail from '../Component/Productdetail/productdetail';
 import Payment from '../Component/Payment/payment';
 
+
 function AppRouter() {
     return (
         <BrowserRouter>

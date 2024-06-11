@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ Open, onClose }) => {
-  const [sortBy, setSortBy] = useState('Popularity');
-  const [SizeBy, setSizeBy] = useState('');
+  const [sortBy, setSortBy] = useState({});
+  const [SizeBy, setSizeBy] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [showSizeFilter, setShowSizeFilter] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);

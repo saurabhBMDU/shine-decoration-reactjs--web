@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Productimages from './Productimages';
 import '../Home/index';
 import Excusivecategory from '../Home/Excusivecategory';
+import ReactImageMagnify from 'react-image-magnify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,29 +19,66 @@ function Productdetail() {
   };
   return (
     <>
-      <section className="container-fluid py-5">
+      <section className="container-fluid py-3">
         <div className="row">
           <div className="col-lg-5">
             <div className='position-sticky top-0'>
-              <img src="https://nestasia.in/cdn/shop/files/lantern_11_ae0adc63-35cc-4f7d-911b-95119255a724.jpg?v=1712713864&width=600" alt="" className="img-fluid" />
-              <div>
-                <Productimages />
+              <div className='d-flex justify-content-start'>
+                <div className='p-1 d-none d-md-block'>
+                  <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
+                  <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
+                  <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
+                  <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
+                  <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
+                </div>
+                <div className='image-magnify-container' style={{ height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
+                  {/* <img
+                    src="https://rukminim2.flixcart.com/image/416/416/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false"
+                    alt="Product"
+                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                  /> */}
+                  <ReactImageMagnify {...{
+                    smallImage: {
+                      alt: 'e-commerce',
+                      isFluidWidth: true,
+                      src: "https://rukminim2.flixcart.com/image/416/416/xif0q/dinner-set/v/b/5/yes-34-htecom34dn1fnafl-larah-by-borosil-original-imahybvzgfdwgvh5.jpeg?q=70&crop=false",
+                    },
+                    largeImage: {
+                      src: "https://rukminim2.flixcart.com/image/416/416/xif0q/dinner-set/v/b/5/yes-34-htecom34dn1fnafl-larah-by-borosil-original-imahybvzgfdwgvh5.jpeg?q=70&crop=false",
+                      width: 1200,
+                      height: 1800,
+                      style: { borderRadius: '10px' }
+                    },
+                    enlargedImagePosition: 'beside',
+                    enlargedImageContainerStyle: { zIndex: 9 },
+                    enlargedImageContainerDimensions: { width: '200%', height: '130%' }
+                  }} />
+                </div>
               </div>
+              <div className="d-flex justify-content-center flex-wrap mt-2">
+                <button className="px-4 py-3 me-2 text-white" style={{ background: "#FF9F00", width: "200px" }}>
+                  <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
+                </button>
+                <button className=" px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
+                  <i className="fas fa-bolt px-2"></i> BUY NOW
+                </button>
+              </div>
+
             </div>
           </div>
-          <div className="col-lg-7 pl-3">
+          <div className="col-lg-7 pl-1">
             <div>
               <h3>Lantern</h3>
-              <p>Stars And Moon Festive Metal Lantern With Handle</p>
+              <span style={{ fontSize: "12px" }}>Stars And Moon Festive Metal Lantern With Handle</span>
               <div>
                 <div className="d-flex justify-content-start">
                   <span className="fs-4" style={{ fontWeight: "500" }}>₹1,500</span>
                   <del className="px-2 py-1" style={{ fontWeight: "500", color: "gray" }}>₹1,910</del>
                   <span className="px-2 py-2 text-success" style={{ fontWeight: "500", fontSize: "12px" }}>13% off</span>
                 </div>
-                <p style={{ fontSize: "12px" }}>include of all taxes</p>
+                <span style={{ fontSize: "12px" }}>include of all taxes</span>
               </div>
-              <div className="qty-container">
+              <div className="qty-container mt-2">
                 <button className="qty-btn-minus btn-light rounded bg-light" type="button" onClick={handleDecrease}>
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
@@ -49,8 +86,7 @@ function Productdetail() {
                   type="text"
                   value={quantity}
                   className="input-qty text-center mx-2"
-                  readOnly
-                />
+                 />
                 <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
@@ -69,7 +105,7 @@ function Productdetail() {
                       </div>
                     </div>
                     <div className='d-flex justify-content-start'>
-                      <p className="highlight">Seller</p>
+                      <span className="highlight text-align-center py-2">Seller</span>
                       <div className="highlight-text">
                         <ul>
                           <li className="py-1 d-flex justify-content-start"> <i className="fa-solid fa-circle p-2 " style={{ fontSize: "6px", color: "gray" }}></i><li>7 Days Replacement Policy</li></li>
@@ -87,7 +123,7 @@ function Productdetail() {
                   </div>
                 </div>
               </div>
-              <div className="container mt-4">
+              <div className="container">
                 <h3 className="mb-3 px-2">Specifications</h3>
                 <table className="table table-bordered">
                   <tbody>
