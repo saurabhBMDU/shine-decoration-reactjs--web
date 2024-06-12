@@ -122,12 +122,12 @@ const Sidebar = ({ Open, onClose }) => {
         ) : (
           <div className='d-flex justify-content-start'>
             <h6 style={{ fontSize: "15px", cursor: "pointer" }} onClick={handleClearAll}>
-              <i class="fa-solid fa-arrow-left"></i>
+              <i className="fa-solid fa-arrow-left"></i>
             </h6>
             <h6 className='px-3'>{selectedFilter}</h6>
           </div>
         )}
-        <p onClick={onClose}><i class="fa-solid fa-xmark"></i></p>
+        <p onClick={onClose}><i className="fa-solid fa-xmark"></i></p>
       </div>
       <div className='justify-content-between px-3 mt-2'>
         {selectedFilter === null ? (

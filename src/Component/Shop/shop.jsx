@@ -129,25 +129,25 @@ function Shop() {
             </div>
           </div>
           <div className="col-lg-10">
-            <div class="container my-5">
-              <div class="row">
+            <div className="container my-5">
+              <div className="row">
                 {/* <!-- Product Card 1 --> */}
-                <div class="col-md-3">
-                  <div class="card mb-4">
-                    <img src="/img/Rectangle 128.png" class="card-img-top" alt="Car" />
-                    <div class="p-2">
-                      <h6 class="card-title" style={{ fontSize: "13px" }}>CADDLE & TOES Famous Car Remote Control 3D with LED Lights</h6>
-                      <p class="card-text">
-                        <div class="">
+                <div className="col-md-3">
+                  <div className="card mb-4">
+                    <img src="/img/Rectangle 128.png" className="card-img-top" alt="Car" />
+                    <div className="p-2">
+                      <h6 className="card-title" style={{ fontSize: "13px" }}>CADDLE & TOES Famous Car Remote Control 3D with LED Lights</h6>
+                      <p className="card-text">
+                        <div className="">
                           <span>(9,824)</span>
                         </div>
-                        <div class="d-flex align-items-center mt-2">
-                          <span class="text-success font-weight-bold" style={{ fontWeight: "600" }}>₹499</span>
-                          <span class="text-muted px-2" style={{ fontWeight: "600" }}><s>₹1,999</s></span>
-                          <span class="badge text-dark">75% off</span>
+                        <div className="d-flex align-items-center mt-2">
+                          <span className="text-success font-weight-bold" style={{ fontWeight: "600" }}>₹499</span>
+                          <span className="text-muted px-2" style={{ fontWeight: "600" }}><s>₹1,999</s></span>
+                          <span className="badge text-dark">75% off</span>
                         </div>
-                        <div class="d-flex align-items-center mt-2">
-                          <span class="ml-2 px-2" style={{ fontWeight: "600" }}>3.5 Star</span>
+                        <div className="d-flex align-items-center mt-2">
+                          <span className="ml-2 px-2" style={{ fontWeight: "600" }}>3.5 Star</span>
                         </div>
                       </p>
                     </div>

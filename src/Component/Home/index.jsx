@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from "react-slick";
 import './index.css';
 // import PopularCategory from './PopularCategory';
 import { NextArrow, PrevArrow } from './Arrow';
+import { fetchData } from '../../action/index';
 import Excusivecategory from './Excusivecategory';
 import PopularCategory from './PopularCategory';
 import About from './About';
@@ -13,6 +15,13 @@ import Offer from './Offer';
 import Testimonial from './Testimonial';
 
 function Home() {
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.data.data);
+  console.log(data, "data ecomerce ka");
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   const product = [
     {
@@ -141,42 +150,42 @@ function Home() {
         <h3>Recently Viewed Stores</h3>
         <div className="row">
           <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+            <div className=" card-custom">
+              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
+              <div className="card-body">
+                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
+                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
               </div>
             </div>
           </div>
           <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+            <div className=" card-custom">
+              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
+              <div className="card-body">
+                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
+                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
               </div>
             </div>
           </div>
           <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+            <div className=" card-custom">
+              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
+              <div className="card-body">
+                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
+                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
               </div>
             </div>
           </div>
           <div className="col-lg-3">
-            <div class=" card-custom">
-              <img src="/img/Rectangle 128.png" class="card-img-top" alt="Product" />
-              <div class="card-body">
-                <Link to='shop'> <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span class="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p class="price" style={{ color: "#626161" }}>₹ 599</p>
+            <div className=" card-custom">
+              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
+              <div className="card-body">
+                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
+                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
+                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
               </div>
             </div>
           </div>
@@ -194,12 +203,12 @@ function Home() {
               return (
                 <div className='col-md-3'>
                   <div className="px-2">
-                    <div class=" card-custom">
-                      <img src={img} class="card-img-top" alt="Product" />
-                      <div class="card-body">
-                        <h6 class="card-title" style={{ color: "#626161", fontSize: "14px" }}>{title}</h6>
-                        <span class="text-danger" style={{ fontSize: "12px" }}>{titleth}</span>
-                        <p class="price" style={{ color: "#626161" }}>₹{price}</p>
+                    <div className=" card-custom">
+                      <img src={img} className="card-img-top" alt="Product" />
+                      <div className="card-body">
+                        <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{title}</h6>
+                        <span className="text-danger" style={{ fontSize: "12px" }}>{titleth}</span>
+                        <p className="price" style={{ color: "#626161" }}>₹{price}</p>
                       </div>
                     </div>
                   </div>

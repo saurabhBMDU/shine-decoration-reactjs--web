@@ -1,17 +1,32 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
+// import App from './App';
+// import './assest/css/style.css'
+// import './assest/css/responsive.css'
+// import { Provider } from 'react-redux';
+// import Store from './Store/store.js';
+
+// ReactDOM.render(
+//   <Provider store={Store}>
+//     <App />
+//   </Provider>,
+//   document.getElementById('root')
+// );
+
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import './assest/css/style.css'
-import './assest/css/responsive.css'
-// import './assest/js/main.js'
-import reportWebVitals from './reportWebVitals';
+import './assest/css/style.css';
+import './assest/css/responsive.css';
+import { Provider } from 'react-redux';
+import store from './store/store'; // Adjusted import
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+ReactDOM.render(
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>,
+  document.getElementById('root')
 );
 
-reportWebVitals();

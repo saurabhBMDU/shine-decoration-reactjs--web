@@ -135,7 +135,7 @@ function Payment() {
                             <div className="input-group">
                               <span className="input-group-text text-success" id="captcha-image">
                                 {captcha}
-                                <i class="fa-solid fa-arrows-rotate text-info px-2" onClick={generateCaptcha}></i>
+                                <i className="fa-solid fa-arrows-rotate text-info px-2" onClick={generateCaptcha}></i>
                               </span>
                               <input
                                 type="text"
