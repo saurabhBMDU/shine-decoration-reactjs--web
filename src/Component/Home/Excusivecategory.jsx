@@ -1,13 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from './Arrow';
 import { Link } from 'react-router-dom';
 import './index.css' // Import custom arrow components
+import { fetchProduct } from '../../action/index';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Excusivecategory() {
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.productData.data);
+  console.log("data product ka", products);
+
+
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch])
 
   const slider = useRef();
   const setting = {
@@ -73,6 +83,10 @@ function Excusivecategory() {
           <h3>Recently Viewed Store</h3>
         </div>
         <Slider ref={slider} {...setting} className="">
+          {/* {
+            data && data.result && data.result.images &&
+            
+          } */}
           <div className="px-2">
             <div className=" card-custom">
               <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />

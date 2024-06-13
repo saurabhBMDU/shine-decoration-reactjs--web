@@ -3,19 +3,16 @@ import { Link } from 'react-router-dom';
 import './register.css'
 import { useDispatch } from 'react-redux';
 import { register } from '../../../action/authaction';
-import { useNavigate } from 'react-router-dom';
 
 
 function Register() {
   const [form, setForm] = useState({})
   const dispatch = useDispatch();
-  // const navigate = useNavigate(); 
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register(form));
-    // navigate("/")
   };
 
   const handleInputChange = (name, value) => {
@@ -35,6 +32,7 @@ function Register() {
                 <input
                   type="text"
                   className='w-100'
+                  placeholder='name'
                   value={form.name}
                   name='name'
                   onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -49,6 +47,7 @@ function Register() {
                   type="text"
                   className='w-100'
                   value={form.mobile}
+                  placeholder='mobile'
                   name='mobile'
                   onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                   required
@@ -61,6 +60,7 @@ function Register() {
                 <input
                   type="password"
                   className='w-100'
+                  placeholder='password'
                   value={form.password}
                   name='password'
                   onChange={(e) => handleInputChange(e.target.name, e.target.value)}

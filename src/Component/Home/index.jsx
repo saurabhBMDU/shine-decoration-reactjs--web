@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import './index.css';
 // import PopularCategory from './PopularCategory';
 import { NextArrow, PrevArrow } from './Arrow';
-import { fetchData } from '../../action/index';
+import { fetchImages } from '../../action/index';
 import Excusivecategory from './Excusivecategory';
 import PopularCategory from './PopularCategory';
 import About from './About';
@@ -17,10 +17,9 @@ import Testimonial from './Testimonial';
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
-  console.log(data, "data ecomerce ka");
-
+ 
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchImages());
   }, [dispatch]);
 
   const product = [
@@ -133,12 +132,11 @@ function Home() {
       <section className='container-fluid py-2'>
         <div>
           <Slider ref={sliderone} {...settingone} className="">
-            <div className=''>
-              <img src="https://images.squarespace-cdn.com/content/v1/638a549813e4ce689b4dcb03/be7b24ed-55c9-4035-8182-6f7236858496/Narumi-banner-79.png" alt="" className='w-100 rounded-1' />
-            </div>
-            <div className=''>
-              <img src="https://nestasia.in/cdn/shop/files/N1.png?v=1715786111&width=2000" alt="" className='w-100 rounded-1' />
-            </div>
+            {data && data.result && data.result.images &&
+              data.result.images.map((image, index) => (
+                <img key={index} src={image} alt={`Banner ${index + 1}`} />
+              )
+              )}
           </Slider>
         </div>
       </section>
