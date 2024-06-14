@@ -7,7 +7,8 @@ function Footer() {
   const currentURL = location.pathname;
   if (
     currentURL === '/login' ||
-    currentURL === '/register'
+    currentURL === '/register' ||
+    currentURL === '/forgot'
   ) {
     return null
   }

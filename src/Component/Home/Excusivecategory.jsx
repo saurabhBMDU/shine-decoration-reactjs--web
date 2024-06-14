@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 function Excusivecategory() {
   const dispatch = useDispatch()
   const products = useSelector(state => state.productData.data);
-  console.log("data product ka", products);
-
 
   useEffect(() => {
     dispatch(fetchProduct());
@@ -80,74 +78,22 @@ function Excusivecategory() {
     <>
       <section className="container-fluid py-4">
         <div>
-          <h3>Recently Viewed Store</h3>
+          <h3>Products</h3>
         </div>
         <Slider ref={slider} {...setting} className="">
-          {/* {
-            data && data.result && data.result.images &&
-            
-          } */}
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
+          {products && products.result.products &&
+            products.result.products.map((product, index) => (
+              <div key={index} className="px-2">
+                <div className=" card-custom">
+                  <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
+                  <div className="card-body">
+                    <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
+                    <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
+                    <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="px-2">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-
+            ))}
         </Slider>
       </section>
     </>

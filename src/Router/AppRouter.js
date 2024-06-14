@@ -13,6 +13,7 @@ import Shop from '../Component/Shop/shop';
 import Checkout from '../Component/Checkout/checkout';
 import Productdetail from '../Component/Productdetail/productdetail';
 import Payment from '../Component/Payment/payment';
+import Forgot from '../Component/Auth/Forgot/forgot';
 
 
 function AppRouter() {
@@ -22,6 +23,7 @@ function AppRouter() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/forgot" element={<Forgot />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/cart' element={<Viewcart />} />

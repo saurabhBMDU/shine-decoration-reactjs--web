@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './login.css';
-import { API_URL } from '../../../service/api'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { doLogin } from '../../../action/authaction';
 import { useDispatch } from 'react-redux';
 
@@ -21,31 +19,27 @@ function Login() {
   };
 
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(doLogin(form).then(res => {
+  //     const token = localStorage.getItem('token');
+  //     console.log(token, "t---");
+  //     if (token) {
+  //       navigate('/');
+  //     }
+  //   }));
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(doLogin(form));
-    const token = localStorage.getItem('token');
-    console.log(token, "t---");
-    if (token) {
-      navigate('/');
-    }
+    dispatch(doLogin(form, () => {
+      const token = localStorage.getItem('token');
+      console.log(token, "t---");
+      if (token) {
+        navigate('/');
+      }
+    }));
   };
-
-
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(`${API_URL}/mobileApi/login`, form);
-  //     if (response.ok) {
-  //        navigate('/');  
-  //     }
-  //   } catch (error) {
-  //     console.error('Login error:', error);
-
-  //   }
-  // };
 
   return (
     <>
@@ -75,7 +69,7 @@ function Login() {
                 onChange={handleInputChange}
               />
             </div>
-            <Link to={'/forget'}>Forgot your password?</Link>
+            <Link to={'/forgot'}>Forgot your password?</Link>
             <button type="submit" className="btn btn-primary w-100">Login</button>
           </form>
         </div>
