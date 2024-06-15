@@ -135,7 +135,7 @@ function Header() {
                         <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
                       </div>
                       <div>
-                        <div className="gi-header-action align-self-center">
+                        <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>
                           <div onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
                             <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" }}>
                               <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px", top: "5px", height: "20px" }} />

@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './register.css'
 import { useDispatch } from 'react-redux';
-import { register } from '../../../action/authaction';
+import { doRegister } from '../../../action/authaction';
 
 
 function Register() {
   const [form, setForm] = useState({})
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(form));
+    dispatch(doRegister(form, () => {
+      navigate('/')
+    }));
   };
 
   const handleInputChange = (name, value) => {
@@ -69,7 +72,6 @@ function Register() {
               </div>
             </div>
             <div className="">
-              <Link to={'/forget'}>Forgot your password?</Link>
             </div>
             <button type="submit" className="btn btn-primary w-100 mt-2" onClick={(e) => handleSubmit(e)}>Login</button>
           </form>

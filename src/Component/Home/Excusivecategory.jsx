@@ -86,11 +86,13 @@ function Excusivecategory() {
               <div key={index} className="px-2">
                 <div className=" card-custom">
                   <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
-                  <div className="card-body">
-                    <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
-                    <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
-                    <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
-                  </div>
+                  <Link to={`/productdetail/${product._id}`}>
+                    <div className="card-body">
+                      <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
+                      <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
+                      <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
+                    </div>
+                  </Link>
                 </div>
               </div>
             ))}

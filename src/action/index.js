@@ -7,13 +7,13 @@ import { API_URL } from '../service/api';
 export const fetchImages = () => {
   return dispatch => {
     axios.get(`${API_URL}/admin/banner/home-page-banner`)
-      .then(response => {
-        dispatch({
-          type: FETCH_DATA_SUCCESS,
-          payload: response.data
-        });
+    .then(response => {
+       dispatch({
+        type: FETCH_DATA_SUCCESS,
+        payload: response.data
+      });
 
-      })
+    })
   };
 };
 
@@ -22,7 +22,6 @@ export const fetchProduct = () => {
   return dispatch => {
     axios.get(`${API_URL}/admin/product/products`)
       .then(response => {
-        console.log("res",response);
         dispatch({
           type: FETCH_PRODUCT_SUCCESS,
           payload: response.data

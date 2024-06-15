@@ -4,12 +4,9 @@ import {
   REGISTER_SUCCES,
 } from './actionType';
 import { toast } from 'react-toastify';
-// import { useNavigate } from 'react-router-dom';
 
 
-
-
-export const register = (form) => {
+export const doRegister = (form, callback) => {
   return dispatch => {
     axios.post(`${API_URL}/mobileApi/register`, form)
       .then(response => {
@@ -21,6 +18,7 @@ export const register = (form) => {
             payload: response.data.result
           });
           toast.success(message);
+          if (callback) callback();
         } else {
           toast.error("Registration failed: " + message);
         }
@@ -38,13 +36,10 @@ export const register = (form) => {
 
 
 export const doLogin = (form, callback) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // const navigate = useNavigate();
   return (dispatch) => {
     axios.post(`${API_URL}/mobileApi/login`, form)
       .then(response => {
-        console.log("res toen ka--", response.data.result.user.jwtToken);
-        const { data } = response;
+         const { data } = response;
         const { message, statusCode } = data;
 
         if (statusCode === 200) {
@@ -56,10 +51,8 @@ export const doLogin = (form, callback) => {
           });
           toast.success(message);
           if (callback) callback();
-          // Navigate to login page
-          // navigate('/login');
         } else {
-          toast.error(message); // Changed from success to error for failure case
+          toast.error(message);
         }
       })
       .catch(error => {
@@ -74,9 +67,37 @@ export const doLogin = (form, callback) => {
 };
 
 
-export const forgotPassword = (form) => {
+export const forgotPassword = (form, callback) => {
   return dispatch => {
-    axios.post(`${API_URL}/mobileApi/register`, form)
+    axios.post(`${API_URL}/mobileApi/forget-password`, form)
+      .then(response => {
+         const { data: { message, statusCode } = {} } = response;
+        if (statusCode === 200) {
+          dispatch({
+            type: REGISTER_SUCCES,
+            payload: response.data.result
+          });
+          toast.success(message);
+          if (callback) callback();
+        } else {
+          toast.error("Registration failed: " + message);
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          const { data: { message } } = error.response;
+          toast.error(message);
+        } else {
+          return error
+        }
+      });
+  };
+};
+
+
+export const otpVerification = (form, callback) => {
+  return dispatch => {
+    axios.post(`${API_URL}/mobileApi/otp-verify`, form)
       .then(response => {
         console.log("res--", response);
         const { data: { message, statusCode } = {} } = response;
@@ -86,6 +107,7 @@ export const forgotPassword = (form) => {
             payload: response.data.result
           });
           toast.success(message);
+          if (callback) callback();
         } else {
           toast.error("Registration failed: " + message);
         }

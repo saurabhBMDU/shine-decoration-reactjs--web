@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Home/index';
 import Excusivecategory from '../Home/Excusivecategory';
 import ReactImageMagnify from 'react-image-magnify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductDetails } from '../../action/productdetailaction';
+import { addWishList, addtoCart } from '../../action/productdetailaction'
+import { useParams } from 'react-router-dom';
+
+
 
 
 function Productdetail() {
 
+  const { product } = useSelector(state => state.productDetails);
   const [quantity, setQuantity] = useState(1);
+  const params = useParams();
+  const id = params.id;
+  const dispatch = useDispatch();
+  console.log(id, "7890");
+  console.log(product, "7890------");
+
+
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, [dispatch, id]);
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
@@ -17,6 +34,48 @@ function Productdetail() {
   const handleDecrease = () => {
     setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
   };
+
+  const addToWishlist = (productId) => {
+    dispatch(addWishList(productId));
+  };
+
+  const handeaddtoCart = (productId) => {
+    dispatch(addtoCart(productId));
+  };
+
+  // const handleWishList = async (productId) => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     console.log("token", token);
+  //     if (!token) {
+  //       toast.error("User is not authenticated");
+  //       return;
+  //     }
+
+  //     const response = await fetch(`${API_URL}/mobileApi/wishlist/add-to-wishlist/${productId}`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     console.log("oooo", productId);
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log('data', data);
+  //       toast.success("Product added to wishlist successfully");
+  //       // Optionally, you can dispatch an action or update local state here
+  //     } else {
+  //       const errorData = await response.json();
+  //       console.log('errorData', errorData);
+  //       toast.error(errorData.message || 'Failed to add product to wishlist');
+  //     }
+  //   } catch (error) {
+  //     console.error('An unexpected error occurred:', error);
+  //     toast.error("An unexpected error occurred while adding to wishlist");
+  //   }
+  // };
+
   return (
     <>
       <section className="container-fluid py-3">
@@ -31,12 +90,7 @@ function Productdetail() {
                   <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
                   <img src="https://rukminim2.flixcart.com/image/128/128/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false" alt="" style={{ height: "80px", width: "80px" }} className='border d-flex justify-content-center p-2 my-1' />
                 </div>
-                <div className='image-magnify-container' style={{ height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
-                  {/* <img
-                    src="https://rukminim2.flixcart.com/image/416/416/xif0q/dinner-set/n/m/q/yes-17-8904350469963-cello-original-imagz7xtzuqybbac.jpeg?q=70&crop=false"
-                    alt="Product"
-                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                  /> */}
+                <div className='image-magnify-container' style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
                   <ReactImageMagnify {...{
                     smallImage: {
                       alt: 'e-commerce',
@@ -53,10 +107,11 @@ function Productdetail() {
                     enlargedImageContainerStyle: { zIndex: 9 },
                     enlargedImageContainerDimensions: { width: '200%', height: '130%' }
                   }} />
+                  <i className="fa-regular fa-heart" onClick={() => addToWishlist(product._id)} style={{ position: 'absolute', top: '10px', right: '10px', color: 'gray', fontSize: '24px', cursor: 'pointer' }}></i>
                 </div>
               </div>
               <div className="d-flex justify-content-center flex-wrap mt-2">
-                <button className="px-4 py-3 me-2 text-white" style={{ background: "#FF9F00", width: "200px" }}>
+                <button className="px-4 py-3 me-2 text-white" onClick={() => handeaddtoCart(product._id)} style={{ background: "#FF9F00", width: "200px" }}>
                   <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
                 </button>
                 <button className=" px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
@@ -86,7 +141,7 @@ function Productdetail() {
                   type="text"
                   value={quantity}
                   className="input-qty text-center mx-2"
-                 />
+                />
                 <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>

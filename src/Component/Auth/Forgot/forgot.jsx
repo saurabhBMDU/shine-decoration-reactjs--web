@@ -2,19 +2,23 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './register.css'
 import { useDispatch } from 'react-redux';
-import { forgotPassword } from '../../../action/authaction';
+import { forgotPassword, otpVerification } from '../../../action/authaction';
+
 
 
 function Register() {
   const [form, setForm] = useState({})
   const [otpSent, setOtpSent] = useState(false);
   const dispatch = useDispatch();
-
-
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   dispatch(forgotPassword(form));
+  //   dispatch(forgotPassword(form, () => {
+  //     console.log();
+  //   }));
   // };
+  // const handleOtpVerification = (e) => {
+
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,11 +27,16 @@ function Register() {
       setForm({});
       setOtpSent(false);
     } else {
-      dispatch(forgotPassword(form));
-      setOtpSent(true);
-      setForm({ mobile: '' });
+      dispatch(forgotPassword(form, () => {
+        setOtpSent(true);
+        setForm({ mobile: '' });
+      }));
     }
   };
+  const handleOtp = (e) => {
+    e.preventDefault();
+    dispatch(otpVerification(form));
+  }
 
   const handleInputChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -36,13 +45,13 @@ function Register() {
 
   return (
     <>
-      {/* <div className="register-container d-flex justify-content-center align-items-center vh-100">
+      <div className="register-container d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 shadow" style={{ width: '420px', borderRadius: '10px' }}>
-          <h3 className="text-center mb-4">Register</h3>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <div className="mt-2">
-              <label htmlFor="username" className="">Mobile</label>
-              <div>
+          <h4 className="card-title text-center mb-4">OTP Verification</h4>
+          {!otpSent ? (
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Mobile:</label>
                 <input
                   type="mobile"
                   className='w-100'
@@ -53,51 +62,24 @@ function Register() {
                   required
                 />
               </div>
-            </div>
-            <button type="submit" className="btn btn-primary w-100 mt-4" onClick={(e) => handleSubmit(e)}>Send OTP</button>
-          </form>
-        </div>
-      </div> */}
-
-      <div className="register-container d-flex justify-content-center align-items-center vh-100">
-        <div className="card p-4 shadow" style={{ width: '420px', borderRadius: '10px' }}>
-          <h3 className="text-center mb-4">Register</h3>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            {!otpSent ? (
-              <div className="mt-2">
-                <label htmlFor="mobile">Mobile</label>
-                <div>
-                  <input
-                    type="text"
-                    className='w-100'
-                    placeholder='mobile'
-                    value={form.mobile || ''}
-                    name='mobile'
-                    onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-                    required
-                  />
-                </div>
+              <button type="submit" className="btn btn-primary btn-block mt-2">Send OTP</button>
+            </form>
+          ) : (
+            <form onSubmit={handleOtp}>
+              <div className="form-group">
+                <label>Enter OTP:</label>
+                <input
+                  type="text"
+                  name='otp'
+                  className="form-control"
+                  value={form.otp}
+                  onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+                  required
+                />
               </div>
-            ) : (
-              <div className="mt-2">
-                <label htmlFor="otp">OTP</label>
-                <div>
-                  <input
-                    type="text"
-                    className='w-100'
-                    placeholder='Enter OTP'
-                    value={form.otp}
-                    name='otp'
-                    onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-            )}
-            <button type="submit" className="btn btn-primary w-100 mt-4">
-              {otpSent ? 'Verify OTP' : 'Send OTP'}
-            </button>
-          </form>
+              <button type="submit" className="btn btn-primary btn-block mt-2">Verify OTP</button>
+            </form>
+          )}
         </div>
       </div>
     </>

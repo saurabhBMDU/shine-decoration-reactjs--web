@@ -29,7 +29,7 @@ function AppRouter() {
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
-                <Route path='/productdetail' element={<Productdetail />} />
+                <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route element={<NotFound />} />
             </Routes>

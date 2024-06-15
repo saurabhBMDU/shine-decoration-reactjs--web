@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import './index.css';
 // import PopularCategory from './PopularCategory';
 import { NextArrow, PrevArrow } from './Arrow';
-import { fetchImages } from '../../action/index';
+import { fetchImages, fetchProduct } from '../../action/index';
 import Excusivecategory from './Excusivecategory';
 import PopularCategory from './PopularCategory';
 import About from './About';
@@ -17,43 +17,18 @@ import Testimonial from './Testimonial';
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
- 
+  const products = useSelector(state => state.productData.data);
+  console.log("dsf", data);
+  console.log("dsf__________", products);
+
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch])
+
   useEffect(() => {
     dispatch(fetchImages());
   }, [dispatch]);
 
-  const product = [
-    {
-      img: "/img/Rectangle 128.png",
-      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
-      titleth: "Green, Microwave Safe",
-      price: "490",
-    },
-    {
-      img: "/img/Rectangle 128.png",
-      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
-      titleth: "Green, Microwave Safe",
-      price: "490",
-    },
-    {
-      img: "/img/Rectangle 128.png",
-      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
-      titleth: "Green, Microwave Safe",
-      price: "490",
-    },
-    {
-      img: "/img/Rectangle 128.png",
-      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
-      titleth: "Green, Microwave Safe",
-      price: "490",
-    },
-    {
-      img: "/img/Rectangle 128.png",
-      title: "Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...",
-      titleth: "Green, Microwave Safe",
-      price: "490",
-    }
-  ]
 
   const sliderone = useRef();
   const settingone = {
@@ -132,9 +107,9 @@ function Home() {
       <section className='container-fluid py-2'>
         <div>
           <Slider ref={sliderone} {...settingone} className="">
-            {data && data.result && data.result.images &&
-              data.result.images.map((image, index) => (
-                <img key={index} src={image} alt={`Banner ${index + 1}`} />
+            {data && data.result &&
+              data.result.images.map((data, index) => (
+                <img key={index} src={data.image} alt={`Banner ${index + 1}`} />
               )
               )}
           </Slider>
@@ -147,46 +122,23 @@ function Home() {
       <section className="container-fluid py-4">
         <h3>Recently Viewed Stores</h3>
         <div className="row">
-          <div className="col-lg-3">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
+          {products && products.result.products &&
+            products.result.products.map((product, index) => (
+              <div className="col-md-3 mt-4">
+                <div key={index} className="px-2">
+                  <div className=" card-custom">
+                    <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
+                    <Link to={`/productdetail/${product._id}`}>
+                      <div className="card-body">
+                        <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
+                        <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
+                        <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3">
-            <div className=" card-custom">
-              <img src="/img/Rectangle 128.png" className="card-img-top" alt="Product" />
-              <div className="card-body">
-                <Link to='shop'> <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>Cello Pack of 47 Opalware Dazzle Opalware Oleander Dinn...</h6></Link>
-                <span className="text-danger" style={{ fontSize: "12px" }}>Green, Microwave Safe</span>
-                <p className="price" style={{ color: "#626161" }}>₹ 599</p>
-              </div>
-            </div>
-          </div>
+            ))}
         </div>
       </section>
 
@@ -196,23 +148,19 @@ function Home() {
         </div>
         <div>
           <Slider ref={slider} {...setting} className="">
-            {product.map((shop, index) => {
-              const { title, img, price, titleth } = shop;
-              return (
-                <div className='col-md-3'>
-                  <div className="px-2">
-                    <div className=" card-custom">
-                      <img src={img} className="card-img-top" alt="Product" />
-                      <div className="card-body">
-                        <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{title}</h6>
-                        <span className="text-danger" style={{ fontSize: "12px" }}>{titleth}</span>
-                        <p className="price" style={{ color: "#626161" }}>₹{price}</p>
-                      </div>
+            {products && products.result.products &&
+              products.result.products.map((product, index) => (
+                <div key={index} className="px-2">
+                  <div className=" card-custom">
+                    <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
+                    <div className="card-body">
+                      <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
+                      <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
+                      <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              ))}
           </Slider>
         </div>
       </section>
