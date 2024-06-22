@@ -14,25 +14,27 @@ import PotteryEnd from './PotteryEnd';
 import Banner2 from './Banner2';
 import Sliders from './Sliders';
 import Banner3 from './Banner3';
-import { HeaderEndBar } from '../Common/Header/HeaderEndBar';
+import HeaderEndBar from '../Common/Header/HeaderEndBar';
+import { getCategory } from '../../action/categoryAction';
 
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
   const products = useSelector(state => state.productData.data);
-  console.log("dsf", data);
-  console.log("dsf__________", products);
+  const category = useSelector(state => state.categories)
+ 
 
   useEffect(() => {
     dispatch(fetchProduct());
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(fetchImages());
+    dispatch(getCategory());
+    
   }, [dispatch]);
+  console.log("dsf", data);
+  console.log("dsf__________", products);
+  console.log('category @ home ' ,category)
 
 
-  console.log(data,'data')
 
  
   // const settingone = {
@@ -53,7 +55,7 @@ function Home() {
 
   return (
     <>
-     <HeaderEndBar />
+     <HeaderEndBar  />
       <section className=" py-2">
         <div>
 
@@ -64,7 +66,7 @@ function Home() {
           >
              {data&&
           data.map((data, index) => (
-            <div className="carousel-inner">
+            <div key={index} className="carousel-inner">
               <div className="carousel-item active">
                 <img className="d-block w-100 banner-img" 
                 // src={data.image}

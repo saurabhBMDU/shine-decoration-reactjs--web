@@ -67,7 +67,7 @@ const Sliders = ({products}) => {
     {products &&
             products.result.products &&
             products.result.products.map((product, index) => (
-    <div key={index} className="px-2">
+              <div key={index} className="px-2">
                 <div className=" card-custom ">
                   <div className="position-relative card-img-container">
                    <img src={'https://gramic-store-demo.myshopify.com/cdn/shop/products/11.1.jpg?v=1593683051'} className="card-img-top" alt="Product" style={{ height: "240px",  }} />

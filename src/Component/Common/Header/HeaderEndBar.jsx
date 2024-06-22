@@ -1,8 +1,14 @@
-import React from "react";
+import React, { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from "../../Home/Arrow";
-export function HeaderEndBar() {
+import { useSelector } from "react-redux";
+
+const HeaderEndBar = () => {
+  const category = useSelector(state => state.categories)
+  useEffect(()=>{
+    console.log(category)
+  })
 
   const settings = {
     dots: false,
@@ -20,7 +26,7 @@ export function HeaderEndBar() {
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
-        }
+        },
       },
       {
         breakpoint: 1024,
@@ -29,7 +35,7 @@ export function HeaderEndBar() {
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
-        }
+        },
       },
       {
         breakpoint: 900,
@@ -38,7 +44,7 @@ export function HeaderEndBar() {
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
-        }
+        },
       },
       {
         breakpoint: 600,
@@ -46,110 +52,73 @@ export function HeaderEndBar() {
           slidesToShow: 3,
           slidesToScroll: 1,
           autoplay: true,
-          initialSlide: 1
-        }
+          initialSlide: 1,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 3,
           autoplay: true,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
-  return <> <div className='d-flex justify-content-start align-items-baseline py-2' style={{
-      backgroundColor: "#ededed",
-      paddingLeft: '2rem'
-    }}>
-          <h5>SORT BY</h5>
-          <select name="" id="" className=' px-3 py-1 rounded border-0' style={{
-        boxShadow: '0px 8px 10px  1px #b9b9b9',
-        fontSize: '1rem',
-        marginLeft: "1rem"
-      }}>
-            <option value="">Price Category</option>
-          </select>
-          
-        </div>
 
-        <div className="header-slider">
-          <Slider {...settings}>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
-              </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
+  return (
+    <>
+      <div
+        className="d-flex justify-content-start align-items-baseline py-2"
+        style={{
+          backgroundColor: "#ededed",
+          paddingLeft: "2rem",
+        }}
+      >
+        <h5>SORT BY</h5>
+        <select
+          name=""
+          id=""
+          className="px-3 py-1 rounded border-0"
+          style={{
+            boxShadow: "0px 8px 10px 1px #b9b9b9",
+            fontSize: "1rem",
+            marginLeft: "1rem",
+          }}
+        >
+          <option value="">Price Category</option>
+        </select>
+      </div>
 
-            <div className="dropdown drop-list position-static">
-              <div className='d-flex justify-content-center'>
-                <img src="/img/Ellipse 53.png" alt="" style={{
-              width: "110px",
-              height: 'auto'
-            }} />
+      <div className="header-slider">
+        <Slider {...settings}>
+          {category &&
+            category.categories &&
+            category.categories.category.map((cat) => (
+              <div className="dropdown drop-list position-static" key={cat._id}>
+                <div className="d-flex justify-content-center">
+                  <img
+                  className="nav-headend-img"
+                    src={cat.image}
+                    alt={cat.name}
+                    style={{
+                      width: "110px",
+                      height: "auto",
+                    }}
+                  />
+                </div>
+                <Link
+                  to={`/${cat._id}`}
+                  className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-capitalize"
+                >
+                  {cat.name}
+                </Link>
               </div>
-              <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-captilize">Bone China</Link>
-            </div>
-          </Slider>
-      </div></>;
-}
-  
+            ))}
+        </Slider>
+      </div>
+    </>
+  );
+};
+
+export default HeaderEndBar;
