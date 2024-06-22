@@ -8,10 +8,8 @@ const PrivacyPolicy = () => {
         <div className="col-12">
           <h3 className="mb-4">Privacy Policy</h3>
           <p>
-            This “Privacy Policy” describes the privacy practices of Mini
-            Apparels and our subsidiaries and affiliates (collectively, “Mini
-            Apparels”, “we”, “us”, or “our”) in connection with the
-            https://www.miniapparels.com/ , the Mini Apparels, any other website
+            This “Privacy Policy” describes the privacy practices of Shine Decoration and our subsidiaries and affiliates (collectively, “Shine Decoration”, “we”, “us”, or “our”) in connection with the
+            https://www.shinedecoration.com/ , the Shine Decoration, any other website
             or mobile application that we own or control and which posts or
             links to this Privacy Policy (the “Sites”) as well as our retail
             stores and related services (together with the Sites, the
