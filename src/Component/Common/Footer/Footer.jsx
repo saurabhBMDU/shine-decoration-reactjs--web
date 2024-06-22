@@ -69,7 +69,7 @@ function Footer() {
                     <div className="gi-footer-links gi-footer-dropdown">
                       <ul className="align-itegi-center">
                         <li className="gi-footer-link"><Link to="/">Sign In</Link></li>
-                        <li className="gi-footer-link"><Link to="/">View Cart</Link></li>
+                        <li className="gi-footer-link"><Link to="/cart">View Cart</Link></li>
                         <li className="gi-footer-link"><Link to="/privacy">Return Policy</Link></li>
                         <li className="gi-footer-link"><Link to="/">Become a Vendor</Link></li>
                         <li className="gi-footer-link"><Link to="/">Affiliate Program</Link></li>

@@ -5,9 +5,10 @@ import ReactImageMagnify from 'react-image-magnify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '../../action/productdetailaction';
-import { addWishList, addtoCart } from '../../action/productdetailaction'
+import { addtoCart, getProductDetails } from '../../action/productdetailaction';
+import { addWishList } from '../../action/productdetailaction'
 import { useParams } from 'react-router-dom';
+
 
 
 
@@ -40,41 +41,10 @@ function Productdetail() {
   };
 
   const handeaddtoCart = (productId) => {
-    dispatch(addtoCart(productId));
+    dispatch(addtoCart({productId,quantity}));
   };
 
-  // const handleWishList = async (productId) => {
-  //   try {
-  //     const token = localStorage.getItem('token');
-  //     console.log("token", token);
-  //     if (!token) {
-  //       toast.error("User is not authenticated");
-  //       return;
-  //     }
-
-  //     const response = await fetch(`${API_URL}/mobileApi/wishlist/add-to-wishlist/${productId}`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  //     console.log("oooo", productId);
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log('data', data);
-  //       toast.success("Product added to wishlist successfully");
-  //       // Optionally, you can dispatch an action or update local state here
-  //     } else {
-  //       const errorData = await response.json();
-  //       console.log('errorData', errorData);
-  //       toast.error(errorData.message || 'Failed to add product to wishlist');
-  //     }
-  //   } catch (error) {
-  //     console.error('An unexpected error occurred:', error);
-  //     toast.error("An unexpected error occurred while adding to wishlist");
-  //   }
-  // };
+  
 
   return (
     <>

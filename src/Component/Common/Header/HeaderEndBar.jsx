@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from "../../Home/Arrow";

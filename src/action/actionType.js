@@ -7,3 +7,5 @@ export const GET_PRODUCT_DETAILS = 'GET_PRODUCT_DETAILS';
 export const REGISTER_SUCCES = 'REGISTER_SUCCES';
 
 export const GET_CATEGORY = 'GET_CATEGORY';
+
+export const ADD_TO_CART = 'ADD_TO_CART'

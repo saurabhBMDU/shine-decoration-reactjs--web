@@ -1,9 +1,11 @@
 import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
+  ADD_TO_CART,
   GET_PRODUCT_DETAILS,
 } from './actionType';
 import { toast } from 'react-toastify';
+import { type } from '@testing-library/user-event/dist/type';
 
 
 export const addWishList = (productId) => {
@@ -50,17 +52,18 @@ export const addWishList = (productId) => {
 
 
 
-export const addtoCart = (productId) => {
+export const addtoCart = ({productId,quantity}) => {
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');
+      console.log('this token from addtocart',token)
       if (!token) {
         toast.error("User is not authenticated");
         return;
       }
       const requestBody = {
         productId: productId,
-        'quantity': 'quantity'
+        quantity:quantity,
       };
       const response = await fetch(`${API_URL}/mobileApi/cart/add-to-cart/${productId}`, {
         method: 'POST',
@@ -78,6 +81,7 @@ export const addtoCart = (productId) => {
 
         if (statusCode === 200) {
           dispatch({
+            type:ADD_TO_CART,
             payload: result
           });
           toast.success(message);

@@ -1,11 +1,9 @@
-import { HeaderEndBar } from './HeaderEndBar';
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import './header.css';
 import Sidebar from './sidebar'
-import Slider from 'react-slick';
-import { NextArrow, PrevArrow } from '../../Home/Arrow';
+
 
 function Header() {
 
