@@ -138,7 +138,7 @@ function Header() {
                   <div className="header-search ">
                     <form className="gi-search-group-form">
                       <input className="form-control gi-search-bar  rounded" placeholder="Search Products..." type="text" style={{maxWidth:'32rem'}} />
-                      <div className='position-absolute' style={{ right: "8rem" }}>
+                      <div className='position-absolute nav-searchicon-container' >
                         <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
                       </div>
                       <div>

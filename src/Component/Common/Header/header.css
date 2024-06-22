@@ -282,3 +282,19 @@
     width: 92vw;
     margin: 2rem auto;
 }
+
+@media (min-width:1399px) {
+    .nav-searchicon-container{
+        right: 140px;
+    }
+    
+}
+
+@media (max-width:1398px) {
+    .nav-searchicon-container{
+        right: 0px;
+
+    }
+
+    
+}
