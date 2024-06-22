@@ -248,3 +248,37 @@
     width: 10px;
     transform: scale(0.8);
   }
+
+
+.gi-main{
+    display: flex;
+    align-items: center;
+    height: auto;
+    overflow-x: scroll;
+    scrollbar-color: #edb70b;
+    scroll-behavior: smooth;
+    scrollbar-track-color: #000;
+    border: none;
+    justify-content: center;
+    color: #edb70b;
+   
+}
+.gi-main ul li .links{
+    color: #edb70b;
+    
+}
+
+.gi-main ul {
+    display: flex;
+    justify-content:space-evenly;
+    gap: 4rem;
+}
+
+.gi-main ul li{
+    width: auto;
+}
+
+.header-slider{
+    width: 92vw;
+    margin: 2rem auto;
+}

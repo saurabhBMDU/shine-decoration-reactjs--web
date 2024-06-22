@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import './index.css' // Import custom arrow components
 import { fetchProduct } from '../../action/index';
 import { useDispatch, useSelector } from 'react-redux';
+import HeartButton from './HeartButton';
 
 
 function Excusivecategory() {
@@ -22,7 +23,7 @@ function Excusivecategory() {
     infinite: true,
     speed: 400,
     autoplay: false,
-    slidesToShow: 5,
+    slidesToShow: 2,
     arrows: true, // Enable arrows
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -31,7 +32,7 @@ function Excusivecategory() {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 4,
           slidesToScroll: 1,
           autoplay: false,
           infinite: true,
@@ -49,7 +50,7 @@ function Excusivecategory() {
       {
         breakpoint: 900,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
           autoplay: false,
           infinite: true,
@@ -76,21 +77,25 @@ function Excusivecategory() {
   };
   return (
     <>
-      <section className="container-fluid py-4">
+      <section className="container-fluid py-4 card-container">
         <div>
           <h3>Products</h3>
         </div>
-        <Slider ref={slider} {...setting} className="">
+        <Slider ref={slider} {...setting} className=" sliders">
           {products && products.result.products &&
             products.result.products.map((product, index) => (
               <div key={index} className="px-2">
                 <div className=" card-custom">
-                  <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
+                  <div className='position-relative'>
+                  <img src={'https://gramic-store-demo.myshopify.com/cdn/shop/products/11.1.jpg?v=1593683051'} className="card-img-top" alt="Product" style={{ height: "240px",  }} />
+                  <HeartButton/>
+                  </div>
                   <Link to={`/productdetail/${product._id}`}>
-                    <div className="card-body">
-                      <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
+                    <div className="card-body" style={{width:'100%'}}>
+                      <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category} Ripple Vase</h6>
                       <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
                       <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
+                      <p className="text-muted font-weight-bold" style={{fontSize:'.8rem'}}>Check delivery date and more details &gt;</p>
                     </div>
                   </Link>
                 </div>

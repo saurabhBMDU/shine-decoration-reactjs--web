@@ -1,1 +1,13 @@
 
+
+
+  :root{
+    font-family: "Lato", sans-serif ;
+    --bs-body-font-family:"Lato", sans-serif;
+  }
+
+
+  .cormorant-italic {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+  }

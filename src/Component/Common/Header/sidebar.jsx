@@ -110,7 +110,7 @@ const Sidebar = ({ Open, onClose }) => {
       left: Open ? '0' : '-320px',
       top: '0',
       width: '320px',
-      zIndex: 1,
+      zIndex: 3,
       height: '100%',
       backgroundColor: '#fff',
       boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',

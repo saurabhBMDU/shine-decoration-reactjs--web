@@ -1,8 +1,11 @@
+import { HeaderEndBar } from './HeaderEndBar';
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import './header.css';
 import Sidebar from './sidebar'
+import Slider from 'react-slick';
+import { NextArrow, PrevArrow } from '../../Home/Arrow';
 
 function Header() {
 
@@ -37,6 +40,9 @@ function Header() {
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
+
+
+ 
 
   return (
     <>
@@ -112,6 +118,7 @@ function Header() {
                   <div className="px-2">
                     <li className="border-bottom"><Link to="/profile">Logout</Link></li>
                   </div>
+             
                 </ul>
               </nav>
             </div>
@@ -130,19 +137,12 @@ function Header() {
                 <div className="align-self-center gi-header-search">
                   <div className="header-search ">
                     <form className="gi-search-group-form">
-                      <input className="form-control gi-search-bar px-5" placeholder="Search Products..." type="text" />
-                      <div className='position-absolute' style={{ left: "1px" }}>
+                      <input className="form-control gi-search-bar  rounded" placeholder="Search Products..." type="text" style={{maxWidth:'32rem'}} />
+                      <div className='position-absolute' style={{ right: "8rem" }}>
                         <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
                       </div>
                       <div>
-                        <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>
-                          <div onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
-                            <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" }}>
-                              <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px", top: "5px", height: "20px" }} />
-                              <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
-                            </div>
-                          </div>
-                        </div>
+                        
                         <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
                       </div>
                     </form>
@@ -167,7 +167,7 @@ function Header() {
                     </div>
                     <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
-                        <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B" }}></i>
+                        <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
@@ -177,53 +177,11 @@ function Header() {
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>
                     </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="gi-header-cat d-none d-lg-block">
-          <div className="container-fluid">
-            <div className="gi-nav-bar">
-              <div id="gi-main-menu-desk" className="d-none d-lg-block sticky-nav">
-                <div className="nav-desk">
-                  <div className="row">
-                    <div className="col-md-12 align-self-center">
-                      <div className="gi-main-menu">
-                        <ul className='my-2' >
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list" style={{ width: "140px", borderRight: "1px solid #EDB70B" }} >
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Wooden</Link>
-                          </li>
-                          <li className="dropdown drop-list " style={{ width: "140px" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Ceramic</Link>
-                          </li>
-                        </ul>
+                    <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>      
+                      <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" ,cursor:"pointer" }} 
+                        onClick={handleToggleSidebar}>
+                        <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B", marginRight:'2px', fontSize:'.8rem' }}>FILTER</span>
+                        <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative align-top ' style={{ width: "22px", top: "5px", height: "20px" }} />
                       </div>
                     </div>
                   </div>
@@ -232,6 +190,10 @@ function Header() {
             </div>
           </div>
         </div>
+
+
+      
+                    
       </header>
     </>
   )

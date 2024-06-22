@@ -14,7 +14,8 @@ import Checkout from '../Component/Checkout/checkout';
 import Productdetail from '../Component/Productdetail/productdetail';
 import Payment from '../Component/Payment/payment';
 import Forgot from '../Component/Auth/Forgot/forgot';
-
+import PrivacyPolicy from '../Component/PrivacyPolicy/PrivacyPolicy';
+import TermsOfService from '../Component/TermsAndConditions/TermsOfService';
 
 function AppRouter() {
     return (
@@ -26,6 +27,8 @@ function AppRouter() {
                 <Route path="/forgot" element={<Forgot />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/privacy' element={<PrivacyPolicy/>}/>
+                <Route path='/Termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
