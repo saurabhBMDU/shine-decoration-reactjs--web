@@ -3,6 +3,7 @@ import dataReducer from './dataReducer';
 import productReducer from './productReducer';
 import productdetailReducer from './productdetailReducer';
 import categoryReducer from './categoryReducer';
+import getCartReducer from './getCart';
 
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     productData: productReducer,
     productDetails: productdetailReducer,
     categories:categoryReducer,
+    CartData : getCartReducer,
    
 });
 

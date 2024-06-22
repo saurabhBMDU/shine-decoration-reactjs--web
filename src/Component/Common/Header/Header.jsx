@@ -169,7 +169,7 @@ function Header() {
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-cart-toggle" title="Cart">
+                    <Link to="/cart" className="gi-header-btn gi-cart-toggle" title="Cart">
                       <div className="gi-btn-desc">
                         <i className="fa-solid fa-bag-shopping text-center py-2" style={{ color: "#EDB70B" }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>

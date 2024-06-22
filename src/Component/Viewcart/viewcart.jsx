@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './viewcart.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart } from '../../action/getCartAction';
 
 export default function Viewcart() {
-
+  const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(1);
+ const  cartData = useSelector(state=>state.cartData);
+
+  useEffect(() => {
+    dispatch(getCart())
+  },[dispatch])
+
+  console.log(cartData)
 
   const handleIncrease = () => {
     setQuantity(prevQuantity => prevQuantity + 1);
