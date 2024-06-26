@@ -1,9 +1,12 @@
 import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
+  ADD_TO_CART,
+  DELETE_FROM_CART,
   GET_PRODUCT_DETAILS,
 } from './actionType';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { type } from '@testing-library/user-event/dist/type';
 
 
 export const addWishList = (productId) => {
@@ -50,17 +53,18 @@ export const addWishList = (productId) => {
 
 
 
-export const addtoCart = (productId) => {
+export const addtoCart = ({productId,quantity}) => {
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');
+      console.log('this token from addtocart',token)
       if (!token) {
         toast.error("User is not authenticated");
         return;
       }
       const requestBody = {
         productId: productId,
-        'quantity': 'quantity'
+        quantity:quantity,
       };
       const response = await fetch(`${API_URL}/mobileApi/cart/add-to-cart/${productId}`, {
         method: 'POST',
@@ -73,11 +77,11 @@ export const addtoCart = (productId) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('data', response);
         const { message, statusCode, result } = data;
 
         if (statusCode === 200) {
           dispatch({
+            type:ADD_TO_CART,
             payload: result
           });
           toast.success(message);
@@ -87,7 +91,7 @@ export const addtoCart = (productId) => {
       } else {
         const errorData = await response.json();
         console.log('data', errorData);
-        toast.error(errorData.message || 'An unexpected error occurred');
+        toast.error(errorData.message || 'An unexpected error occurred ');
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
@@ -95,6 +99,17 @@ export const addtoCart = (productId) => {
     }
   };
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const getProductDetails = (id) => {

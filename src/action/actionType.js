@@ -5,3 +5,11 @@ export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const GET_PRODUCT_DETAILS = 'GET_PRODUCT_DETAILS';
 
 export const REGISTER_SUCCES = 'REGISTER_SUCCES';
+
+export const GET_CATEGORY = 'GET_CATEGORY';
+
+export const ADD_TO_CART = 'ADD_TO_CART';
+
+export const GET_CART = 'GET_CART';
+
+export const DELETE_FROM_CART = 'DELETE_FROM_CART'

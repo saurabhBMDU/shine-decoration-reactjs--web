@@ -10,7 +10,7 @@ export const fetchImages = () => {
     .then(response => {
        dispatch({
         type: FETCH_DATA_SUCCESS,
-        payload: response.data
+        payload: response.data.result 
       });
 
     })

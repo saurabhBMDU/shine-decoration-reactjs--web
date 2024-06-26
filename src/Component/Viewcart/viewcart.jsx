@@ -1,80 +1,295 @@
-import React, { useState } from 'react';
-import './viewcart.css';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useCallback, useEffect, useState } from "react";
+import "./viewcart.css";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { API_URL } from "../../service/api";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { width } from "@fortawesome/free-solid-svg-icons/fa0";
 
 export default function Viewcart() {
+  const [quantity, setQuantity] = useState(0);
+  const [cartData, setCartData] = useState(null);
+  const [productDetails, setProductDetails] = useState([]);
+  const [updaterQ , setUpdaterQ] = useState(false)
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
-  const [quantity, setQuantity] = useState(1);
+  const fetchCartData = useCallback(async () => {
+    try {
+      
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("User is not authorised");
+        return;
+      }
+      const response = await fetch(`${API_URL}/mobileApi/cart/cart`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      const { message, statusCode } = data;
+      if (statusCode === 200) {
+        setCartData(data.result);
+        toast.success("Cart items fetched successfully");
+      } else {
+        toast.error(message || "Failed to fetch cart data");
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      toast.error("Failed to fetch cart data");
+    }
+  
+  }, []);
+
+  useEffect(() => {
+    
+    fetchCartData();
+  }, [fetchCartData]);
+
+  useEffect(() => {
+    const fetchProductDetails = async (cartItems) => {
+      try {
+        console.log(cartItems, "catitem from fetch productdetails");
+        if (cartItems) {
+          const productDetailsArray = await Promise.all(
+            cartItems.cartItems.map(async (item) => {
+              console.log(item, "from map");
+              const response = await fetch(
+                `${API_URL}/admin/product/product/${item.product}`
+              );
+              const data = await response.json();
+              const { statusCode } = data;
+              if (statusCode !== 200) {
+                console.log(item.product, "is missing");
+                toast(item.product, "is missing from cartdata");
+              } else console.log(data, "data item");
+              return {
+                ...data.result,
+                quantity: item.quantity,
+                cartItemId: item._id,
+                sellingPrice: item.selling_price,
+                mrp: item.mrp_price,
+                discount: item.discounting_price,
+                productId: item.product,
+              };
+            })
+          );
+          setProductDetails(productDetailsArray);
+          
+        } 
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    fetchProductDetails(cartData);
+    setLoading(false)
+  }, [cartData, dispatch]);
 
   const handleIncrease = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
+    setQuantity((prevQuantity) => prevQuantity + 1);
   };
 
   const handleDecrease = () => {
-    setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+    setQuantity((prevQuantity) => (prevQuantity > 1? prevQuantity - 1 : 1));
   };
+
+  const removeFromCart = async (productId) => {
+    try {
+      setLoading(false)
+      console.log("remove action running");
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("User is not authenticated");
+        return;
+      }
+
+      console.log("remove running for cart");
+
+      const response = await fetch(
+        `${API_URL}/mobileApi/cart/remove-cart-product/${productId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json(); // Ensure we wait for the response to be parsed as JSON
+        const { statusCode, message, result } = data; // Destructure the data object
+
+        if (statusCode === 200) {
+          console.log(result);
+          toast.success(message);
+          fetchCartData();
+          console.log("Removed from cart:", result);
+        } else {
+          toast.error(message || "Failed to remove product from cart");
+        }
+      } else {
+        const errorData = await response.json(); // Ensure we wait for the error response to be parsed as JSON
+        console.log("Error from removeFromCart:", errorData);
+        toast.error(
+          errorData.message ||
+            "Something went wrong while deleting the product from the cart"
+        );
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      setLoading(false)
+    }
+  };
+
+
+  const updateQuantity = (qnty) => {
+    setQuantity(Number(qnty))
+    setUpdaterQ(true)
+  }
+  
+  console.log(productDetails ,'product')
+  console.log(loading,'loading');
+  
   return (
-    <div>
-      <div className="container-fluid py-3">
-        <div className="row">
-          <div className="col-md-8">
-            <div style={{ border: "1px solid #F1F3F6" }}>
-              <div className="mb-3">
-                <div className="row px-4">
-                  <div className="col-md-2 d-flex justify-content-center">
-                    <div className='d-flex justify-content-center' style={{ position: "relative" }}>
-                      <img src="https://rukminim2.flixcart.com/image/224/224/xif0q/shopsy-jacket/s/y/g/m-o-black-fluffy-fullsleeve-jacket-fashlook-men-original-imagsjntvhgfttfv.jpeg?q=90" className="d-flex justify-content-center" alt="Product" style={{ height: "130px", position: "absolute", top: "40px" }} />
-                    </div>
+    <>{loading ? ( 
+    <div class="loader"></div>
+  ):
+  (
+    <section className="containerCart  ">
+    <div className="cards">
+      { productDetails.length > 0 || productDetails ===null ? (productDetails.map((item) => {
+        return (
+          <main className="cartCard" key={item.productId}>
+            <div className="cartcardTopContainer">
+              <div>
+                <img
+                  src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRr_QzMJ350TxU4PYbQv74ryOyEO6-94rSpH_0eU6U2Xx5SUir3UeOSyI_Epa_DJvC3nmEMXFwqWbg19c8q0h-0RCxWxjTZhxGlZtFTEdkpHmAlWKF19YPbvg"
+                  alt=""
+                />
+              </div>
+              <div className="cartTexttop">
+                <p>{item.product_name}</p>
+                <p>{item.description}</p>
+                <p>
+                  <span className="">₹{item.mrp}</span>{" "}
+                  <span>₹{item.sellingPrice}</span>{" "}
+                  <span className="off"> ₹{`${item.discount} `}saves </span>{" "}
+                </p>
+              </div>
+            </div>
+            <div className="cartbottom">
+              <div className="buttonbox">
+                <div className="buttongrp">
+                  <div>
+                    <FaMinus onClick={handleDecrease} />
                   </div>
-                  <div className="col-md-9">
-                    <div className="card-body">
-                      <h6 className="card-title">BenQ GW2490T 24 inch Full HD LED Backlit IPS Panel with...</h6>
-                      <p className="card-text">Seller: MTAILMODEECOM</p>
-                      <p className="card-text"><small className="text-muted">Response Time: 5 ms, 100 Hz Refresh Rate</small></p>
-                      <p className="card-text"> <span className="fw-bold">₹11,250</span> <span className="text-decoration-line-through px-2">₹14,990</span> <span className="discount" style={{ fontSize: "12px", fontWeight: "500" }}>24% Off</span></p>
-                    </div>
+                  {updaterQ ? (
+                    <input
+                      type="number"
+                      min="1"
+                      onChange={(e) => setQuantity(e.target.value)}
+                      value={quantity}
+                      style={{ width: "3rem", padding: "3px 4px", textAlign:'center' }}
+                    />
+                  ) : (
+                    <div>{item.quantity}</div>
+                  )}
+                  <div>
+                    <FaPlus onClick={handleIncrease} />
                   </div>
-                  <div className='d-flex justify-content-start align-items-center'>
-                    <div className="qty-container d-flex align-items-center">
-                      <button className="qty-btn-minus btn-light rounded bg-light" type="button" onClick={handleDecrease}>
-                        <FontAwesomeIcon icon={faMinus} />
+                </div>
+                <div className="buttongrp2">
+                  {updaterQ ? (
+                    <>
+                      <button className=" py-1  px-2 fs-6 btn">save</button>
+                      <button
+                        onClick={() => setUpdaterQ(false)}
+                        className="py-2 px-2 fs-6 badge bg-secondary"
+                      >
+                        cancel
                       </button>
-                      <input
-                        type="text"
-                        value={quantity}
-                        className="input-qty text-center mx-2"
-                        readOnly
-                      />
-                      <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                    </div>
-                    <p className='px-4 m-0 text-danger' style={{ cursor: 'pointer', fontWeight: "600" }}>REMOVE</p>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => updateQuantity(item.quantity)}
+                      className=" py-2 px-2 fs-6  updatebutton"
+                    >
+                      update quantity
+                    </button>
+                  )}
+                  <div
+                    className=" remove"
+                    style={{ fontWeight: "700" }}
+                    onClick={() => removeFromCart(item.productId)}
+                  >
+                    Remove
                   </div>
                 </div>
               </div>
-              <div className="cad mb-3">
-              </div>
-              <div className='d-flex justify-content-end card-button'>
-                <Link to="/checkout"><button className='btn btn-warning'>PLACE ORDER</button></Link>
-              </div>
             </div>
-          </div>
-          <div className="col-md-4">
-            <div className="price-details">
-              <h5 className="product-title border-bottom py-2">Price Details</h5>
-              <div className='py-1'>Price (1 item): <span className='float-end'>₹14,990</span></div>
-              <div className='py-1'>Discount: <span className="text-success float-end"> ₹3,740</span></div>
-              <div className='py-1 mb-3'>Delivery Charges: <span className="text-success float-end">Free</span></div>
-              <div className="total-amount py-1 border-bottom border-top py-3">Total Amount<span className="text-success float-end">₹11,250</span></div>
-              <div className="save-amount py-1">You will save ₹3,740 on this order</div>
-              {/* <button className="btn btn-warning w-100">PLACE ORDER</button> */}
+            <div className="last">
+              <button className="orderbutton">Place Order</button>
             </div>
-          </div>
+          </main>
+        );
+      })  ) :( 
+
+        <div className="cards mx-auto " style={{width:'50%',textAlign:'center' , marginTop:'3rem', fontSize:'1rem'}}>
+          <p style={{fontWeight:500, fontSize:'140%'}} className="--bs-warning">   NO products in cart </p>
+       
+          <Link className="text-center badge text-bg-secondary fs-3 mt-4"  to={'/'}>shop now</Link>
+
+        </div>
+      )  }
+      
+    </div>
+
+    <div className="col-md-4 ">
+      <div className="price-details">
+        <h5 className="product-title border-bottom py-2">Price Details</h5>
+        <div className="py-1">
+          Price ({cartData && cartData.totalQuantity}):{" "}
+          <span className="float-end">
+            ₹{cartData && cartData.totalPrice}
+          </span>
+        </div>
+        <div className="py-1">
+          Discount:{" "}
+          <span className="text-success float-end">
+            {" "}
+            ₹{cartData && cartData.totalDiscountedPrice}
+          </span>
+        </div>
+        <div className="py-1 mb-3">
+          Delivery Charges:{" "}
+          <span className="text-success float-end">Free</span>
+        </div>
+        <div className="total-amount py-1 border-bottom border-top py-3">
+          Total Amount
+          <span className="text-success float-end">
+            {" "}
+            ₹{cartData && cartData.totalPayablePrice}
+          </span>
+        </div>
+        <div className="save-amount py-1">
+          You will save ₹{cartData && cartData.totalDiscountedPrice} on this
+          order
         </div>
       </div>
     </div>
-  )
+  </section>
+
+  )}
+  
+    </>
+   
+  );
 }
