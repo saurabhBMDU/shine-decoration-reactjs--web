@@ -28,7 +28,7 @@ function AppRouter() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/privacy' element={<PrivacyPolicy/>}/>
-                <Route path='/Termsandcondition' element={<TermsOfService/>}/>
+                <Route path='/termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />

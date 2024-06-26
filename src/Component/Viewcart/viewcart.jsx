@@ -6,6 +6,7 @@ import { API_URL } from "../../service/api";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { width } from "@fortawesome/free-solid-svg-icons/fa0";
+import { addtoCart } from "../../action/productdetailaction";
 
 export default function Viewcart() {
   const [quantity, setQuantity] = useState(0);
@@ -14,7 +15,7 @@ export default function Viewcart() {
   const [updaterQ , setUpdaterQ] = useState(false)
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-
+  
   const fetchCartData = useCallback(async () => {
     try {
       
@@ -44,11 +45,18 @@ export default function Viewcart() {
     }
   
   }, []);
-
+ 
   useEffect(() => {
     
     fetchCartData();
-  }, [fetchCartData]);
+  }, [fetchCartData ,dispatch]);
+
+  const updateCart = useCallback((productId,quantity) => {  
+    console.log( quantity ,'updatecart')
+    dispatch(addtoCart({productId, quantity}))
+    setQuantity(0)
+    setUpdaterQ(false)
+  },[quantity])
 
   useEffect(() => {
     const fetchProductDetails = async (cartItems) => {
@@ -90,14 +98,7 @@ export default function Viewcart() {
     setLoading(false)
   }, [cartData, dispatch]);
 
-  const handleIncrease = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const handleDecrease = () => {
-    setQuantity((prevQuantity) => (prevQuantity > 1? prevQuantity - 1 : 1));
-  };
-
+ 
   const removeFromCart = async (productId) => {
     try {
       setLoading(false)
@@ -154,6 +155,25 @@ export default function Viewcart() {
     setQuantity(Number(qnty))
     setUpdaterQ(true)
   }
+
+
+  const handleIncrease = (qnty) => {
+    if(!updaterQ){
+      updateQuantity(qnty)
+    }
+
+   
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrease = (qnty) => {
+    if(!updaterQ){
+      updateQuantity(qnty)
+    }
+   
+    setQuantity((prevQuantity) => (prevQuantity > 1? prevQuantity - 1 : 1));
+  };
+
   
   console.log(productDetails ,'product')
   console.log(loading,'loading');
@@ -189,7 +209,7 @@ export default function Viewcart() {
               <div className="buttonbox">
                 <div className="buttongrp">
                   <div>
-                    <FaMinus onClick={handleDecrease} />
+                    <FaMinus onClick={()=>handleDecrease(item.quantity)} />
                   </div>
                   {updaterQ ? (
                     <input
@@ -203,13 +223,15 @@ export default function Viewcart() {
                     <div>{item.quantity}</div>
                   )}
                   <div>
-                    <FaPlus onClick={handleIncrease} />
+                    <FaPlus onClick={()=>handleIncrease(item.quantity)} />
                   </div>
                 </div>
                 <div className="buttongrp2">
                   {updaterQ ? (
                     <>
-                      <button className=" py-1  px-2 fs-6 btn">save</button>
+                      <button
+                      onClick={()=>updateCart(item.productId,quantity)}
+                       className=" py-1  px-2 fs-6 btn">save</button>
                       <button
                         onClick={() => setUpdaterQ(false)}
                         className="py-2 px-2 fs-6 badge bg-secondary"
@@ -218,12 +240,7 @@ export default function Viewcart() {
                       </button>
                     </>
                   ) : (
-                    <button
-                      onClick={() => updateQuantity(item.quantity)}
-                      className=" py-2 px-2 fs-6  updatebutton"
-                    >
-                      update quantity
-                    </button>
+                    null
                   )}
                   <div
                     className=" remove"
