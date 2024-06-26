@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { API_URL } from "../../service/api";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { width } from "@fortawesome/free-solid-svg-icons/fa0";
-import { addtoCart } from "../../action/productdetailaction";
+import { updateCart } from "../../action/productdetailaction";
+
 
 export default function Viewcart() {
   const [quantity, setQuantity] = useState(0);
@@ -18,7 +18,6 @@ export default function Viewcart() {
   
   const fetchCartData = useCallback(async () => {
     try {
-      
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("User is not authorised");
@@ -42,75 +41,60 @@ export default function Viewcart() {
     } catch (error) {
       console.error("Error fetching cart data:", error);
       toast.error("Failed to fetch cart data");
+    } finally {
+      setLoading(false);
     }
-  
   }, []);
- 
+
   useEffect(() => {
-    
     fetchCartData();
-  }, [fetchCartData ,dispatch]);
+  }, [fetchCartData]);
 
-  const updateCart = useCallback((productId,quantity) => {  
-    console.log( quantity ,'updatecart')
-    dispatch(addtoCart({productId, quantity}))
-    setQuantity(0)
-    setUpdaterQ(false)
-  },[quantity])
+  const fetchProductDetails = useCallback(async (cartItems) => {
+    try {
+      if (cartItems) {
+        const productDetailsArray = await Promise.all(
+          cartItems.cartItems.map(async (item) => {
+            const response = await fetch(
+              `${API_URL}/admin/product/product/${item.product}`
+            );
+            const data = await response.json();
+            const { statusCode } = data;
+            if (statusCode !== 200) {
+              toast(item.product, "is missing from cart data");
+            }
+            return {
+              ...data.result,
+              quantity: item.quantity,
+              cartItemId: item._id,
+              sellingPrice: item.selling_price,
+              mrp: item.mrp_price,
+              discount: item.discounting_price,
+              productId: item.product,
+            };
+          })
+        );
+        setProductDetails(productDetailsArray);
+      }
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchProductDetails = async (cartItems) => {
-      try {
-        console.log(cartItems, "catitem from fetch productdetails");
-        if (cartItems) {
-          const productDetailsArray = await Promise.all(
-            cartItems.cartItems.map(async (item) => {
-              console.log(item, "from map");
-              const response = await fetch(
-                `${API_URL}/admin/product/product/${item.product}`
-              );
-              const data = await response.json();
-              const { statusCode } = data;
-              if (statusCode !== 200) {
-                console.log(item.product, "is missing");
-                toast(item.product, "is missing from cartdata");
-              } else console.log(data, "data item");
-              return {
-                ...data.result,
-                quantity: item.quantity,
-                cartItemId: item._id,
-                sellingPrice: item.selling_price,
-                mrp: item.mrp_price,
-                discount: item.discounting_price,
-                productId: item.product,
-              };
-            })
-          );
-          setProductDetails(productDetailsArray);
-          
-        } 
-      } catch (error) {
-        console.error("Error fetching product details:", error);
-      }
-    };
+    if (cartData) {
+      fetchProductDetails(cartData);
+    }
+  }, [cartData, fetchProductDetails]);
 
-    fetchProductDetails(cartData);
-    setLoading(false)
-  }, [cartData, dispatch]);
-
- 
   const removeFromCart = async (productId) => {
     try {
-      setLoading(false)
-      console.log("remove action running");
+      setLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("User is not authenticated");
         return;
       }
-
-      console.log("remove running for cart");
-
       const response = await fetch(
         `${API_URL}/mobileApi/cart/remove-cart-product/${productId}`,
         {
@@ -123,20 +107,16 @@ export default function Viewcart() {
       );
 
       if (response.ok) {
-        const data = await response.json(); // Ensure we wait for the response to be parsed as JSON
-        const { statusCode, message, result } = data; // Destructure the data object
-
+        const data = await response.json();
+        const { statusCode, message, result } = data;
         if (statusCode === 200) {
-          console.log(result);
           toast.success(message);
           fetchCartData();
-          console.log("Removed from cart:", result);
         } else {
           toast.error(message || "Failed to remove product from cart");
         }
       } else {
-        const errorData = await response.json(); // Ensure we wait for the error response to be parsed as JSON
-        console.log("Error from removeFromCart:", errorData);
+        const errorData = await response.json();
         toast.error(
           errorData.message ||
             "Something went wrong while deleting the product from the cart"
@@ -146,35 +126,36 @@ export default function Viewcart() {
       console.error("An unexpected error occurred:", error);
       toast.error("An unexpected error occurred");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
-
   const updateQuantity = (qnty) => {
-    setQuantity(Number(qnty))
-    setUpdaterQ(true)
-  }
-
+    setQuantity(Number(qnty));
+    setUpdaterQ(true);
+  };
 
   const handleIncrease = (qnty) => {
-    if(!updaterQ){
+    if(!updaterQ) {
       updateQuantity(qnty)
     }
-
-   
     setQuantity((prevQuantity) => prevQuantity + 1);
+    setUpdaterQ(true);
   };
 
   const handleDecrease = (qnty) => {
-    if(!updaterQ){
+    if(!updaterQ) {
       updateQuantity(qnty)
     }
-   
-    setQuantity((prevQuantity) => (prevQuantity > 1? prevQuantity - 1 : 1));
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+    setUpdaterQ(true);
   };
 
-  
+  const handleUpdateCart = (productId) => {
+    dispatch(updateCart({ productId, quantity }));
+    setQuantity(0);
+    setUpdaterQ(false);
+  };
   console.log(productDetails ,'product')
   console.log(loading,'loading');
   
@@ -230,7 +211,7 @@ export default function Viewcart() {
                   {updaterQ ? (
                     <>
                       <button
-                      onClick={()=>updateCart(item.productId,quantity)}
+                      onClick={()=>handleUpdateCart(item.productId,quantity)}
                        className=" py-1  px-2 fs-6 btn">save</button>
                       <button
                         onClick={() => setUpdaterQ(false)}

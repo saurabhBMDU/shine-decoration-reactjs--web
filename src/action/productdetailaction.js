@@ -4,6 +4,7 @@ import {
   ADD_TO_CART,
   DELETE_FROM_CART,
   GET_PRODUCT_DETAILS,
+  UPDATE_CART,
 } from './actionType';
 import { ToastContainer, toast } from 'react-toastify';
 import { type } from '@testing-library/user-event/dist/type';
@@ -103,7 +104,52 @@ export const addtoCart = ({productId,quantity}) => {
 
 
 
+export const updateCart = ({productId,quantity}) => {
+  return async dispatch => {
+    try {
+      const token = localStorage.getItem('token');
+      console.log('this token from addtocart',token)
+      if (!token) {
+        toast.error("User is not authenticated");
+        return;
+      }
+      const requestBody = {
+        productId: productId,
+        quantity:quantity,
+      };
+      const response = await fetch(`${API_URL}/mobileApi/cart/update-cart/${productId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody)
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        const { message, statusCode, result } = data;
+
+        if (statusCode === 200) {
+          dispatch({
+            type:UPDATE_CART,
+            payload: result
+          });
+          toast.success(message);
+        } else {
+          toast.error("Failed to add to Cart: " + message);
+        }
+      } else {
+        const errorData = await response.json();
+        console.log('data', errorData);
+        toast.error(errorData.message || 'An unexpected error occurred ');
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+      toast.error("An unexpected error occurred");
+    }
+  };
+};
 
 
 
