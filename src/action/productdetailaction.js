@@ -2,9 +2,10 @@ import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
   ADD_TO_CART,
+  DELETE_FROM_CART,
   GET_PRODUCT_DETAILS,
 } from './actionType';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { type } from '@testing-library/user-event/dist/type';
 
 
@@ -76,7 +77,6 @@ export const addtoCart = ({productId,quantity}) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('data', response);
         const { message, statusCode, result } = data;
 
         if (statusCode === 200) {
@@ -91,7 +91,7 @@ export const addtoCart = ({productId,quantity}) => {
       } else {
         const errorData = await response.json();
         console.log('data', errorData);
-        toast.error(errorData.message || 'An unexpected error occurred');
+        toast.error(errorData.message || 'An unexpected error occurred ');
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
@@ -99,6 +99,17 @@ export const addtoCart = ({productId,quantity}) => {
     }
   };
 };
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const getProductDetails = (id) => {

@@ -74,7 +74,7 @@ function Header() {
                       <div className="header-icon"><i className="fa-regular fa-heart"></i></div>
                       <span className="gi-header-count gi-wishlist-count">3</span>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-cart-toggle">
+                    <Link to="/cart" className="gi-header-btn gi-cart-toggle">
                       <div className="header-icon"><i className="fa-solid fa-cart-shopping"></i>
                         <span className="main-label-note-new"></span>
                       </div>

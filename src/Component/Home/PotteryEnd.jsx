@@ -7,7 +7,7 @@ const PotteryEnd = () => {
         infinite: true,
         speed: 400,
         autoplay: true,
-        slidesToShow: 2,
+        slidesToShow: 6,
         arrows: false,
         slidesToScroll: 1,
         PrevArrow:<PrevArrow/>,
