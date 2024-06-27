@@ -88,7 +88,7 @@ function Excusivecategory() {
                 <div className=" card-custom">
                   <div className='position-relative'>
                   <img src={'https://gramic-store-demo.myshopify.com/cdn/shop/products/11.1.jpg?v=1593683051'} className="card-img-top" alt="Product" style={{ height: "240px",  }} />
-                  <HeartButton/>
+                  <HeartButton productId={product._id}/>
                   </div>
                   <Link to={`/productdetail/${product._id}`}>
                     <div className="card-body" style={{width:'100%'}}>

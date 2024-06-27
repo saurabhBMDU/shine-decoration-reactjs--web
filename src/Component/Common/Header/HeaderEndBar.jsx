@@ -101,10 +101,7 @@ const HeaderEndBar = () => {
                   className="nav-headend-img"
                     src={cat.image}
                     alt={cat.name}
-                    style={{
-                      width: "110px",
-                      height: "auto",
-                    }}
+                  
                   />
                 </div>
                 <Link

@@ -1,0 +1,156 @@
+.wish-banner{
+    background-image: url('/public/img/wishlist-img-bg.jpg');
+    height: 25rem;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.wishlist-head{
+     font-family: "Cormorant Garamond", serif !important;
+    color: rgb(16, 57, 43);
+    top: 170px;
+    left: 130px;
+    text-align: left;
+}
+
+.wishlist-head h2 {
+    font-style: italic;
+    font-size: 4.5rem;
+    font-weight: 500;
+    
+}
+
+.wishlist-head p {
+     margin: 0;
+     padding: 0;
+    font-weight: 500;
+}
+
+.wishlist-list {
+    width: 90%;
+    margin: 10rem auto;
+}
+
+
+.wishlist-list table thead tr th , .wishlist-list table tbody tr td{
+    color:  rgb(16, 57, 43);
+    font-family:  "Cormorant Garamond", serif !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.wishlist-list table tbody tr td{
+    text-transform: capitalize;
+    font-size: x-large;
+
+}
+.wishlist-list table tbody tr td button {
+    color:  rgb(16, 57, 43);
+    font-weight: 700;
+    transition: all .8s;
+}
+
+.wishlist-list table tbody tr td button:hover {
+    color: rgb(9, 247, 89);
+}
+
+.wishlist-list table tbody tr td button .btn-arrow{
+    transition: all .8s;
+    font-size: xx-large;
+}
+
+.wishlist-list table tbody tr td button:hover .btn-arrow{
+    color: rgb(9, 247, 89);
+     
+    font-size: xx-large;
+
+}
+
+
+.wishlist-list table tbody tr {
+    border-bottom: rgb(199, 191, 191) solid;
+    text-align: start;
+    
+}
+
+.min-xl,.min-lg,.min-sm,.max-sm{
+    display: none;
+}
+
+
+
+@media (min-width:1200px) {
+    .min-xl{
+        display: table-cell;
+    }
+
+    
+}
+
+@media (min-width:1000px) {
+    .min-lg{
+        display: table-cell;
+    }
+    
+    
+}
+
+@media (max-width:1000px) {
+    .wishlist-list table thead tr th , .wishlist-list table tbody tr td{
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+    }
+    
+}
+
+@media (min-width:760px) {
+    .min-sm{
+        display: table-cell;
+    }
+    
+}
+
+@media (max-width:999px) {
+    .max-sm{
+        display: table-cell;
+     
+    }
+
+    .max-sm div{
+        font-size: 1.2rem;
+        font-weight: 700 !important;
+        text-align: start;
+    }
+   
+    .max-sm div p ,   .max-sm div button {
+        font-size: 1.2rem;
+        font-weight: 500 !important;
+        text-align: start;
+        color: rgb(16, 57, 43);
+        font-style: normal;
+
+    }
+
+    .wishlist-list table tbody tr td button {
+        color:  rgb(16, 57, 43);
+        font-weight: 700 !important;
+        text-align: start !important;
+        font-size: 1.2rem;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    .wish-banner{
+        background-image: url('/public/img/wishlist-img-bg.jpg');
+        height: 25rem;
+        width: 100%;
+        background-position:calc(63%);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+}

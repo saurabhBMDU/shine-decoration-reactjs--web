@@ -16,6 +16,8 @@ import Payment from '../Component/Payment/payment';
 import Forgot from '../Component/Auth/Forgot/forgot';
 import PrivacyPolicy from '../Component/PrivacyPolicy/PrivacyPolicy';
 import TermsOfService from '../Component/TermsAndConditions/TermsOfService';
+import Whishlist from '../Component/Whislist/Whishlist';
+import LogoutUser from '../Component/Auth/Logout/logout';
 
 function AppRouter() {
     return (
@@ -30,10 +32,12 @@ function AppRouter() {
                 <Route path='/privacy' element={<PrivacyPolicy/>}/>
                 <Route path='/termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
+                <Route path='/logout' element={<LogoutUser/>}/>
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
+                <Route path='wishlist' element={<Whishlist/>} />
                 <Route element={<NotFound />} />
             </Routes>
             <Footer />

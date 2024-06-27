@@ -20,7 +20,7 @@ export default function Viewcart() {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        toast.error("User is not authorised");
+        toast.error("please log In ");
         return;
       }
       const response = await fetch(`${API_URL}/mobileApi/cart/cart`, {
@@ -48,7 +48,7 @@ export default function Viewcart() {
 
   useEffect(() => {
     fetchCartData();
-  }, [fetchCartData]);
+  }, [fetchCartData ]);
 
   const fetchProductDetails = useCallback(async (cartItems) => {
     try {
@@ -151,8 +151,10 @@ export default function Viewcart() {
     setUpdaterQ(true);
   };
 
-  const handleUpdateCart = (productId) => {
-    dispatch(updateCart({ productId, quantity }));
+  function handleUpdateCart (productId) {
+    dispatch(updateCart({ productId, quantity })).then(() => {
+      fetchCartData();
+    });
     setQuantity(0);
     setUpdaterQ(false);
   };

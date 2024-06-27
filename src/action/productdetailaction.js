@@ -13,6 +13,7 @@ import { type } from '@testing-library/user-event/dist/type';
 export const addWishList = (productId) => {
   return async dispatch => {
     try {
+      console.log('dispatched for add to wishlist');
       const token = localStorage.getItem('token');
       if (!token) {
         toast.error("User is not authenticated");
@@ -28,7 +29,7 @@ export const addWishList = (productId) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('data', response);
+        console.log('data wishlist', data);
         const { message, statusCode, result } = data;
 
         if (statusCode === 200) {

@@ -70,7 +70,7 @@ function Header() {
                     <Link to="login.html" className="gi-header-btn gi-header-user">
                       <div className="header-icon"><i className="fa-regular fa-user"></i></div>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-wish-toggle">
+                    <Link to="/wishlist" className="gi-header-btn gi-wish-toggle">
                       <div className="header-icon"><i className="fa-regular fa-heart"></i></div>
                       <span className="gi-header-count gi-wishlist-count">3</span>
                     </Link>
@@ -163,7 +163,7 @@ function Header() {
                         <li><Link to={"/login"}>Login</Link></li>
                       </ul>
                     </div>
-                    <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">
+                    <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
                         <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>

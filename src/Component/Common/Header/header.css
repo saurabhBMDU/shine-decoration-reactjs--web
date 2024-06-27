@@ -300,8 +300,9 @@
 }
 
 .nav-headend-img{
-    height: 110px !important;
-    width: 110px !important;
+    height: 90px;
+    max-height: 110px !important;
+    width:53%!important;
     object-fit: cover;
     border-radius: 50%;
 }
