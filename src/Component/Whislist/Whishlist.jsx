@@ -14,20 +14,15 @@ const Whishlist = () => {
             toast.error('please login ')
             return;
         }
-
         const response = await axios.get(`${API_URL}/mobileApi/remove-from-wishlist/:productId `,{
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
               }
         });
-
         if(response.ok) {
             
         }
-
-
-
     } catch (error) {
         
     }
@@ -63,8 +58,8 @@ const Whishlist = () => {
             </thead>
             <tbody className="table-group-divider">
                 <tr className="align-middle tr">
-                    <td><MdClose size={20} /></td>
-                    <td><img style={{width:'14rem'}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgHj0hOjWdiyBdda2WGGgaWNjVg7eprmbVsg&s" alt="" /></td>
+                    <td><MdClose size={25}  className="x-close" /></td>
+                    <td><img style={{width:'14rem'}} src="https://cdn.pixabay.com/photo/2019/03/20/21/21/cherry-blossoms-4069596_1280.jpg" alt="" /></td>
                     <td className="max-sm">
                         <div>
                             <p>product name</p>
@@ -73,13 +68,13 @@ const Whishlist = () => {
                         </div>
                     </td>
                     <td className="min-lg">bowl</td>
-                    <td className="min-lg">600</td>
-                    <td className="min-xl">available</td>
+                    <td className="min-lg">₹600</td>
+                    <td className="min-xl">In stock</td>
                     <td className="min-lg"><button>Add to Cart <span className="btn-arrow">&rarr;</span></button></td>
                 </tr>
                 <tr className="align-middle tr">
-                    <td><MdClose size={20} /></td>
-                    <td><img style={{width:'14rem'}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgHj0hOjWdiyBdda2WGGgaWNjVg7eprmbVsg&s" alt="" /></td>
+                    <td><MdClose size={25}  className="x-close" /></td>
+                    <td><img style={{width:'14rem'}} src="https://cdn.pixabay.com/photo/2019/03/20/21/21/cherry-blossoms-4069596_1280.jpg" alt="" /></td>
                     <td className="max-sm">
                         <div>
                             <p>product name</p>
@@ -88,13 +83,13 @@ const Whishlist = () => {
                         </div>
                     </td>
                     <td className="min-lg">bowl</td>
-                    <td className="min-lg">600</td>
-                    <td className="min-xl">available</td>
+                    <td className="min-lg">₹600</td>
+                    <td className="min-xl">In stock</td>
                     <td className="min-lg"><button>Add to Cart <span className="btn-arrow">&rarr;</span></button></td>
                 </tr>
                 <tr className="align-middle tr">
-                    <td><MdClose size={20} /></td>
-                    <td><img style={{width:'14rem'}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgHj0hOjWdiyBdda2WGGgaWNjVg7eprmbVsg&s" alt="" /></td>
+                    <td><MdClose size={25}  className="x-close" /></td>
+                    <td><img style={{width:'14rem'}} src="https://cdn.pixabay.com/photo/2019/03/20/21/21/cherry-blossoms-4069596_1280.jpg" alt="" /></td>
                     <td className="max-sm">
                         <div>
                             <p>product name</p>
@@ -103,8 +98,8 @@ const Whishlist = () => {
                         </div>
                     </td>
                     <td className="min-lg">bowl</td>
-                    <td className="min-lg">600</td>
-                    <td className="min-xl">available</td>
+                    <td className="min-lg">₹600</td>
+                    <td className="min-xl">In stock</td>
                     <td className="min-lg"><button>Add to Cart <span className="btn-arrow">&rarr;</span></button></td>
                 </tr>
 

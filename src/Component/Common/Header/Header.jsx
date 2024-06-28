@@ -1,3 +1,4 @@
+import { SearchBar } from './SearchBar';
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
@@ -134,16 +135,7 @@ function Header() {
                 </div>
                 <div className="align-self-center gi-header-search">
                   <div className="header-search ">
-                    <form className="gi-search-group-form">
-                      <input className="form-control gi-search-bar  rounded" placeholder="Search Products..." type="text" style={{maxWidth:'32rem'}} />
-                      <div className='position-absolute nav-searchicon-container' >
-                        <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
-                      </div>
-                      <div>
-                        
-                        <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
-                      </div>
-                    </form>
+              <SearchBar   SidebarOpen={SidebarOpen} handleCloseSidebar={handleCloseSidebar}  />
 
                   </div>
                 </div>

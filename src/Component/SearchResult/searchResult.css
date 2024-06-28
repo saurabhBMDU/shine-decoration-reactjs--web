@@ -1,0 +1,114 @@
+.first-box{
+    margin: 1rem 4rem;
+
+}
+
+.first-box div{
+    font-weight: 500;
+}
+.s-container {
+    padding: 5rem 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.s-container > main {
+    display: flex;
+    margin-bottom: 1.5rem;
+    justify-content: start;
+    align-items: center;
+    gap: 5rem;
+    border-top-right-radius: 2%;
+    border-top-left-radius: 2%;
+    box-shadow: -1px 3px 7px rgb(216, 215, 215);
+    width: max-content;
+    padding: 1rem 1rem;
+    border: 40% 0;
+
+}
+
+.s-text-container a {
+    display: block;
+    font-size: 110%;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    width:33rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; 
+}
+
+.s-text-container a:hover {
+    color: rgba(207, 167, 9, 0.996);
+}
+
+.s-container > main .s-pic-container img {
+    width: 200px;
+    height: auto;
+    object-fit: cover;
+}
+
+.rating div{
+    vertical-align: top;
+    background: rgba(8, 177, 73, 0.996);
+    border-radius: 7px;
+    padding: .3rem;
+    width: max-content;
+    font-weight: 500;
+    font-size: 1rem;
+    font-family: 'work sans', sans-serif ;
+}
+
+.s-price-details-container div  {
+    margin-top: .5rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    vertical-align: baseline;
+}
+
+
+.s-price-details-container div h5{
+    font-weight: 700;
+
+}
+.s-button-container{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.s-button-container button {
+    font: 1rem black bolder;
+    font-family: 'Lato' ,sans-serif;
+    text-transform: capitalize;
+    font-weight: 700;
+    padding: 5px 7px;
+    border-radius: 5px;
+    vertical-align: top;
+    background-color: rgba(238, 193, 12, 0.996);
+    transition:all .8s;
+    
+}
+
+.s-button-container button:first-child:hover {
+  background-color: yellow;
+    
+}
+
+.s-button-container button:last-child{
+    background-color: rgba(255, 255, 255, 0.996);
+    border: solid 1px rgba(207, 167, 9, 0.996); 
+}
+
+.s-button-container button:last-child:hover {
+    background-color: rgba(207, 167, 9, 0.996); 
+}

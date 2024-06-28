@@ -254,6 +254,15 @@
     z-index: 100;
 }
 
+.slide-discription{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; 
+}
+
 
 @media (max-width:768px) {
     .fixed-right{

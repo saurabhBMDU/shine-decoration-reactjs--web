@@ -76,7 +76,7 @@ const Sliders = ({products}) => {
                   <Link to={`/productdetail/${product._id}`}>
                     <div className="card-body" style={{width:'100%'}}>
                       <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.product_name} </h6>
-                      <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
+                      <span className="text-danger slide-discription" style={{ fontSize: "12px" }}>{product.description}</span>
                       <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
                       <p className="text-muted font-weight-bold" style={{fontSize:'.8rem'}}>Check delivery date and more details &gt;</p>
                     </div>

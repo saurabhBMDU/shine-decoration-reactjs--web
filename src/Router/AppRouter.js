@@ -18,6 +18,7 @@ import PrivacyPolicy from '../Component/PrivacyPolicy/PrivacyPolicy';
 import TermsOfService from '../Component/TermsAndConditions/TermsOfService';
 import Whishlist from '../Component/Whislist/Whishlist';
 import LogoutUser from '../Component/Auth/Logout/logout';
+import SearchResult from '../Component/SearchResult/SearchResult';
 
 function AppRouter() {
     return (
@@ -33,6 +34,7 @@ function AppRouter() {
                 <Route path='/termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/logout' element={<LogoutUser/>}/>
+                <Route path='/result/:id' element={<SearchResult/>} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />

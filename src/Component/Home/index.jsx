@@ -30,9 +30,9 @@ function Home() {
     dispatch(getCategory());
     
   }, [dispatch]);
-  console.log("dsf", data);
-  console.log("dsf__________", products);
-  console.log('category @ home ' ,category)
+  // console.log("dsf", data);
+  // console.log("dsf__________", products);
+  // console.log('category @ home ' ,category)
 
 
 
@@ -59,47 +59,48 @@ function Home() {
       <section className=" py-2">
         <div>
 
-          <div 
-            id="carouselExampleControls"
-            className="carousel slide"
-            data-ride="carousel"
-          >
-             {data&&
-          data.map((data, index) => (
-            <div key={index} className="carousel-inner">
-              <div className="carousel-item active">
-                <img className="d-block w-100 banner-img" 
-                // src={data.image}
-                src='/img/bannermain.webp'
-                 alt={`Banner ${index + 1}`}  />
-              </div>
-            </div>
-             ))} 
-            <a
-              className="carousel-control-prev"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a
-              className="carousel-control-next"
-              href="#carouselExampleControls"
-              role="button"
-              data-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="sr-only">Next</span>
-            </a>
+        <div
+      id="carouselExampleControls"
+      className="carousel slide"
+      data-ride="carousel"
+    >
+      <div className="carousel-inner">
+        {data && data.map((item, index) => (
+          <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+            <img
+              className="d-block w-100 banner-img"
+              // src={item.image}
+              src='/img/bannermain.webp'
+              alt={`Banner ${index + 1}`}
+            />
           </div>
+        ))}
+      </div>
+      <a
+        className="carousel-control-prev"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="prev"
+      >
+        <span
+          className="carousel-control-prev-icon"
+          aria-hidden="true"
+        ></span>
+        <span className="sr-only">Previous</span>
+      </a>
+      <a
+        className="carousel-control-next"
+        href="#carouselExampleControls"
+        role="button"
+        data-slide="next"
+      >
+        <span
+          className="carousel-control-next-icon"
+          aria-hidden="true"
+        ></span>
+        <span className="sr-only">Next</span>
+      </a>
+    </div>
         </div>
       </section>
 

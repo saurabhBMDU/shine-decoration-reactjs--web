@@ -13,6 +13,16 @@
     left: 130px;
     text-align: left;
 }
+.x-close{
+    transition: all .8s;
+    color: gray;
+    font-weight: 700;
+}
+
+.x-close:hover{
+    color:  rgb(247, 207, 9);;
+    cursor: pointer;
+}
 
 .wishlist-head h2 {
     font-style: italic;
@@ -28,32 +38,50 @@
 }
 
 .wishlist-list {
+    font-family: "Work Sans", sans-serif !important;
     width: 90%;
     margin: 10rem auto;
 }
 
 
 .wishlist-list table thead tr th , .wishlist-list table tbody tr td{
-    color:  rgb(16, 57, 43);
-    font-family:  "Cormorant Garamond", serif !important;
-    font-weight: 700;
-    font-size: 1.5rem;
+    color:  rgb(247, 207, 9);
+    font-family:  inherit;
+    font-weight: 600;
+    font-size: 1.1rem;
     text-transform: uppercase;
 }
 
 .wishlist-list table tbody tr td{
-    text-transform: capitalize;
-    font-size: x-large;
+    color:  rgb(16, 57, 43);
+    text-transform: none;
+    font-size: 1.3rem;
+    padding:2rem ;
+    font-weight: 400;
+}
+
+.wishlist-list table tbody tr td:nth-child(6) {
+    font-style:oblique;
+    font-size: 1.1rem;
+}
+
+.wishlist-list table tbody tr td img{
+    width: 60% !important;
+    height: 90px;
+    object-fit: contain;
+    
 
 }
 .wishlist-list table tbody tr td button {
     color:  rgb(16, 57, 43);
-    font-weight: 700;
+    font-weight: 400;
+    font-family: 'Cormorant-Garamond';
+    font-style: italic;
     transition: all .8s;
 }
 
 .wishlist-list table tbody tr td button:hover {
-    color: rgb(9, 247, 89);
+    color:  rgb(247, 207, 9);
 }
 
 .wishlist-list table tbody tr td button .btn-arrow{
@@ -62,7 +90,7 @@
 }
 
 .wishlist-list table tbody tr td button:hover .btn-arrow{
-    color: rgb(9, 247, 89);
+    color: rgb(247, 207, 9);
      
     font-size: xx-large;
 
