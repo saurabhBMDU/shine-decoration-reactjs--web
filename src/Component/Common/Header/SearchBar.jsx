@@ -1,15 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import Sidebar from "./sidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SuggestionsList from "./SuggestionList";
-import { Navigate, useNavigate } from "react-router-dom";
+import { fetchProduct } from "../../../action";
+import { useNavigate } from 'react-router-dom';
+import { getSearchResult } from "../../../action/searchResultAction";
 
 export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
+    const dispatch = useDispatch();
     const [query, setQuery] = useState('');
     const products = useSelector((state) => state.productData.data?.result?.products || []);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [active, setActive] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const queryRef = useRef(query);
+
+    useEffect(() => {
+        queryRef.current = query;
+    }, [query]);
 
     const handleQuery = useCallback((e) => {
         const { value } = e.target;
@@ -17,8 +25,8 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
         setActive(value.trim().length > 0);
     }, []);
 
-    const handleSearch = useCallback((query) => {
-        const lowercasedQuery = query.toLowerCase();
+    const handleSearch = useCallback((searchQuery) => {
+        const lowercasedQuery = searchQuery.toLowerCase();
         const results = products.filter(product =>
             product.category.toLowerCase().includes(lowercasedQuery) ||
             product.sub_category.toLowerCase().includes(lowercasedQuery) ||
@@ -27,22 +35,30 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
         setFilteredProducts(results);
     }, [products]);
 
-    const handleNavigate= useCallback(()=>{
-        
-    })
-
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        navigate('/cart')
+        const searchQuery = queryRef.current;
+        handleSearch(searchQuery); // Update filteredProducts
+        setActive(false);
+        setQuery('');
+        // Dispatch with the updated filteredProducts
+        dispatch(getSearchResult(filteredProducts));
+        navigate(`/result/${searchQuery}`);
+    }, [dispatch, navigate, filteredProducts, handleSearch]);
+
+    const listSearch = useCallback((search) => {
+        handleSearch(search); // Update filteredProducts
+        setQuery('');
+        setActive(false);
+    }, [handleSearch]);
+
+    useEffect(() => {
+        dispatch(fetchProduct());
+    }, [dispatch]);
+
+    useEffect(() => {
+        handleSearch(query); // Initial search on mount or query change
     }, [query, handleSearch]);
-
-    useEffect(()=>{
-        handleSearch(query)
-    },[query])
-
-
-    console.log(products, 'products');
-    console.log(filteredProducts, 'filteredProducts');
 
     return (
         <form className="gi-search-group-form position-relative" onSubmit={handleSubmit}>
@@ -50,8 +66,7 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
                 className="form-control gi-search-bar rounded"
                 placeholder="Search Products..."
                 value={query}
-                onChange={(e)=>handleQuery(e)}
-                onClick={()=>handleSearch(query)}
+                onChange={handleQuery}
                 type="text"
                 style={{
                     maxWidth: "32rem",
@@ -65,7 +80,7 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
                     }}
                 ></i>
             </button>
-            {active && <SuggestionsList suggestions={filteredProducts} />}
+            {active && <SuggestionsList suggestions={filteredProducts} listSearch={listSearch} />}
             
             <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
         </form>

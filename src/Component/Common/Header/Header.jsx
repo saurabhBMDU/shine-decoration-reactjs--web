@@ -1,21 +1,32 @@
 import { SearchBar } from './SearchBar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import './header.css';
-import Sidebar from './sidebar'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart } from '../../../action/getCartAction';
+
+
+
 
 
 function Header() {
-
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [SidebarOpen, setSidebarOpen] = useState(false);
-
   const [isOpen, setIsOpen] = useState(false);
-
   const location = useLocation();
+  const cartQuantity = useSelector(state=>state?.CartData?.data?.totalQuantity  )
   const currentURL = location.pathname;
+  
+ 
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(getCart())
+  },[dispatch ,cartQuantity])
+
+  
+
   if (
     currentURL === '/login' ||
     currentURL === '/register' ||
@@ -41,7 +52,7 @@ function Header() {
   };
 
 
- 
+
 
   return (
     <>
@@ -79,7 +90,7 @@ function Header() {
                       <div className="header-icon"><i className="fa-solid fa-cart-shopping"></i>
                         <span className="main-label-note-new"></span>
                       </div>
-                      <span className="gi-header-count gi-cart-count">3</span>
+                      <span className="gi-header-count gi-cart-count">{cartQuantity}</span>
                     </Link>
                     <button onClick={toggleSidebar} className="gi-header-btn gi-site-menu-icon d-lg-none">
                       <i className="fa-solid fa-bars"></i>
@@ -157,12 +168,14 @@ function Header() {
                     </div>
                     <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
+                      <span className=" badge-ab ">6</span>
                         <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
                     <Link to="/cart" className="gi-header-btn gi-cart-toggle" title="Cart">
                       <div className="gi-btn-desc">
+                      <span className=" badge-ab ab-2 ">{cartQuantity}</span>
                         <i className="fa-solid fa-bag-shopping text-center py-2" style={{ color: "#EDB70B" }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>

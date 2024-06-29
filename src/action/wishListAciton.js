@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../service/api";
+import { GET_WISHLIST } from "./actionType";
 
 export const checkWishlist = async (productId) => {
     return async dispatch =>{
@@ -75,3 +76,40 @@ export const removeFromWishlist = (productId)=>{
         }
     }
 }
+
+
+
+export const getWishlist = () => {
+    return async dispatch => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                toast.error('please login');
+                return;
+                }
+                const response = await axios.get(`${API_URL}/mobileApi/wishlist/wishlist`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                        }   
+                        });
+                        if (response.status === 200) {
+                            const {statusCode , message , result} = response.data;
+                           
+                            if (statusCode === 200) {
+                                dispatch({type: GET_WISHLIST, payload: result});
+                                toast.success(message);
+                                } else {
+                                    toast.error(message);
+                                    }   
+                                    } else {
+                                        throw Error(response)
+            
+                                    }
+                                } catch (error) {
+                                    toast.error(error.message);
+                                    console.log(error,'from getwhishlist');
+                                    
+        }   
+    }
+}   

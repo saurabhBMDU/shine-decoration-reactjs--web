@@ -25,7 +25,6 @@ function Home() {
  
 
   useEffect(() => {
-    dispatch(fetchProduct());
     dispatch(fetchImages());
     dispatch(getCategory());
     

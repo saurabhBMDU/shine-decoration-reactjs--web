@@ -1,5 +1,5 @@
 .first-box{
-    margin: 1rem 4rem;
+    padding: 1rem 5%;
 
 }
 
@@ -10,22 +10,30 @@
     padding: 5rem 5rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    gap: 4%;
 }
 .s-container > main {
     display: flex;
     margin-bottom: 1.5rem;
-    justify-content: start;
+    justify-content: space-around;
     align-items: center;
-    gap: 5rem;
+    gap: 2%;
     border-top-right-radius: 2%;
     border-top-left-radius: 2%;
     box-shadow: -1px 3px 7px rgb(216, 215, 215);
-    width: max-content;
+    width: 60%;
+    min-width: 571px;
+    max-width: 605px;
     padding: 1rem 1rem;
     border: 40% 0;
 
+}
+
+.s-text-main-container{
+    width: 100%;
+    min-width: 372px;
 }
 
 .s-text-container a {
@@ -34,7 +42,7 @@
     text-decoration: none;
     color: black;
     font-weight: 500;
-    width:33rem;
+    width:100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -48,14 +56,15 @@
 }
 
 .s-container > main .s-pic-container img {
-    width: 200px;
+    width: 50%;
+    min-width: 170px;
     height: auto;
     object-fit: cover;
 }
 
 .rating div{
     vertical-align: top;
-    background: rgba(8, 177, 73, 0.996);
+    background: rgba(173, 235, 129, 0.996);
     border-radius: 7px;
     padding: .3rem;
     width: max-content;
@@ -111,4 +120,104 @@
 
 .s-button-container button:last-child:hover {
     background-color: rgba(207, 167, 9, 0.996); 
+}
+
+
+@media (max-width:620px) {
+    .s-container {
+        padding: 1rem 0rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 4%;
+    }
+    .s-container > main{
+        flex-direction: row;
+        max-width: 100vw !important;
+        min-width: 100vw;
+        gap: 3%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .s-container > main .s-pic-container{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        vertical-align: top;
+        height: 100%;
+    }
+    .s-container > main .s-pic-container img {
+        max-width:100%;
+        min-width: 100%;
+        height: 140px !important;
+        align-self: self-start !important;
+        object-fit: cover;
+        
+    }
+    
+    .s-text-main-container{
+       max-width:70%; 
+       min-width: 70%
+        
+    }
+
+    .s-text-container a {
+       min-width: 80%;
+       max-width: 90%;
+       font-size: 80% !important;
+       width: 50%;
+       font-weight: 500;
+       font-size: .9rem;
+       text-align: start;
+       -webkit-box-orient: vertical;
+       -webkit-line-clamp: 2;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: normal; 
+    }
+
+    .s-price-details-container div  {
+        margin-top: .1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        vertical-align: baseline;
+    }
+
+     .s-price-details-container div h5{
+        font-size: 1rem;
+    }
+    .s-price-details-container div h6{
+        font-size: 70% !important;
+    }
+
+
+    .rating div{
+        vertical-align: top;
+        background: rgba(173, 235, 129, 0.996);
+        border-radius: 7px;
+        padding: .3rem;
+        width: max-content;
+        margin: .3rem auto;
+        font-weight: 500;
+        font-size: .7rem;
+        font-family: 'work sans', sans-serif ;
+    }
+    .s-button-container{
+        justify-content: center;
+        border-top: solid lightgray;
+        padding-top: .5rem;
+        margin: 0;
+    }
+
+    .s-button-container button{
+        font-size: .8rem;
+        
+    }
+
 }
