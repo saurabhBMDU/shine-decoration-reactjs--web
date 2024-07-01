@@ -198,14 +198,14 @@ function Header() {
                    
                     <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
-                      <span className=" badge-ab ">6</span>
+                      <span className=" badge-ab ">{wishListQuantity && wishListQuantity}</span>
                         <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
                     <Link to="/cart" className="gi-header-btn gi-cart-toggle" title="Cart">
                       <div className="gi-btn-desc">
-                      <span className=" badge-ab ab-2 ">{cartQuantity}</span>
+                      <span className=" badge-ab ab-2 ">{cartQuantity? cartQuantity :0}</span>
                         <i className="fa-solid fa-bag-shopping text-center py-2" style={{ color: "#EDB70B" }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>
