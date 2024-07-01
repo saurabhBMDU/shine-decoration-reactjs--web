@@ -46,6 +46,8 @@ function Productdetail() {
 
   
 
+  
+
   return (
     <>
       <section className="container-fluid py-3">

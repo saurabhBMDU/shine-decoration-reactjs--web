@@ -16,6 +16,7 @@ import Sliders from './Sliders';
 import Banner3 from './Banner3';
 import HeaderEndBar from '../Common/Header/HeaderEndBar';
 import { getCategory } from '../../action/categoryAction';
+import { getUser } from '../../action/authaction';
 
 function Home() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function Home() {
   useEffect(() => {
     dispatch(fetchImages());
     dispatch(getCategory());
+    dispatch(getUser())
     
   }, [dispatch]);
   // console.log("dsf", data);

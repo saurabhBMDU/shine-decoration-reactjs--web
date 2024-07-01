@@ -5,6 +5,9 @@ import { useLocation } from 'react-router-dom';
 import './header.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart } from '../../../action/getCartAction';
+import { getWishlist } from '../../../action/wishListAciton';
+import { getUser } from '../../../action/authaction';
+import { FaRegUserCircle } from 'react-icons/fa';
 
 
 
@@ -15,16 +18,23 @@ function Header() {
   const [SidebarOpen, setSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const cartQuantity = useSelector(state=>state?.CartData?.data?.totalQuantity  )
+  const cartQuantity = useSelector(state=>state?.CartData?.data?.totalQuantity)
+  const wishListQuantity = useSelector(state=>state?.WishlistData?.data?.totalItem)
   const currentURL = location.pathname;
-  
+  const user = useSelector(state => state?.getUser?.user)
  
   const dispatch = useDispatch()
   
   useEffect(()=>{
     dispatch(getCart())
+    dispatch(getWishlist())
   },[dispatch ,cartQuantity])
 
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUser());
+    }
+  }, [dispatch, user]); 
   
 
   if (
@@ -153,6 +163,16 @@ function Header() {
                 <div className="gi-header-action align-self-center">
                   <div className="gi-header-bottons">
                     {/* <!-- Header User Start --> */}
+                  {user?(
+                     <Link to="/" className="gi-header-btn gi-wish-toggle" title="home">
+                     <div className="gi-btn-desc d-flex flex-col align-items-end py-2 justify-content-center " style={{gap:'8px', }}>
+                     <FaRegUserCircle color=' #EDB70B ' size={23}  className='text-center align-self-center'/>
+                       <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>{user.name}</span>
+                     </div>
+                   </Link>
+                  ):(
+                    null
+                  )}
                     <div className="gi-acc-drop">
                       <Link to="/" className="gi-header-btn mt-1 gi-header-user dropdown-toggle gi-user-toggle"
                         title="Account">
@@ -161,11 +181,21 @@ function Header() {
                           <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Profile</span>
                         </div>
                       </Link>
+                      
                       <ul className="gi-dropdown-menu">
-                        <li><Link className="dropdown-item" to="/register">Register</Link></li>
-                        <li><Link to={"/login"}>Login</Link></li>
+                        {user ? (
+                             <li><Link className="dropdown-item" to="/logout">logout</Link></li>
+
+                        ):(
+                          <>
+                          <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                          <li><Link to={"/login"}>Login</Link></li>
+                          </>
+                        )}
+                     
                       </ul>
                     </div>
+                   
                     <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
                       <span className=" badge-ab ">6</span>

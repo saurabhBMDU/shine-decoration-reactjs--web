@@ -19,6 +19,7 @@ import TermsOfService from '../Component/TermsAndConditions/TermsOfService';
 import Whishlist from '../Component/Whislist/Whishlist';
 import LogoutUser from '../Component/Auth/Logout/logout';
 import SearchResult from '../Component/SearchResult/SearchResult';
+import CategoryResult from '../Component/CatagoryResult/CatagoryResult';
 
 function AppRouter() {
     return (
@@ -37,6 +38,7 @@ function AppRouter() {
                 <Route path='/result/:id' element={<SearchResult/>} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
+                <Route path='/category/:id' element={<CategoryResult/>} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path='wishlist' element={<Whishlist/>} />

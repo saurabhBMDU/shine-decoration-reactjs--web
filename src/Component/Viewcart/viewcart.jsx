@@ -55,11 +55,10 @@ export default function Viewcart() {
       if (cartItems) {
         const productDetailsArray = await Promise.all(
           cartItems.cartItems.map(async (item) => {
-            const response = await fetch(
-              `${API_URL}/admin/product/product/${item.product}`
-            );
+            const response = await fetch(`${API_URL}/admin/product/product/${item._id}`);
             const data = await response.json();
             const { statusCode } = data;
+            console.log('check the whole iteration', data);
             if (statusCode !== 200) {
               toast(item.product, "is missing from cart data");
             }
@@ -70,8 +69,7 @@ export default function Viewcart() {
               sellingPrice: item.selling_price,
               mrp: item.mrp_price,
               discount: item.discounting_price,
-              productId: item.product,
-            };
+              productId: item.product};
           })
         );
         setProductDetails(productDetailsArray);
@@ -213,7 +211,7 @@ export default function Viewcart() {
                   {updaterQ ? (
                     <>
                       <button
-                      onClick={()=>handleUpdateCart(item.productId,quantity)}
+                      onClick={()=>handleUpdateCart(item.productId._id,quantity)}
                        className=" py-1  px-2 fs-6 btn">save</button>
                       <button
                         onClick={() => setUpdaterQ(false)}
@@ -228,7 +226,7 @@ export default function Viewcart() {
                   <div
                     className=" remove"
                     style={{ fontWeight: "700" }}
-                    onClick={() => removeFromCart(item.productId)}
+                    onClick={() => removeFromCart(item.productId._id)}
                   >
                     Remove
                   </div>
@@ -245,7 +243,7 @@ export default function Viewcart() {
         <div className="cards mx-auto " style={{width:'50%',textAlign:'center' , marginTop:'3rem', fontSize:'1rem'}}>
           <p style={{fontWeight:500, fontSize:'140%'}} className="--bs-warning">   NO products in cart </p>
        
-          <Link className="text-center badge text-bg-secondary fs-3 mt-4"  to={'/'}>shop now</Link>
+          <Link className="text-center badge text-bg-warning fs-3 mt-4"  to={'/'}>shop now</Link>
 
         </div>
       )  }
@@ -258,7 +256,7 @@ export default function Viewcart() {
         <div className="py-1">
           Price ({cartData && cartData.totalQuantity}):{" "}
           <span className="float-end">
-            ₹{cartData && cartData.totalPrice}
+            ₹{cartData && cartData.totalPrice * cartData.totalQuantity}
           </span>
         </div>
         <div className="py-1">
@@ -276,7 +274,7 @@ export default function Viewcart() {
           Total Amount
           <span className="text-success float-end">
             {" "}
-            ₹{cartData && cartData.totalPayablePrice}
+            ₹{cartData && cartData.totalPayablePrice * cartData.totalQuantity}
           </span>
         </div>
         <div className="save-amount py-1">

@@ -1,6 +1,7 @@
 import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
+  GET_PROFILE,
   REGISTER_SUCCES,
 } from './actionType';
 import { toast } from 'react-toastify';
@@ -120,5 +121,45 @@ export const otpVerification = (form, callback) => {
           return error
         }
       });
+  };
+};
+
+
+export const getUser = () => {
+  return async dispatch => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('please login');
+      return; // Early return if token is not present
+    }
+    
+    try {
+      const response = await axios.get(`${API_URL}/mobileApi/profile`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.status === 200) {
+        const { statusCode, data } = response.data;
+        if (statusCode === 200) {
+          dispatch({
+            type: GET_PROFILE,
+            payload: response.data.result
+          });
+          toast.success('user details fetched');
+        } else {
+          toast.error('error from get user');
+        }
+      } else {
+        const error = response.data;
+        console.log(error);
+        toast.error('error from get user');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('error from get user');
+    }
   };
 };

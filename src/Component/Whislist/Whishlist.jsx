@@ -1,42 +1,26 @@
 import React, { useCallback, useEffect } from "react";
 import './whishlist.css'
 import { MdClose } from "react-icons/md";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { API_URL } from "../../service/api";
 import { useDispatch, useSelector } from "react-redux";
-import { getWishlist } from "../../action/wishListAciton";
-
+import { getWishlist, moveToCart, removeFromWishlist } from "../../action/wishListAciton";
+import { useNavigate } from "react-router-dom";
 const Whishlist = () => {
-    const wishlistData = useSelector(state =>state?.WishlistData?.data)
+    const navigate = useNavigate()
+    const wishlistData = useSelector(state =>state?.WishlistData?.data )
     const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch(getWishlist())
-    },[dispatch])
+    
+    const RemoveFromWishlist = useCallback((productId)=>{
+        dispatch(removeFromWishlist(productId))
+    },[dispatch ])
 
+  useEffect(()=>{
+   dispatch(getWishlist())
+  },[dispatch])
 
- const fetchWihslistData = useCallback( async()=>{
-    try {
-        const token = localStorage.getItem('token');
-        if(!token){
-            toast.error('please login ')
-            return;
-        }
-        const response = await axios.get(`${API_URL}/mobileApi/remove-from-wishlist/:productId `,{
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-              }
-        });
-        if(response.ok) {
-            
-        }
-    } catch (error) {
-        
-    }
- },[])
-
-
+  const handleMoveToCart = useCallback((id)=>{
+    dispatch(moveToCart(id));
+    navigate('/cart')
+  },[dispatch])
 
 
 
@@ -51,6 +35,7 @@ const Whishlist = () => {
             </div>
           
         </div>
+        {wishlistData && wishlistData.products && wishlistData.products.length > 0 ? (
         <main className="wishlist-list">
           <table className="table table-align-middle">
             <thead>
@@ -65,9 +50,9 @@ const Whishlist = () => {
                 </tr>
             </thead>
             <tbody className="table-group-divider">
-                {wishlistData&& wishlistData.products.map((product)  => (
+                {wishlistData && wishlistData.products.map((product)  => (
                     <tr className="align-middle tr" key={product._id}>
-                        <td><MdClose size={25}  className="x-close" /></td>
+                        <td><MdClose size={25}  className="x-close"  onClick={()=>RemoveFromWishlist(product._id)}/></td>
                         <td><img style={{width:'14rem'}} src={product.productImage} alt="" /></td>
                         <td className="max-sm">
                             <div>
@@ -79,7 +64,7 @@ const Whishlist = () => {
                         <td className="min-lg">{product.product_name}</td>
                         <td className="min-lg">₹{product.selling_price}</td>
                         <td className="min-xl">{ product.remaining_quantity >0 ? 'In stock' : 'not available'}</td>
-                        <td className="min-lg"><button>Add to Cart <span className="btn-arrow">&rarr;</span></button></td>
+                        <td className="min-lg"><button onClick={()=>handleMoveToCart(product._id)}>Add to Cart <span className="btn-arrow">&rarr;</span></button></td>
                     </tr>
                 ))}
               
@@ -87,6 +72,13 @@ const Whishlist = () => {
           </table>
 
         </main>
+        ):(
+            <div className="mt-2 text-center">
+                <p className="text-center fs-4 text-black">No products in wihslist Continue shopping</p>
+                <button className="badge text-bg-warning py-2 py-3 fs-5"
+                onClick={()=>{navigate('/')}}> shop now</button>
+            </div>
+        )}
     </section>
     </>
   )

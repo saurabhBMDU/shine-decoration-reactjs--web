@@ -1,28 +1,41 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../service/api";
-import { GET_WISHLIST } from "./actionType";
+import { GET_WISHLIST, MOVE_TO_CART, REMOVE_FROM_WISHLIST } from "./actionType";
 
-export const checkWishlist = async (productId) => {
-    return async dispatch =>{
+export const moveToCart = async (productId) => {
+    return async dispatch => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
                 toast.error('please login');
                 return;
             }
-            const response = await axios.get(`${API_URL}/mobileApi/remove-from-wishlist/${productId}`, {
+            // const response = await axios.post(`${API_URL}/mobileApi/move-product-to-cart/${productId}`, {
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Authorization: `Bearer ${token}`
+            //     }
+            // });
+
+            const response = await fetch(`${API_URL}/mobileApi/move-product-to-cart/${productId}`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
-                }
-            });
+                    }
+            })
     
             if (response.status === 200) {
                 const data = await response.json();
                 const { statusCode, message, result } = data;
                 console.log(data, 'product found in check wishlist');
                 if (statusCode === 200) {
+                    dispatch({
+                        type: MOVE_TO_CART,
+                        payload: productId
+                    })
+                    toast.success(message + 'successfully move to cart');
                     
                 } else {
                     toast.error('error in check wishlist', result);
@@ -49,18 +62,23 @@ export const removeFromWishlist = (productId)=>{
                 toast.error('please login');
                 return;
             }
-            const response = await axios.put(`${API_URL}/mobileApi/wishlist/remove-from-wishlist/${productId}`, {
+            const response = await fetch(`${API_URL}/mobileApi/wishlist/remove-from-wishlist/${productId}`,{
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            });
+            })
     
             if (response.status === 200) {
                 const data = await response.json();
                 const { statusCode, message, result } =  data;
                 console.log(data, 'product not removed from wishlist error');
                 if (statusCode === 200) {
+                    dispatch({
+                        type: REMOVE_FROM_WISHLIST,
+                        payload:productId
+                    })
                     toast.success('product removed from wishlist')
                     
                 } else {
@@ -83,6 +101,7 @@ export const getWishlist = () => {
     return async dispatch => {
         try {
             const token = localStorage.getItem('token');
+          
             if (!token) {
                 toast.error('please login');
                 return;
@@ -92,7 +111,8 @@ export const getWishlist = () => {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`
                         }   
-                        });
+                    });
+                       
                         if (response.status === 200) {
                             const {statusCode , message , result} = response.data;
                            

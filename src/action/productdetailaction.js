@@ -2,7 +2,6 @@ import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
   ADD_TO_CART,
-  DELETE_FROM_CART,
   GET_PRODUCT_DETAILS,
   UPDATE_CART,
 } from './actionType';
@@ -118,6 +117,7 @@ export const updateCart = ({productId,quantity}) => {
         productId: productId,
         quantity:quantity,
       };
+      console.log(requestBody, 'from the reqbody of update cart')
       const response = await fetch(`${API_URL}/mobileApi/cart/update-cart/${productId}`, {
         method: 'PUT',
         headers: {

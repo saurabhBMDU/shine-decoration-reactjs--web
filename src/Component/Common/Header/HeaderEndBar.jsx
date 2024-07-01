@@ -96,20 +96,20 @@ const HeaderEndBar = () => {
             category.categories &&
             category.categories.category.map((cat) => (
               <div className="dropdown drop-list position-static" key={cat._id}>
-                <div className="d-flex justify-content-center">
+                <Link to={`/category/${cat.name}`} className="d-flex justify-content-center">
                   <img
                   className="nav-headend-img"
                     src={cat.image}
                     alt={cat.name}
                   
                   />
-                </div>
-                <Link
-                  to={`/${cat._id}`}
+                </Link>
+                <p
+                 
                   className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-capitalize"
                 >
                   {cat.name}
-                </Link>
+                </p>
               </div>
             ))}
         </Slider>
