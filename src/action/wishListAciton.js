@@ -35,7 +35,7 @@ export const moveToCart = async (productId) => {
                         type: MOVE_TO_CART,
                         payload: productId
                     })
-                    toast.success(message + 'successfully move to cart');
+                    // toast.success(message + 'successfully move to cart');
                     
                 } else {
                     toast.error('error in check wishlist', result);
@@ -79,7 +79,7 @@ export const removeFromWishlist = (productId)=>{
                         type: REMOVE_FROM_WISHLIST,
                         payload:productId
                     })
-                    toast.success('product removed from wishlist')
+                    // toast.success('product removed from wishlist')
                     
                 } else {
                     toast.error('error in remove from wishlist', result);
@@ -118,7 +118,7 @@ export const getWishlist = () => {
                            
                             if (statusCode === 200) {
                                 dispatch({type: GET_WISHLIST, payload: result});
-                                toast.success(message);
+                                // toast.success(message);
                                 } else {
                                     toast.error(message);
                                     }   

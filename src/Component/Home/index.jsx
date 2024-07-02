@@ -47,7 +47,7 @@ function Home() {
       
       if (statusCode === 200) {
           setRecentProducts(result.products);
-          toast.success('Recent products received');
+          // toast.success('Recent products received');
       } else {
           toast.error(message);
       }

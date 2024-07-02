@@ -33,7 +33,7 @@ export const addWishList = (productId) => {
 
         if (statusCode === 200) {
       
-          toast.success(message);
+          // toast.success(message);
         } else {
           toast.error("Failed to add to wishlist: " + message);
         }
@@ -82,7 +82,7 @@ export const addtoCart = ({productId,quantity}) => {
             type:ADD_TO_CART,
             payload: result
           });
-          toast.success(message);
+          // toast.success(message);
         } else {
           toast.error("Failed to add to Cart: " + message);
         }
@@ -133,7 +133,7 @@ export const updateCart = ({productId,quantity}) => {
             type:UPDATE_CART,
             payload: result
           });
-          toast.success(message);
+          // toast.success(message);
         } else {
           toast.error("Failed to add to Cart: " + message);
         }

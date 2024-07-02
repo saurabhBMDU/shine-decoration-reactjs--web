@@ -52,7 +52,7 @@ const CategoryResult = () => {
                 const { statusCode, message, result } = response.data; // Access data directly from response
                 if (statusCode === 200) {
                     setRelatedProducts(result);
-                    toast.success('Data fetched successfully');
+                    // toast.success('Data fetched successfully');
                 } else {
                     toast.error(message);
                 }

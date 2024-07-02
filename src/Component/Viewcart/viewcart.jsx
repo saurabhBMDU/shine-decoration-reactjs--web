@@ -34,7 +34,7 @@ export default function Viewcart() {
       const { message, statusCode } = data;
       if (statusCode === 200) {
         setCartData(data.result);
-        toast.success("Cart items fetched successfully");
+        // toast.success("Cart items fetched successfully");
       } else {
         toast.error(message || "Failed to fetch cart data");
       }
@@ -108,7 +108,7 @@ export default function Viewcart() {
         const data = await response.json();
         const { statusCode, message, result } = data;
         if (statusCode === 200) {
-          toast.success(message);
+          // toast.success(message);
           fetchCartData();
         } else {
           toast.error(message || "Failed to remove product from cart");

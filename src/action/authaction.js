@@ -18,7 +18,7 @@ export const doRegister = (form, callback) => {
             type: REGISTER_SUCCES,
             payload: response.data.result
           });
-          toast.success(message);
+          // toast.success(message);
           if (callback) callback();
         } else {
           toast.error("Registration failed: " + message);
@@ -50,7 +50,7 @@ export const doLogin = (form, callback) => {
             type: 'LOGIN_SUCCESS',
             payload: data.result,
           });
-          toast.success(message);
+          // toast.success(message);
           if (callback) callback();
         } else {
           toast.error(message);
@@ -78,7 +78,7 @@ export const forgotPassword = (form, callback) => {
             type: REGISTER_SUCCES,
             payload: response.data.result
           });
-          toast.success(message);
+          // toast.success(message);
           if (callback) callback();
         } else {
           toast.error("Registration failed: " + message);
@@ -107,7 +107,7 @@ export const otpVerification = (form, callback) => {
             type: REGISTER_SUCCES,
             payload: response.data.result
           });
-          toast.success(message);
+          // toast.success(message);
           if (callback) callback();
         } else {
           toast.error("Registration failed: " + message);
@@ -148,7 +148,7 @@ export const getUser = () => {
             type: GET_PROFILE,
             payload: response.data.result
           });
-          toast.success('user details fetched');
+          // toast.success('user details fetched');
         } else {
           toast.error('error from get user');
         }

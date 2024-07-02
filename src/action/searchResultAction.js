@@ -14,7 +14,7 @@ export const getSearchResult = (ResultArray) => {
                 type: SEARCH_RESULT_LIST,
                 payload: ResultArray
             })
-            toast.success('search result got dispatched successfully')
+            // toast.success('search result got dispatched successfully')
             
         } catch (error) {
             toast.error(error)

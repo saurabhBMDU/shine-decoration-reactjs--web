@@ -16,7 +16,7 @@ export const getCategory = () => {
             type: GET_CATEGORY,
             payload: response.data.result
           });
-          toast.success(message);
+          // toast.success(message);
         } else {
           toast.error("category is missing in req" + message);
         }

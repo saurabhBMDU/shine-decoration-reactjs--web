@@ -26,7 +26,7 @@ export const getCart = () => {
                         type: GET_CART,
                         payload: data.result,
                     });
-                    toast.success(message);
+                    // toast.success(message);
                 } else {
                     toast.error(message, 'Failed to get cart data');
                 }

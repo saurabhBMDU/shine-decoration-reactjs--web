@@ -60,7 +60,7 @@ export const addRecentProduct = (productId) => {
                         dispatch({ 
                             type: GET_RECENT_PRODUCT,
                              payload: result});
-                        toast.success('recent products received');
+                        // toast.success('recent products received');
                     }else{
                         toast.error(message);
                     }
