@@ -2,12 +2,13 @@ import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
   ADD_TO_CART,
+  ADD_TO_WISHLIST,
   GET_PRODUCT_DETAILS,
+  GET_WISHLIST,
   UPDATE_CART,
 } from './actionType';
 import { ToastContainer, toast } from 'react-toastify';
 import { type } from '@testing-library/user-event/dist/type';
-
 
 export const addWishList = (productId) => {
   return async dispatch => {
@@ -32,8 +33,9 @@ export const addWishList = (productId) => {
         const { message, statusCode, result } = data;
 
         if (statusCode === 200) {
-      
-          // toast.success(message);
+          // Dispatch the add to wishlist action with the new product as payload
+          dispatch({ type: ADD_TO_WISHLIST, payload: result.products });
+          toast.success(message);
         } else {
           toast.error("Failed to add to wishlist: " + message);
         }
@@ -50,19 +52,18 @@ export const addWishList = (productId) => {
 };
 
 
-
-export const addtoCart = ({productId,quantity}) => {
+export const addtoCart = ({ productId, quantity }) => {
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');
-      console.log('this token from addtocart',token)
+      console.log('this token from addtocart', token);
       if (!token) {
         toast.error("User is not authenticated");
         return;
       }
       const requestBody = {
         productId: productId,
-        quantity:quantity,
+        quantity: quantity,
       };
       const response = await fetch(`${API_URL}/mobileApi/cart/add-to-cart/${productId}`, {
         method: 'POST',
@@ -79,8 +80,11 @@ export const addtoCart = ({productId,quantity}) => {
 
         if (statusCode === 200) {
           dispatch({
-            type:ADD_TO_CART,
-            payload: result
+            type: ADD_TO_CART,
+            payload: {
+              product: result.product, // Ensure the payload matches the reducer logic
+              quantity: quantity,
+            }
           });
           // toast.success(message);
         } else {
@@ -89,7 +93,7 @@ export const addtoCart = ({productId,quantity}) => {
       } else {
         const errorData = await response.json();
         console.log('data', errorData);
-        toast.error(errorData.message || 'An unexpected error occurred ');
+        toast.error(errorData.message || 'An unexpected error occurred');
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);

@@ -11,7 +11,8 @@ export const fetchImages = () => {
        dispatch({
         type: FETCH_DATA_SUCCESS,
         payload: response.data.result 
-      });
+      })
+      
 
     })
   };

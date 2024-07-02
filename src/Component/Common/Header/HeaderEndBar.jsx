@@ -68,7 +68,7 @@ const HeaderEndBar = () => {
 
   return (
     <>
-      <div
+      {/* <div
         className="d-flex justify-content-start align-items-baseline py-2"
         style={{
           backgroundColor: "#ededed",
@@ -88,7 +88,7 @@ const HeaderEndBar = () => {
         >
           <option value="">Price Category</option>
         </select>
-      </div>
+      </div> */}
 
       <div className="header-slider">
         <Slider {...settings}>

@@ -290,10 +290,7 @@
 .banner-img{
     transition: all 2s ease-in-out;
 }
-.banner-img:hover{
-    transform: scaleX(1.3);
 
-}
 
 
 .banner2-container{

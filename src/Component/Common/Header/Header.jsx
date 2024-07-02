@@ -28,7 +28,7 @@ function Header() {
   useEffect(()=>{
     dispatch(getCart())
     dispatch(getWishlist())
-  },[dispatch ,cartQuantity])
+  },[dispatch ,wishListQuantity])
 
   useEffect(() => {
     if (!user) {
@@ -198,7 +198,7 @@ function Header() {
                    
                     <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
-                      <span className=" badge-ab ">{wishListQuantity && wishListQuantity}</span>
+                      <span className=" badge-ab ">{wishListQuantity || 0}</span>
                         <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>

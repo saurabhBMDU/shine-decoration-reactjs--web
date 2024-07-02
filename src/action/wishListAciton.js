@@ -11,12 +11,6 @@ export const moveToCart = async (productId) => {
                 toast.error('please login');
                 return;
             }
-            // const response = await axios.post(`${API_URL}/mobileApi/move-product-to-cart/${productId}`, {
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         Authorization: `Bearer ${token}`
-            //     }
-            // });
 
             const response = await fetch(`${API_URL}/mobileApi/move-product-to-cart/${productId}`, {
                 method: 'POST',

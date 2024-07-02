@@ -69,7 +69,7 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
                 onChange={handleQuery}
                 type="text"
                 style={{
-                    maxWidth: "32rem",
+                    maxWidth: "28rem",
                 }}
             />
             <button type="submit" className="position-absolute nav-searchicon-container">

@@ -20,6 +20,8 @@ export const UPDATE_CART = 'UPDATE_CART';
 
 export const SEARCH_RESULT_LIST = 'SEARCH_RESULT_LIST   ';
 
+export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST'
+
 export const GET_WISHLIST   = 'GET_WISHLIST';
 
 export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';

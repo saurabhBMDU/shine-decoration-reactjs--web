@@ -4,28 +4,44 @@
       text-decoration:none;
       color:#fff !important;
   }
-  
+
+  .super-container{
+    width: 80%;
+  }
+ 
   .intro-section {
-    background-image: url(/public/img/login-banner.webp);
+    background-image: url(https://t3.ftcdn.net/jpg/06/55/48/22/360_F_655482254_1k1yrQACCvforJsBqcLgQgJAuoPSzg3X.jpg);
+    filter: brightness(60%);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; /* Adjust the position to start from the left */
     padding: 75px 95px;
     min-height: 100vh;
-    display: -webkit-box;
+    width: 58%;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-            flex-direction: column;
-    color: #ffffff; }
+    flex-direction: column;
+    color: #ffffff;
+  }
     @media (max-width: 991px) {
+      .super-container{
+        width: 90%;
+
+      }
+
       .intro-section {
         padding-left: 50px;
         padding-right: 50px; } }
     @media (max-width: 767px) {
+      .super-container{
+        width: 100%;
+
+      }
       .intro-section {
         padding: 28px; } }
     @media (max-width: 575px) {
+      .super-container{
+        width: 100%;
+      }
       .intro-section {
         min-height: auto; } }
   
@@ -47,7 +63,8 @@
       margin-bottom: 17px; }
     .intro-content-wrapper .intro-text {
       font-size: 19px;
-      line-height: 1.37; }
+      line-height: 1.37; 
+ }
     .intro-content-wrapper .btn-read-more {
       background-color: #fff;
       padding: 13px 30px;

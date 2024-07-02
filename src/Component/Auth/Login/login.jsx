@@ -28,7 +28,7 @@ function Login() {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="super-container">
         <div className="row">
           <div className="col-sm-6 col-md-7 intro-section">
             <div className="brand-wrapper">

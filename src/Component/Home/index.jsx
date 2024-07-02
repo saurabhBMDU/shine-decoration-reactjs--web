@@ -20,17 +20,19 @@ import { getUser } from '../../action/authaction';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '../../service/api';
+import MainCarousel from './MainCarousal';
 
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
   const products = useSelector(state => state.productData?.data?.result?.products);
   const category = useSelector(state => state.categories);
+  const toaken = localStorage.getItem('token')
   // const recentProducts = useSelector(state => state.recentProducts?.products);
   const [recentProducts , setRecentProducts] = useState([])
  
   const getRecent = useCallback(async()=> {
-    console.log('runnign the getreacent')
+
    try {
       const token = localStorage.getItem('token');
       if(!token) {
@@ -43,7 +45,6 @@ function Home() {
               'Authorization': `Bearer ${token}`
       }});
       const { statusCode, message, result } = response.data;
-      console.log(result, '--------------s-----');
       
       if (statusCode === 200) {
           setRecentProducts(result.products);
@@ -57,13 +58,13 @@ function Home() {
   }
 }, []);
 
-  useEffect(() => {
+useEffect(() => {
+  getRecent();
     dispatch(getUser());
     dispatch(getCategory());
     dispatch(fetchImages());
-    getRecent();
     
-  }, [dispatch]);
+  }, [dispatch, getRecent]);
   console.log(recentProducts)
   // console.log("dsf", data);
   // console.log("dsf__________", products);
@@ -94,58 +95,28 @@ function Home() {
       <section className=" py-2">
         <div>
 
-        <div
-      id="carouselExampleControls"
-      className="carousel slide"
-      data-ride="carousel"
-    >
-      <div className="carousel-inner">
-        {data && data.map((item, index) => (
-          <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-            <img
-              className="d-block w-100 banner-img"
-              // src={item.image}
-              src='/img/bannermain.webp'
-              alt={`Banner ${index + 1}`}
-            />
-          </div>
-        ))}
-      </div>
-      <a
-        className="carousel-control-prev"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="prev"
-      >
-        <span
-          className="carousel-control-prev-icon"
-          aria-hidden="true"
-        ></span>
-        <span className="sr-only">Previous</span>
-      </a>
-      <a
-        className="carousel-control-next"
-        href="#carouselExampleControls"
-        role="button"
-        data-slide="next"
-      >
-        <span
-          className="carousel-control-next-icon"
-          aria-hidden="true"
-        ></span>
-        <span className="sr-only">Next</span>
-      </a>
-    </div>
+        <MainCarousel data={data}/>
         </div>
       </section>
 
       {/* <PopularCategory /> */}
       <Excusivecategory />
       <Banner2/>
-      <section className="container-fluid py-4">
-        <h3>Recently Viewed Stores</h3>
-        <Sliders products={recentProducts}/>
-      </section>
+      {
+        toaken ? (
+          <section className="container-fluid py-4">
+          <h3>Recently Viewed Stores</h3>
+          <Sliders products={recentProducts}/>
+        </section>
+        ) :(
+          <section className="container-fluid py-4">
+          <h3>Latest Collection</h3>
+          <Sliders products={products}/>
+        </section>
+
+        )
+      }
+     
       <Banner3/>
       <section className="container-fluid py-4">
         <div>
