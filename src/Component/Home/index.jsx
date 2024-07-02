@@ -1,4 +1,4 @@
-import React, {  useEffect } from 'react';
+import React, {  useCallback, useEffect, useState } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,20 +17,54 @@ import Banner3 from './Banner3';
 import HeaderEndBar from '../Common/Header/HeaderEndBar';
 import { getCategory } from '../../action/categoryAction';
 import { getUser } from '../../action/authaction';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { API_URL } from '../../service/api';
 
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
-  const products = useSelector(state => state.productData.data);
-  const category = useSelector(state => state.categories)
+  const products = useSelector(state => state.productData?.data?.result?.products);
+  const category = useSelector(state => state.categories);
+  // const recentProducts = useSelector(state => state.recentProducts?.products);
+  const [recentProducts , setRecentProducts] = useState([])
  
+  const getRecent = useCallback(async()=> {
+    console.log('runnign the getreacent')
+   try {
+      const token = localStorage.getItem('token');
+      if(!token) {
+          toast.error('please login');
+          return ;
+      }
+      const response = await axios.get(`${API_URL}/mobileApi/product/recently-view-product`, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+      }});
+      const { statusCode, message, result } = response.data;
+      console.log(result, '--------------s-----');
+      
+      if (statusCode === 200) {
+          setRecentProducts(result.products);
+          toast.success('Recent products received');
+      } else {
+          toast.error(message);
+      }
+  } catch (error) {
+      console.log('Error:',error ,'from jsx');
+      toast.error('An error occurred while fetching recent products');
+  }
+}, []);
 
   useEffect(() => {
-    dispatch(fetchImages());
+    dispatch(getUser());
     dispatch(getCategory());
-    dispatch(getUser())
+    dispatch(fetchImages());
+    getRecent();
     
   }, [dispatch]);
+  console.log(recentProducts)
   // console.log("dsf", data);
   // console.log("dsf__________", products);
   // console.log('category @ home ' ,category)
@@ -110,7 +144,7 @@ function Home() {
       <Banner2/>
       <section className="container-fluid py-4">
         <h3>Recently Viewed Stores</h3>
-        <Sliders products={products}/>
+        <Sliders products={recentProducts}/>
       </section>
       <Banner3/>
       <section className="container-fluid py-4">

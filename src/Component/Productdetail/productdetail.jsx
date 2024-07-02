@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addtoCart, getProductDetails } from '../../action/productdetailaction';
 import { addWishList } from '../../action/productdetailaction'
 import { useParams } from 'react-router-dom';
+import { addRecentProduct } from '../../action/recentProductAction';
 
 
 
@@ -26,6 +27,7 @@ function Productdetail() {
 
   useEffect(() => {
     dispatch(getProductDetails(id));
+    dispatch(addRecentProduct(id))
   }, [dispatch, id]);
 
   const handleIncrease = () => {

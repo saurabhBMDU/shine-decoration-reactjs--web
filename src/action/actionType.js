@@ -26,4 +26,6 @@ export const REMOVE_FROM_WISHLIST = 'REMOVE_FROM_WISHLIST';
 
 export const MOVE_TO_CART = 'MOVE_TO_CART';
 
-export const GET_PROFILE = 'GET_PROFILE'
+export const GET_PROFILE = 'GET_PROFILE';
+
+export const GET_RECENT_PRODUCT = 'RECENT_PRODUCT';

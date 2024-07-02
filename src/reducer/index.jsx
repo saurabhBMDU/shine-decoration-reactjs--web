@@ -7,6 +7,7 @@ import getCartReducer from './getCart';
 import SearchResultReducer from './searchlistReducer';
 import getWhishlistReducer from './getWishlistReducer';
 import getUserReducer from './getUserDetailsReducer';
+import recentProuductsReducer from './recentProductsReducer';
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     searchResult:SearchResultReducer,
     WishlistData:getWhishlistReducer,
     getUser:getUserReducer,
+    recentProducts:recentProuductsReducer,
    
 });
 

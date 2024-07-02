@@ -32,10 +32,7 @@ export const addWishList = (productId) => {
         const { message, statusCode, result } = data;
 
         if (statusCode === 200) {
-          dispatch({
-            type: 'ADD_TO_WISHLIST',
-            payload: result
-          });
+      
           toast.success(message);
         } else {
           toast.error("Failed to add to wishlist: " + message);

@@ -64,9 +64,9 @@ const Sliders = ({products}) => {
   return (
     <>
     <Slider {...setting}>
-    {products &&
-            products.result.products &&
-            products.result.products.map((product, index) => (
+    {
+            products &&
+            products.map((product, index) => (
               <div key={index} className="px-2">
                 <div className=" card-custom ">
                   <div className="position-relative card-img-container">
