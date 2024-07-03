@@ -1,6 +1,6 @@
 import { SearchBar } from './SearchBar';
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useAsyncError } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import './header.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { getCart } from '../../../action/getCartAction';
 import { getWishlist } from '../../../action/wishListAciton';
 import { getUser } from '../../../action/authaction';
 import { FaRegUserCircle } from 'react-icons/fa';
+import LoginPOP from '../../Loginbutton/LoginPOP';
 
 
 
@@ -22,8 +23,9 @@ function Header() {
   const wishListQuantity = useSelector(state=>state?.WishlistData?.data?.totalItem)
   const currentURL = location.pathname;
   const user = useSelector(state => state?.getUser?.user)
- 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  
+
   
   useEffect(()=>{
     dispatch(getCart())
@@ -34,6 +36,7 @@ function Header() {
     if (!user) {
       dispatch(getUser());
     }
+  
   }, [dispatch, user]); 
   
 
@@ -226,7 +229,7 @@ function Header() {
 
 
       
-                    
+        <LoginPOP />
       </header>
     </>
   )

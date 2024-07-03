@@ -92,8 +92,8 @@ useEffect(() => {
   return (
     <>
      <HeaderEndBar  />
-      <section className=" py-2">
-        <div>
+      <section className=" pb-1 pt-2" >
+        <div className='slider-container'>
 
         <MainCarousel data={data}/>
         </div>
@@ -109,7 +109,7 @@ useEffect(() => {
           <Sliders products={recentProducts}/>
         </section>
         ) :(
-          <section className="container-fluid py-4">
+          <section className="container-fluid py-2">
           <h3>Latest Collection</h3>
           <Sliders products={products}/>
         </section>
@@ -118,7 +118,7 @@ useEffect(() => {
       }
      
       <Banner3/>
-      <section className="container-fluid py-4">
+      <section className="container-fluid " >
         <div>
           <h2 className="fw-bold fs-3" style={{ color: "#6B6363" }}>
             Shop by Occasion

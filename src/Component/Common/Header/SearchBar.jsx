@@ -63,7 +63,7 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
     return (
         <form className="gi-search-group-form position-relative" onSubmit={handleSubmit}>
             <input
-                className="form-control gi-search-bar rounded"
+                className="form-control gi-search-bar "
                 placeholder="Search Products..."
                 value={query}
                 onChange={handleQuery}

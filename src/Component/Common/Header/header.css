@@ -280,7 +280,8 @@
 
 .header-slider{
     width: 92vw;
-    margin: 2rem auto;
+    margin: 0rem auto;
+    margin-top: 1.5rem;
 }
 
 @media (min-width:1399px) {
@@ -300,11 +301,12 @@
 }
 
 .nav-headend-img{
-    height: 90px;
+    height: 100px !important;
     max-height: 110px !important;
     width:53%!important;
     object-fit: cover;
-    border-radius: 50%;
+    height: 100px;
+    border-radius: 90%;
 }
 
 .suggestion-container{

@@ -77,7 +77,7 @@ function Excusivecategory() {
   };
   return (
     <>
-      <section className="container-fluid py-4 card-container">
+      <section className="container-fluid pt-1 card-container">
         <div>
           <h3>Products</h3>
         </div>

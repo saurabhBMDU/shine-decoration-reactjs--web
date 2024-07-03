@@ -1,0 +1,57 @@
+.pop-m{
+    box-shadow: 3px -5px 8px rgb(65, 62, 62);
+    right: 250px;
+    border-radius: 5%;
+    width: 20rem;
+    height: max-content;
+   background-color: wheat;
+   display: flex;
+   flex-direction: column;
+   position: fixed;
+   padding: 15px 15px;
+    
+}
+
+.pop-up-login{
+    width: 100%;
+    border-radius: 5%;
+    
+}
+
+.pop-up-login div{
+    width: 95%;
+    margin: 10px auto;
+    
+    display: flex;
+    justify-content: end;
+
+
+
+}
+.pop-up-login div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.pop-up-login div:nth-child(2) img{
+    object-fit: contain;
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    mix-blend-mode: multiply;
+
+}
+
+.pop-up-login div:nth-child(3) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5px;
+}
+.pop-up-login div:nth-child(3) p {
+    font-weight: 500;
+    font-size: large;
+
+}

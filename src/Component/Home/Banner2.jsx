@@ -2,7 +2,7 @@ import React from "react";
 
 const Banner2 = () => {
   return(
-    <section className="d-flex banner2-container">
+    <section className="d-flex banner2-container mt-5">
     <div className="banner2-bg">
         <div className="banner2-bg-text">
             <img src='/img/after-products-banner-circle1.png' className="" alt="" />

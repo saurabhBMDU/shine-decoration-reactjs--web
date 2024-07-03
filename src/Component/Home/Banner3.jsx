@@ -2,7 +2,7 @@ import React from "react";
 
 const Banner3 = () => {
   return (
-    <section className="banner3-container d-flex justify-content-center align-items-center">
+    <section className="banner3-container d-flex justify-content-center align-items-center ">
         <div className="text-center position-relative">
             <img src="/img/banner3bg.jpg" alt="banner 3"  />
             <div className="position-absolute text-overlay">
