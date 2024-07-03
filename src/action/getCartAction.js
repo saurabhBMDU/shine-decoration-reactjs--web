@@ -8,7 +8,7 @@ export const getCart = () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                toast.error('User is not authorised');
+                // toast.error('User is not authorised');
                 return;
             }
             fetch(`${API_URL}/mobileApi/cart/cart`, {

@@ -16,7 +16,7 @@ export const addWishList = (productId) => {
       console.log('dispatched for add to wishlist');
       const token = localStorage.getItem('token');
       if (!token) {
-        toast.error("User is not authenticated");
+        // toast.error("User is not authenticated");
         return;
       }
       const response = await fetch(`${API_URL}/mobileApi/wishlist/add-to-wishlist/${productId}`, {
@@ -58,7 +58,7 @@ export const addtoCart = ({ productId, quantity }) => {
       const token = localStorage.getItem('token');
       console.log('this token from addtocart', token);
       if (!token) {
-        toast.error("User is not authenticated");
+        // toast.error("User is not authenticated");
         return;
       }
       const requestBody = {
@@ -111,7 +111,7 @@ export const updateCart = ({productId,quantity}) => {
       const token = localStorage.getItem('token');
       console.log('this token from addtocart',token)
       if (!token) {
-        toast.error("User is not authenticated");
+        // toast.error("User is not authenticated");
         return;
       }
       const requestBody = {

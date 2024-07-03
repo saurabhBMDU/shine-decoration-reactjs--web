@@ -129,7 +129,7 @@ export const getUser = () => {
   return async dispatch => {
     const token = localStorage.getItem('token');
     if (!token) {
-      toast.error('please login');
+      // toast.error('please login');
       return; // Early return if token is not present
     }
     

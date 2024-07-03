@@ -90,7 +90,7 @@ export default function Viewcart() {
       setLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
-        toast.error("User is not authenticated");
+        // toast.error("User is not authenticated");
         return;
       }
       const response = await fetch(

@@ -8,7 +8,7 @@ export const moveToCart = async (productId) => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                toast.error('please login');
+                // toast.error('please login');
                 return;
             }
 
@@ -53,7 +53,7 @@ export const removeFromWishlist = (productId)=>{
             const token = localStorage.getItem('token');
             console.log(token , 'this from remove wihslist')
             if (!token) {
-                toast.error('please login');
+                // toast.error('please login');
                 return;
             }
             const response = await fetch(`${API_URL}/mobileApi/wishlist/remove-from-wishlist/${productId}`,{
@@ -97,7 +97,7 @@ export const getWishlist = () => {
             const token = localStorage.getItem('token');
           
             if (!token) {
-                toast.error('please login');
+                // toast.error('please login');
                 return;
                 }
                 const response = await axios.get(`${API_URL}/mobileApi/wishlist/wishlist`, {

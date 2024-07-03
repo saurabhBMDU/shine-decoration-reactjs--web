@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ Open, onClose }) => {
+  const navigate = useNavigate();
   const [sortBy, setSortBy] = useState({});
   const [SizeBy, setSizeBy] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(null);
@@ -19,8 +21,10 @@ const Sidebar = ({ Open, onClose }) => {
   ];
 
   const handleFilterClick = (filter) => {
+    
+    
     setSelectedFilter(selectedFilter === filter ? null : filter);
-
+    
     // Check if the clicked filter is 'Size', then show size filter
     if (filter === 'Size') {
       setShowSizeFilter(true);
@@ -101,6 +105,12 @@ const Sidebar = ({ Open, onClose }) => {
     }
   };
 
+  const handleRadioFilter = (option) => {
+    navigate(`/filtered/${option}`)
+    
+
+  }
+
 
 
 
@@ -160,6 +170,7 @@ const Sidebar = ({ Open, onClose }) => {
                       value={option}
                       checked={sortBy === option}
                       onChange={() => setSortBy(option)}
+                      onClick={()=>handleRadioFilter(option)}
                     />
                     <label htmlFor={option}>{option}</label>
                   </div>

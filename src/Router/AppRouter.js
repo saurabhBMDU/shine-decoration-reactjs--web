@@ -20,6 +20,7 @@ import Whishlist from '../Component/Whislist/Whishlist';
 import LogoutUser from '../Component/Auth/Logout/logout';
 import SearchResult from '../Component/SearchResult/SearchResult';
 import CategoryResult from '../Component/CatagoryResult/CatagoryResult';
+import FilterResultPage from '../Component/FilterReulst/FilterResultPage';
 
 function AppRouter() {
     return (
@@ -36,6 +37,7 @@ function AppRouter() {
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/logout' element={<LogoutUser/>}/>
                 <Route path='/result/:id' element={<SearchResult/>} />
+                <Route path='/filtered/:id' element={<FilterResultPage/>} />
                 <Route path='/shop' element={<Shop />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/category/:id' element={<CategoryResult/>} />

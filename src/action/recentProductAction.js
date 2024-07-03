@@ -10,7 +10,7 @@ export const addRecentProduct = (productId) => {
         try {
             const token = localStorage.getItem('token')
         if(!token) {
-            toast.error('please login')
+            // toast.error('please login')
             return
         }
         const response = await fetch(`${API_URL}/mobileApi/product/add-recently-view-product/${productId}`, {
@@ -45,7 +45,7 @@ export const addRecentProduct = (productId) => {
             try {
                 const token = localStorage.getItem('token');
                 if(!token) {
-                    toast.error('please login');
+                    // toast.error('please login');
                     return ;
                 }
                 const response = await axios.get(`${API_URL}mobileApi/product/recently-view-product`, {
