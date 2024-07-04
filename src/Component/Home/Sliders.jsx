@@ -70,8 +70,11 @@ const Sliders = ({products}) => {
               <div key={index} className="px-2">
                 <div className=" card-custom ">
                   <div className="position-relative card-img-container">
-                   <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "240px",  }} />
+                    <Link to={`/productdetail/${product._id}`}>
+                    <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "240px",  }} />
+                    </Link>    
                    <HeartButton productId={product._id}/>
+                   <div className="product-badge"> </div>
                   </div>
                   <Link to={`/productdetail/${product._id}`}>
                     <div className="card-body" style={{width:'100%'}}>

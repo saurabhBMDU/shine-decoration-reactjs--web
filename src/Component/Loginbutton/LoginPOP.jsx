@@ -18,7 +18,7 @@ const LoginPOP = () => {
             <IoMdClose size={25} onClick={() => setModal(false)} />
           </div>
           <div>
-            <img src="/img/pop-up-bg.png" alt="Popup Background" />
+            <img src="/img/popupbg.png" alt="Popup Background" />
           </div>
           <div>
             <p>Please Login</p>

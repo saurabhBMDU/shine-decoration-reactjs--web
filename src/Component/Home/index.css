@@ -171,6 +171,7 @@
     padding: 0px 170px;
 }
 
+
 .shipping {
     background-color: #EFF8F2;
     padding: 0px 300px;
@@ -193,7 +194,7 @@
 
 .card-custom div .card-img-top {
     border: none;
-    overflow:hidden;
+    
     transition: all 2s ease-in-out;
 }
 
@@ -528,3 +529,46 @@
     overflow-x: hidden;
     width: 100%; 
   }
+
+.product-badge{
+    position: absolute;
+    top: 0;
+    height: max-content;
+    height: 8rem;
+    width: 8rem;
+    left: -.8rem;
+    top: -1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+
+.product-badge::before{
+    position: absolute;
+    content: "Trending";
+    height: 2rem;
+    font-weight: 700;
+    width: 145%;
+    text-align: center;
+    line-height: 2rem;
+    color: black;
+   
+    background: linear-gradient(285deg, rgba(180,115,58,1) 0%, rgba(252,253,29,1) 50%, rgba(252,69,69,1) 100%);
+    transform: rotate(-45deg) translateY(-1rem);
+}
+
+
+.product-badge::after{
+    position: absolute;
+    width: .8rem;
+    height: .8rem;
+    content: '';
+    left: 0;
+    bottom: 0;
+    background: rgb(116, 72, 30);
+    box-shadow: 7rem 7rem rgb(116, 72, 30);
+    z-index: -100;
+}

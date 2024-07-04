@@ -9,7 +9,7 @@ import { removeFromWishlist } from "../../action/wishListAciton";
 
 const HeartButton = ({ productId }) => {
     const dispatch = useDispatch();
-    const products = useSelector(state=>state.productData.data.result);
+    const products = useSelector(state=>state.productData?.data?.result);
 
     const [like, setLike] = useState(false);
     

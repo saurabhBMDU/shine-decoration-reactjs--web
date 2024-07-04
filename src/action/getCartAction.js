@@ -28,7 +28,7 @@ export const getCart = () => {
                     });
                     // toast.success(message);
                 } else {
-                    toast.error(message, 'Failed to get cart data');
+                    // toast.error( 'Failed to get cart data');
                 }
             }).catch(error => {
                 throw error;
