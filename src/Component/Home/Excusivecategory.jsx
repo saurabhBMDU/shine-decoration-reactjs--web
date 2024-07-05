@@ -90,7 +90,7 @@ function Excusivecategory() {
                     <Link to={`/productdetail/${product._id}`}>
                     <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "240px",  }} />
                     </Link>      
-                    <div className="product-badge"> </div>
+                    <div className="product-badge" data-badge="Trending"> </div>
                   <HeartButton productId={product._id}/>
                   </div>
                   <Link to={`/productdetail/${product._id}`}>

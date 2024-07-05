@@ -103,10 +103,10 @@ useEffect(() => {
       <Excusivecategory />
       <Banner2/>
       {
-        toaken ? (
+        toaken && recentProducts.length > 0? (
           <section className="container-fluid py-4">
           <h3>Recently Viewed Stores</h3>
-          <Sliders products={recentProducts}/>
+          :<Sliders products={recentProducts}/>
         </section>
         ) :(
           <section className="container-fluid py-2">

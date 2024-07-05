@@ -311,9 +311,9 @@
 
 .suggestion-container{
     position: absolute;
-    top: 70px;
+    top: 50px;
     background-color: rgb(255, 255, 255);
-    width: 100%;
+    width: 70%;
     max-width: 32rem;
     height: auto;
     overflow-y: auto;
@@ -323,8 +323,8 @@
 .suggestion-ul{
     flex-direction: column;
     display: flex;
-    justify-content: normal;
-    align-items: start;
+    overflow-x: hidden;
+    height: 30rem;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
@@ -334,11 +334,14 @@
 }
 
 .suggestion-ul li{
-    text-align: center;
+   display: flex;
+   justify-content: start;
+   align-items: start;
     border-bottom: rgb(242, 236, 236) solid;
     font-weight: 400;
-    padding: 10px 0;
+    padding: 10px 20px;
     width: 100%;
+    
     font-family: 'lato', sans-serif;
 }
 
@@ -349,6 +352,57 @@
 
 .suggestion-ul li section {
     background-color: #9c969600;
+    align-items: stretch;
+}
+
+.suggestion-ul li .section-sug {
+    display: flex;
+    align-items: stretch;
+    justify-content: start;
+    gap: 10%;
+}
+
+.suggestion-ul li .section-sug  div:first-child{
+    
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: min-content;
+}
+
+.suggestion-ul li .section-sug   .img-cont img{
+    height: 100%;
+    width: 50px;
+    object-fit: cover;
+    
+
+
+    
+}
+
+.suggestion-ul li .section-sug div:nth-child(2) {
+    font-family: lato;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    align-content: space-between;
+    
+    height: 100%;
+    width: 10rem;
+}
+
+.text-cont h6{
+    color: rgb(32, 115, 198);
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: .9rem;
+
+}
+.text-cont h5{
+    font-weight: 700;
+
 }
 
 

@@ -44,8 +44,8 @@ function Productdetail() {
 
   const handeaddtoCart = useCallback((productId) => {
     dispatch(addtoCart({productId,quantity}));
-    
-  },[dispatch])
+    console.log(quantity,'qnty from details')
+  },[quantity,dispatch])
 
   
   

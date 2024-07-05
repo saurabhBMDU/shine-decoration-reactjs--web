@@ -183,4 +183,10 @@
   
   .login-wrapper-footer-text {
     font-size: 14px;
-    text-align: center; }
+    text-align: center; 
+    font-weight: 500;
+  }
+
+  .text-signup{
+    color:rgb(47, 105, 223);
+  }

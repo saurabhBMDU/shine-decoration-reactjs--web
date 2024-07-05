@@ -80,7 +80,7 @@ function Login() {
                 </div>
               </form>
               <p className="login-wrapper-footer-text mt-2">
-                Need an account? <a href="#!" className="text-reset">Signup here</a>
+                Need an account? <Link  to="/register" className="text-signup">Signup here</Link>
               </p>
             </div>
           </div>

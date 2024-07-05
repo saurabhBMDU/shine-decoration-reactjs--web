@@ -4,6 +4,9 @@ import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { getWishlist, moveToCart, removeFromWishlist } from "../../action/wishListAciton";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../service/api";
+import { MOVE_TO_CART } from "../../action/actionType";
+import { toast } from "react-toastify";
 const Whishlist = () => {
     const navigate = useNavigate()
     const wishlistData = useSelector(state =>state?.WishlistData?.data )
@@ -17,10 +20,52 @@ const Whishlist = () => {
    dispatch(getWishlist())
   },[dispatch])
 
+  const MoveToCarts = useCallback(async(productId)=>{
+    try {
+         const token = localStorage.getItem('token');
+         if (!token) {
+             // toast.error('please login');
+             return;
+         }
+ 
+         const response = await fetch(`${API_URL}/mobileApi/cart/move-product-to-cart/${productId}`, {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json',
+                 Authorization: `Bearer ${token}`
+                 }
+         })
+ 
+         if (response.status === 200) {
+             const data = await response.json();
+             const { statusCode, message, result } = data;
+             console.log(data, 'product found in check wishlist');
+             if (statusCode === 200) {
+                 dispatch({
+                     type: MOVE_TO_CART,
+                     payload: productId
+                 })
+                 // toast.success(message + 'successfully move to cart');
+                 
+             } else {
+                 toast.error('error in check wishlist', result);
+             }
+         } else {
+             const errorData = await response.data;
+             throw new Error(errorData.message || 'error in check wishlist request');
+         }
+     } catch (error) {
+         toast.error(error.message);
+         console.log(error);
+     }
+   })
+
   const handleMoveToCart = useCallback((id)=>{
-    dispatch(moveToCart(id));
-    navigate('/cart')
+    MoveToCarts(id)
+    // navigate('/cart')
   },[dispatch])
+
+ 
 
 
 

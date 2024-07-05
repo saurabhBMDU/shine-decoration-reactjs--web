@@ -7,7 +7,6 @@ import { checkUser } from "../../assest/js/checker";
 const LoginPOP = () => {
   const [modal, setModal] = useState(checkUser());
   
-  console.log(checkUser(), 'checker')
   // Add an empty dependency array to ensure it runs once on mount
 
   return (

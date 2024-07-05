@@ -30,7 +30,7 @@ function Header() {
   useEffect(()=>{
     dispatch(getCart())
     dispatch(getWishlist())
-  },[dispatch ,wishListQuantity])
+  },[dispatch ,wishListQuantity,cartQuantity])
 
   useEffect(() => {
     if (!user) {

@@ -12,7 +12,7 @@ export const moveToCart = async (productId) => {
                 return;
             }
 
-            const response = await fetch(`${API_URL}/mobileApi/move-product-to-cart/${productId}`, {
+            const response = await fetch(`${API_URL}/mobileApi/wishlist/move-product-to-cart/${productId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

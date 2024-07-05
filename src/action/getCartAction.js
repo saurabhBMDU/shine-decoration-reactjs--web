@@ -1,10 +1,10 @@
 
 import { API_URL } from "../service/api";
-import { GET_CART } from "./actionType";
+import { DELETE_FROM_CART, GET_CART } from "./actionType";
 import { toast } from "react-toastify";
 
 export const getCart = () => {
-    return dispatch => {
+    return async dispatch => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -43,5 +43,59 @@ export const getCart = () => {
                 }
             }
         }
+    }
+}
+
+
+export const removeFromCart = (props)=>{
+     const{ productId ,quantity} = props
+    return async dispatch => {
+        try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  // toast.error("User is not authenticated");
+                  return;
+                }
+                const response = await fetch(
+                  `${API_URL}/mobileApi/cart/remove-cart-product/${productId}`,
+                  {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+          
+                if (response.ok) {
+                  const data = await response.json();
+                  const { statusCode, message, result } = data;
+                  if (statusCode === 200) {
+                    dispatch({
+                        type: DELETE_FROM_CART,
+                        payload:{
+                            quantity,
+                            productId
+                        }
+                        });
+                  
+                    // toast.success(message);
+                  } else {
+                    toast.error(message || "Failed to remove product from cart");
+                  }
+                } else {
+                  const errorData = await response.json();
+                  toast.error(
+                    errorData.message ||
+                      "Something went wrong while deleting the product from the cart"
+                  );
+                }
+              } catch (error) {
+                console.error("An unexpected error occurred:", error);
+                toast.error("An unexpected error occurred");
+              
+            
+    }
+
     }
 }

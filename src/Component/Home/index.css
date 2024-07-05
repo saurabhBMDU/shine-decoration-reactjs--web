@@ -548,7 +548,7 @@
 
 .product-badge::before{
     position: absolute;
-    content: "Trending";
+    content: attr(data-badge);
     height: 2rem;
     font-weight: 700;
     width: 145%;
