@@ -21,6 +21,7 @@ import LogoutUser from '../Component/Auth/Logout/logout';
 import SearchResult from '../Component/SearchResult/SearchResult';
 import CategoryResult from '../Component/CatagoryResult/CatagoryResult';
 import FilterResultPage from '../Component/FilterReulst/FilterResultPage';
+import OrderSummary from '../Component/OrderSummary/OrderSummary';
 
 function AppRouter() {
     return (
@@ -44,7 +45,9 @@ function AppRouter() {
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path='wishlist' element={<Whishlist/>} />
+                <Route path='/productdetails/:id/ordersummary' element={<OrderSummary/>} />
                 <Route element={<NotFound />} />
+                
             </Routes>
             <Footer />
         </BrowserRouter>

@@ -30,7 +30,7 @@ function Home() {
   const toaken = localStorage.getItem('token')
   // const recentProducts = useSelector(state => state.recentProducts?.products);
   const [recentProducts , setRecentProducts] = useState([])
- 
+ console.log(recentProducts,'recent')
   const getRecent = useCallback(async()=> {
 
    try {
@@ -47,7 +47,7 @@ function Home() {
       const { statusCode, message, result } = response.data;
       
       if (statusCode === 200) {
-          setRecentProducts(result.products);
+          setRecentProducts(result);
           // toast.success('Recent products received');
       } else {
           toast.error(message);

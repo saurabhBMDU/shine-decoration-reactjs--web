@@ -7,7 +7,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addtoCart, getProductDetails } from '../../action/productdetailaction';
 import { addWishList } from '../../action/productdetailaction'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { addRecentProduct } from '../../action/recentProductAction';
 
 
@@ -96,7 +96,7 @@ function Productdetail() {
                     <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
                   </button>
                   <button className=" px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
-                    <i className="fas fa-bolt px-2"></i> BUY NOW
+                    <Link className='text-white' to={`/productdetails/${product._id}/ordersummary`}><i className="fas fa-bolt px-2"></i> BUY NOW</Link>
                   </button>
                 </div>
   
