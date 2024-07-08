@@ -11,10 +11,10 @@ const LoginPOP = () => {
 
   return (
     <>
-      <main className={modal ? 'pop-m' : 'd-none'}>
+      <main className={!modal ? 'pop-m' : 'd-none'}>
         <section className="pop-up-login">
           <div>
-            <IoMdClose size={25} onClick={() => setModal(false)} />
+            <IoMdClose size={25} onClick={() => setModal(true)} />
           </div>
           <div>
             <img src="/img/popupbg.png" alt="Popup Background" />
