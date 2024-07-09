@@ -16,6 +16,7 @@ function Login() {
   };
 
   const handleSubmit = (e) => {
+    localStorage.clear()
     e.preventDefault();
     dispatch(doLogin(form, () => {
       const token = localStorage.getItem('token');

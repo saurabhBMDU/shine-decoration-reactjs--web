@@ -166,7 +166,7 @@ function Header() {
                 <div className="gi-header-action align-self-center">
                   <div className="gi-header-bottons">
                     {/* <!-- Header User Start --> */}
-                  {user?(
+                  {/* {user?(
                      <Link to="/" className="gi-header-btn gi-wish-toggle" title="home">
                      <div className="gi-btn-desc d-flex flex-col align-items-end py-2 justify-content-center " style={{gap:'8px', }}>
                      <FaRegUserCircle color=' #EDB70B ' size={23}  className='text-center align-self-center'/>
@@ -175,13 +175,13 @@ function Header() {
                    </Link>
                   ):(
                     null
-                  )}
+                  )} */}
                     <div className="gi-acc-drop">
                       <Link to="/" className="gi-header-btn mt-1 gi-header-user dropdown-toggle gi-user-toggle"
                         title="Account">
                         <div className="gi-btn-desc">
                           <i className="fa-regular fa-user text-center py-2" style={{ color: "#EDB70B" }}></i>
-                          <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Profile</span>
+                          <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>{user ? user.name : 'Profile'}</span>
                         </div>
                       </Link>
                       

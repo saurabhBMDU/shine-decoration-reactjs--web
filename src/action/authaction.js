@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   GET_PROFILE,
   REGISTER_SUCCES,
+  UPDATE_ADRESS,
 } from './actionType';
 import { toast } from 'react-toastify';
 
@@ -163,3 +164,47 @@ export const getUser = () => {
     }
   };
 };
+
+export const addNewAdress = (address)=>{ 
+  console.log(address,'this is adress');
+  return async dispatch => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // toast.error('please login');
+      return; // Early return if token is not present
+      }
+      try {
+        const response = await fetch(`${API_URL}/mobileApi/profile`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+          shipping_address: address
+          })
+        });
+            if(response.status===200){
+              const data = await response.json()
+              const {statusCode,result}= data;
+              if(statusCode===200){
+                dispatch({
+                  type:UPDATE_ADRESS,
+                  payload:response.data
+                  });
+                  console.log(data,'from add new adress')
+                  toast.success('new adress added');
+                  }
+                  else{
+                    toast.error('error from add new adress');
+                    }
+                    }
+
+            }catch(error){
+              toast.error('error from add new adress');
+              console.log(error,'add new addresss')
+            }
+
+
+  }
+}

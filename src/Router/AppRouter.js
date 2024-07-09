@@ -22,6 +22,7 @@ import SearchResult from '../Component/SearchResult/SearchResult';
 import CategoryResult from '../Component/CatagoryResult/CatagoryResult';
 import FilterResultPage from '../Component/FilterReulst/FilterResultPage';
 import OrderSummary from '../Component/OrderSummary/OrderSummary';
+import MangaeAdress from '../Component/ManageAdress/MangaeAdress';
 
 function AppRouter() {
     return (
@@ -36,6 +37,7 @@ function AppRouter() {
                 <Route path='/privacy' element={<PrivacyPolicy/>}/>
                 <Route path='/termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
+                <Route path='/profile/address' element={<MangaeAdress/>} />
                 <Route path='/logout' element={<LogoutUser/>}/>
                 <Route path='/result/:id' element={<SearchResult/>} />
                 <Route path='/filtered/:id' element={<FilterResultPage/>} />

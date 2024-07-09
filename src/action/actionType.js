@@ -31,3 +31,5 @@ export const MOVE_TO_CART = 'MOVE_TO_CART';
 export const GET_PROFILE = 'GET_PROFILE';
 
 export const GET_RECENT_PRODUCT = 'RECENT_PRODUCT';
+
+export const UPDATE_ADRESS ='UPDATE_ADDRESS'

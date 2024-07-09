@@ -109,7 +109,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 1px 1px 2px rgb(131, 129, 129);
-   
+   width: 100%;
 
 }
 
@@ -135,9 +135,16 @@
 
 }
 
+.summarybox >div:first-child p:last-child{
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
 .summarybox main{
     display: flex;
     gap: 5%;
+   
     align-items: stretch;
     padding: 15px 10px;
 }
@@ -172,11 +179,14 @@
     width: 100%
 }
 
-.summarybutns > button {
+.summarybutns > button ,.summarybutns > a {
+    color: black;
     background-color: rgb(238, 215, 5);
     font-weight: 500;
     padding: 4px 8px;
     border-radius: 2px;
+    width:9rem;
+    
 }
 
 .summarybox main section div:first-child{
@@ -218,6 +228,34 @@
     font-size: .9rem;
     color: gray;
 
+}
+
+.quantityBox{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+.quantityBox input::-webkit-outer-spin-button, .quantityBox input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+.statQuantity{
+    border: rgb(205, 196, 196) solid;
+    line-height: 15px;
+    padding: 2px 4px;
+    margin: 0;
+    width: 2rem ;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.quantityBox input{
+    width: 2rem;
+    height: 1.5rem;
 }
 
 .priceoffer{
@@ -357,6 +395,15 @@
     
     }
 
+    .priceDetails{
+        position: static;
+        margin-top: 20px;
+        box-shadow: 1px 1px 5px gray;
+        height: max-content;
+        padding: 10px 20px;
+        width: 100%;
+    }
+
     .leftcontainer{
         
         display: flex;
@@ -399,6 +446,7 @@
 
 
 @media (max-width:1040px) {
+ 
 
     .addresscontent p{
         display: -webkit-box;
@@ -410,11 +458,111 @@
         white-space: normal; 
        }
 
+       .summarybox main div:first-child {
+        width: 25%;
+        min-width:25%;
+    }
+    .summarybox main section div:first-child{
+        text-wrap: nowrap;
+        width: 100%;
+    
+    }
+    
+    .summarybox main div:first-child img {
+        width: 100%;
+    
+    
+    }
+
        .summarybutns{
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
         vertical-align: top;
+        gap: 2rem;
         width: 100%
     }
+
+    .summarybutns > button , .summarybutns > a{
+        font-size: .8rem;
+        font-weight: 500;
+        width: 10rem;
+    }
+
+
+    .toptext{
+        font-size:1rem ;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        min-width:100%;
+       vertical-align: top;
+       width: 100%;
+      
+    }
+
+    .summarybox main section {
+        display:flex;
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+    }
+    
+}
+
+@media (max-width:500px) {
+    .box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        box-shadow: 1px 1px 5px gray;
+        padding: 14px 20px;
+    }
+
+    .summarybutns > button ,.summarybutns > a {
+        background-color: rgb(238, 215, 5);
+        font-weight: 500;
+        font-size: .8rem;
+        padding: 2px 4px;
+        border-radius: 2px;
+        width: 5rem;
+        
+    }
+
+    .addresscontent p{
+        font-size: .8rem;
+        width: 90%;
+       }
+    
+.box{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 1px 1px 5px gray;
+    padding: 10px 10px;
+}
+
+
+.continueSec{
+    box-shadow: 1px 1px 1px lightgray;
+    padding: 10px 10px;
+  
+}
+.continueSec p{
+    font-size: .7rem;
+    font-weight: 500;
+    text-align: left;
+    color: gray;
+    text-transform: capitalize;
+}
+
+.continueSec >button ,.continueSec a {
+    background-color: rgb(232, 132, 11);
+    padding:6px 8px;
+    font-size: .9rem;
+    font-weight: 500;
+    color:white;
+    border-radius: 5px;
+}
 }
