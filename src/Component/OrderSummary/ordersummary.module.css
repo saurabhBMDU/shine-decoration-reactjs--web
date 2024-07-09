@@ -2,7 +2,6 @@
     display: flex;
     gap: 2%;
    padding: 2% 5%;
-  
 
 }
 
@@ -10,10 +9,8 @@
     flex:3;
     display: flex;
     flex-direction: column;
-    
    align-items: flex-end;
     gap:1rem ;
-  
     
 }
 
@@ -23,13 +20,13 @@
     width: 100%;
     box-shadow: 1px 1px 5px gray;
     padding: 14px 20px;
-
 }
 
 .box main{
     display: flex;
     gap:1.5rem;
 }
+
 .box main div:first-child p {
     background-color: rgb(232, 232, 232);
     padding: 5px 7px;
@@ -149,10 +146,12 @@
 
 .summarybox main div:first-child {
     width: 20%;
+    min-width:15%;
 }
 
 .summarybox main div:first-child img {
     width: 100%;
+
 
 }
 .summarybox main section {
@@ -346,4 +345,76 @@
     font-weight: 500;
     text-transform: capitalize;
 
+}
+
+@media (max-width:1450px) {
+
+    .maincontainer{
+        display: flex;
+        flex-direction: column;
+        gap: 2%;
+       padding: 2% 5%;
+    
+    }
+
+    .leftcontainer{
+        
+        display: flex;
+        flex-direction: column;
+       align-items: flex-end;
+        gap:1rem ;
+    }
+
+    .buttonContent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .buttonContent button{
+        vertical-align: top;
+        border:1px solid lightgray;
+        color: rgb(49, 123, 234);
+        font-weight: 600;
+        padding: 5px 12px;
+        font-size: .9rem;
+        text-transform: uppercase;
+        
+           }
+
+           .addresscontent p{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Number of lines to show */
+            line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal; 
+            max-width: 40rem;
+            min-width: 18rem;
+           }
+        
+    }
+    
+    
+
+
+@media (max-width:1040px) {
+
+    .addresscontent p{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* Number of lines to show */
+        line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal; 
+       }
+
+       .summarybutns{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: top;
+        width: 100%
+    }
 }
