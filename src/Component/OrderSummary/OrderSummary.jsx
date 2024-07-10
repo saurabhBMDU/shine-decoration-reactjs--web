@@ -7,6 +7,7 @@ import { getProductDetails } from "../../action/productdetailaction";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
+import ChangeAddress from "./ChangeAddress";
 
 const OrderSummary = () => {
     const navigate = useNavigate()
@@ -14,20 +15,27 @@ const OrderSummary = () => {
     const dispatch = useDispatch()
     const userDetails = useSelector(state=>state?.getUser?.user)
     const user = checkUser()
+    const [selectedAddress, setSelectedAddress ]= useState({ })
     const [modal , setModal] = useState(false);
+    const [addressModal , setAddressModal] = useState(false)
     const [quantity ,setQuantity] = useState(1)
     const [updating, setUpdating] = useState(false)
     const productDetails = useSelector(state=>state.productDetails?.product)
 
     useEffect(()=>{
         dispatch(getProductDetails(id))
+       
     },[dispatch])
-  
+   useEffect(()=>{
+    if(userDetails){
+      setSelectedAddress(userDetails.shipping_address[0])
+    }
+   },[userDetails])
     // console.log(productDetails,'pro')
     // if(productDetails){
     // }
     const handleAddress = useCallback(()=>{
-        navigate('/profile/address')
+        setAddressModal(true)
 
     })
     const handleIncreaseQuantity = () => {
@@ -41,6 +49,8 @@ const OrderSummary = () => {
         setQuantity(prev => prev - 1)
         setUpdating(false)
     }
+
+   
 
 
   return (
@@ -62,6 +72,7 @@ const OrderSummary = () => {
             <button onClick={()=>setModal(true)}>change</button>
           </div>
         </div>
+       {selectedAddress ?( 
         <div className={css.box}>
           <main>
             <div>
@@ -70,8 +81,7 @@ const OrderSummary = () => {
             <div className={`${css.addresscontent}`}>
               <h5 className="">DELIVERY ADDRESS</h5>
               <p className={css.address}>
-                <span>samuelking</span> No.10, Main Market, Near State Bank of
-                India, Nizamuddin West, New Delhi, Delhi <span> 110013</span>
+                <span>{selectedAddress.fullName}</span> -<span>{selectedAddress.mobile}</span> ,{selectedAddress.billing_address}  <span>pinCode:{selectedAddress.pinCode}</span>
               </p>
             </div>
           </main>
@@ -79,6 +89,7 @@ const OrderSummary = () => {
             <button onClick={handleAddress}>change</button>
           </div>
         </div>
+      ):(null)}
         <div className={css.summarybox}>
           <div>
             <p>3</p>
@@ -153,11 +164,17 @@ const OrderSummary = () => {
         </main>
       </section>
       {userDetails ? (
-            modal ? (
+        <>
+            {modal ? (
                 <ChangeUser user={userDetails} setModal={setModal}/>
             )  : (
                 null
-            )
+            )}
+          { addressModal ?  (
+            <ChangeAddress userDetails={userDetails} setModal={setAddressModal} currentAdress={selectedAddress} setSelectedAddress={setSelectedAddress}/>
+          ):(null)}
+        </>
+          
       
       ):(
         null

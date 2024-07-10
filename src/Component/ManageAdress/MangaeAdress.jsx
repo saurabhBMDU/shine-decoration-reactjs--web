@@ -1,8 +1,13 @@
-import React, { useCallback, useState } from "react";
-import { addNewAdress} from "../../action/authaction";
-import { useDispatch } from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import { addNewAdress, deleteAdress} from "../../action/authaction";
+import { useDispatch, useSelector } from "react-redux";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { CiEdit } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const MangaeAdress = () => {
+  const userDeails = useSelector(state=> state.getUser?.user)
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     fullName: "",
@@ -24,11 +29,25 @@ const MangaeAdress = () => {
       [name]: value
     });
   };
+  const handleCancel = () =>{
+    setFormData({
+      fullName: "",
+      email: "",
+      phoneNumber: "",
+      addressLine1: "",
+      addressLine2: "",
+      country: "",
+      state: "",
+      city: "",
+      district:"",
+      pincode: ""
+    })
 
+  }
   const handlesubmit = useCallback((e)=>{
     e.preventDefault()
     const body = {
-        name:formData.fullName,
+      fullName:formData.fullName,
         billing_address :(formData.addressLine1 +','+ formData.addressLine2),
         email:formData.email,
         mobile:formData.phoneNumber,
@@ -39,11 +58,17 @@ const MangaeAdress = () => {
         pinCode:formData.pincode
 
     }
-    console.log(body,"body ")
     dispatch(addNewAdress(body))
-    
-
   })
+
+  const handleDeleteAddress = useCallback((id)=>{
+    dispatch(deleteAdress(id))
+
+  },[dispatch,userDeails])
+
+  useEffect(()=>{
+    
+  },[userDeails,dispatch])
 
   return (
     <div className="container-fluid">
@@ -72,6 +97,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">Full name</label>
                       <input
+                      required
                         type="text"
                         className="form-control"
                         name="fullName"
@@ -86,6 +112,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">Email</label>
                       <input
+                      required
                         type="email"
                         className="form-control"
                         name="email"
@@ -98,6 +125,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">Phone number</label>
                       <input
+                      required
                         type="text"
                         className="form-control"
                         name="phoneNumber"
@@ -116,6 +144,7 @@ const MangaeAdress = () => {
                 <div className="mb-3">
                   <label className="form-label">Address Line 1</label>
                   <input
+                  required
                     type="text"
                     className="form-control"
                     name="addressLine1"
@@ -138,6 +167,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">Country</label>
                       <input
+                      required
                         className="select2 form-control"
                         name="country"
                         value={formData.country}
@@ -151,6 +181,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">State</label>
                       <input
+                      required
                         className="select2 form-control select2-hidden-accessible"
                         name="state"
                         type="text"
@@ -166,6 +197,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">City</label>
                       <input
+                      required
                         className="select2 form-control select2-hidden-accessible"
                         name="city"
                         type="text"
@@ -179,6 +211,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">District</label>
                       <input
+                      required
                         type="text"
                         className="form-control"
                         name="district"
@@ -191,6 +224,7 @@ const MangaeAdress = () => {
                     <div className="mb-3">
                       <label className="form-label">Pincode</label>
                       <input
+                      required
                         type="number"
                         className="form-control"
                         name="pincode"
@@ -203,7 +237,7 @@ const MangaeAdress = () => {
               </div>
             </div>
             <div className="hstack gap-3">
-            <button className="btn btn-light btn-sm btn-icon-text">
+            <button className="btn btn-light btn-sm btn-icon-text" onClick={()=>handleCancel()}>
               <i className="bi bi-x"></i> <span className="text">Cancel</span>
             </button>
             <button className="btn btn-primary btn-sm btn-icon-text">
@@ -214,22 +248,50 @@ const MangaeAdress = () => {
           </div>
           {/* Right side */}
           <div className="col-lg-4">
-            <div className="border border-primary w-full">
-              <h4 className="text-secondary text-center">Address-1</h4>
-              <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
-                Name: alex ehem
-              </p>
-              <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
-                Ph: 8884039399
-              </p>
-              <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
-                Email: abcd@gmail.com
-              </p>
-              <p className="m-0 px-2">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem necessitatibus tenetur nostrum aliquam deserunt.
-              </p>
-              <span className="px-2" style={{ fontWeight: 500, color: "black" }}>Zip Code: 78654</span>
-            </div>
+            {
+              userDeails  ? (
+                userDeails.shipping_address.length <= 0 ? (
+                  <div style={{height:'5rem',width:'100%',textTransform:'uppercase', fontWeight:'500'}}>
+                    <h4 className="text-center text-primary">please add new adress</h4>
+                    <p className="text-center text-dark" style={{fontWeight:600}}>you have not added any shipping adress</p>
+                  </div>
+
+                ) :(
+
+                  userDeails.shipping_address.map((item,index)=>{
+                    return(
+                    <div key={index} className="border border-primary w-full mb-2">
+                      <div className="d-flex justify-content-between  py-1 px-2">
+                      <h4 className="text-secondary text-center">Address-{index+1}</h4>
+                      <div>
+                      <Link to={`/profile/updateaddress/${item._id}`}> <CiEdit color="blue"  size={25}/></Link>
+                      <RiDeleteBin6Line color="red" size={25} onClick={()=>handleDeleteAddress(item._id)}/>
+                      </div>
+                      </div>
+                      <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
+                        Name: {item.fullName}
+                      </p>
+                      <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
+                        Ph: {item.mobile}
+                      </p>
+                      <p className="px-2 m-0" style={{ fontWeight: "500", color: "black" }}>
+                        Email: {item.email}
+                      </p>
+                      <p className="m-0 px-2">
+                        {item.billing_address}
+                      </p>
+                      <span className="px-2" style={{ fontWeight: 500, color: "black" }}>PinCode:{item.pinCode}</span>
+                    </div>
+                    )
+                  })
+                )
+
+              ) : (
+                <div>no Address found</div>
+
+              )
+            }
+            
           </div>
           
         </div>

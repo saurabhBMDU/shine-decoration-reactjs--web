@@ -1,9 +1,11 @@
 import { API_URL } from '../service/api';
 import axios from 'axios';
 import {
+  ADD_NEW_ADDRESS,
+  DELETE_ADDRESS,
   GET_PROFILE,
   REGISTER_SUCCES,
-  UPDATE_ADRESS,
+  UPDATE_ADDRESS,
 } from './actionType';
 import { toast } from 'react-toastify';
 
@@ -143,11 +145,11 @@ export const getUser = () => {
       });
       
       if (response.status === 200) {
-        const { statusCode, data } = response.data;
+        const { statusCode, result} = response.data;
         if (statusCode === 200) {
           dispatch({
             type: GET_PROFILE,
-            payload: response.data.result
+            payload:result
           });
           // toast.success('user details fetched');
         } else {
@@ -174,6 +176,7 @@ export const addNewAdress = (address)=>{
       return; // Early return if token is not present
       }
       try {
+        console.log(address,'from add address');
         const response = await fetch(`${API_URL}/mobileApi/profile`, {
           method: 'PUT',
           headers: {
@@ -189,8 +192,8 @@ export const addNewAdress = (address)=>{
               const {statusCode,result}= data;
               if(statusCode===200){
                 dispatch({
-                  type:UPDATE_ADRESS,
-                  payload:response.data
+                  type:ADD_NEW_ADDRESS,
+                  payload:result
                   });
                   console.log(data,'from add new adress')
                   toast.success('new adress added');
@@ -207,4 +210,85 @@ export const addNewAdress = (address)=>{
 
 
   }
+}
+
+
+
+  export const deleteAdress = (index)=>{
+    return async dispatch => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // toast.error('please login');
+        return; // Early return if token is not present
+        }
+        try {
+          const response =await fetch(`${API_URL}/mobileApi/delete-shipping-address/${index} `,{
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if(response.status===200){
+            const data = await response.json()
+            const {statusCode,result}= data;
+            if(statusCode===200){
+              dispatch({
+                type:DELETE_ADDRESS,
+                payload:result
+            })
+            console.log('delted address',data);
+            toast.success('adress deleted');
+          }
+        } 
+    }catch (error) {
+      toast.error('error from delete adress');
+      console.log(error,'delete adress')
+          
+    }
+
+  }
+}
+
+
+export const updateAddress = (index,data)=>{
+  return async dispatch => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // toast.error('please login');
+      return; // Early return if token is not present
+  }
+  try {
+    console.log(data, 'address from updaet')
+    const response = await fetch(`${API_URL}/mobileApi/update-shipping-address/${index}`,{
+      method: 'PUT',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+      shippingAddress: data
+      })
+    })
+    if(response.status){
+      const data = await response.json();
+      const {statusCode,result}= data;
+      if(statusCode===200){
+        dispatch({
+          type:UPDATE_ADDRESS,
+          payload:result
+        })
+        console.log('response',result);
+        toast.success('address updated')
+      }else{
+        throw Error('error while address updation')
+      }
+    }
+    
+  } catch (error) {
+    toast.error('error from update adress');
+    console.log(error,'update adress')
+    
+  }
+}
 }

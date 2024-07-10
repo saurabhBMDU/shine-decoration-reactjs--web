@@ -23,6 +23,7 @@ import CategoryResult from '../Component/CatagoryResult/CatagoryResult';
 import FilterResultPage from '../Component/FilterReulst/FilterResultPage';
 import OrderSummary from '../Component/OrderSummary/OrderSummary';
 import MangaeAdress from '../Component/ManageAdress/MangaeAdress';
+import UpdateAddress from '../Component/UpdateAddress/UpdateAddress';
 
 function AppRouter() {
     return (
@@ -38,6 +39,7 @@ function AppRouter() {
                 <Route path='/termsandcondition' element={<TermsOfService/>}/>
                 <Route path='/cart' element={<Viewcart />} />
                 <Route path='/profile/address' element={<MangaeAdress/>} />
+                <Route path='/profile/updateaddress/:id' element={<UpdateAddress />} />
                 <Route path='/logout' element={<LogoutUser/>}/>
                 <Route path='/result/:id' element={<SearchResult/>} />
                 <Route path='/filtered/:id' element={<FilterResultPage/>} />

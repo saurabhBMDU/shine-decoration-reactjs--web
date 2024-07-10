@@ -385,6 +385,56 @@ input[type=number] {
 
 }
 
+.changeuserMain{
+    padding: 10px 17px;
+    position: absolute !important;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px gray;
+    border: rgb(232, 132, 11) solid;
+}
+.mainAddress{
+    box-shadow:1px 1px 1px black ;
+}
+
+.addresscard{
+    display: flex;
+    width: 30rem;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 1rem;
+    border-radius: 10px;
+    border: rgb(235, 232, 232) solid;
+    margin-bottom: .5rem;
+    
+}
+
+.addresscard > div:nth-child(2) > p{
+    font-size: .8rem;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; 
+    margin: 0;
+
+}
+
+.addresscard > div:nth-child(2) > span{
+    font-size: .8rem;
+    font-weight: 500;
+}
+
 @media (max-width:1450px) {
 
     .maincontainer{
