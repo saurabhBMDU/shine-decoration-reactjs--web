@@ -9,7 +9,8 @@ import '../SearchResult/searchResult.css'
 
 const FilterResultPage = () => {
     const {id } = useParams()
-    const products = useSelector(state =>state.productData?.data?.result?.products)
+    const products = useSelector(state =>state.filteredProducts?.products?.products)
+    console.log(products,'filterrrr')
   return (
     <>
         <section>

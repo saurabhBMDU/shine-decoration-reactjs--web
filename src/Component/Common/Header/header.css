@@ -425,3 +425,15 @@ right:7px;
     right: 0px !important;
 
 }
+
+.category-filter{
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+ 
+
+}
+
+.category-filter::-webkit-scrollbar{
+    display: none;
+}

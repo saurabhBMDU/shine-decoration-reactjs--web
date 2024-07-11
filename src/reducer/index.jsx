@@ -8,6 +8,7 @@ import SearchResultReducer from './searchlistReducer';
 import getWhishlistReducer from './getWishlistReducer';
 import getUserReducer from './getUserDetailsReducer';
 import recentProuductsReducer from './recentProductsReducer';
+import filterReducer from './filterReducer';
 
 
 const rootReducer = combineReducers({
@@ -20,7 +21,7 @@ const rootReducer = combineReducers({
     WishlistData:getWhishlistReducer,
     getUser:getUserReducer,
     recentProducts:recentProuductsReducer,
-   
+    filteredProducts:filterReducer,
 });
 
 export default rootReducer;

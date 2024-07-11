@@ -25,7 +25,7 @@ export const addRecentProduct = (productId) => {
             const {data, message , statusCode} = datas
           if (statusCode === 200) {
             console.log(datas)
-            toast.success(message);
+            // toast.success(message);
             dispatch({ type: GET_RECENT_PRODUCT, payload: data });
             } else {
                 throw Error('went wrong in add to recent items')

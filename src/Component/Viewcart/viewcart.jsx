@@ -34,7 +34,7 @@ export default function Viewcart() {
       if (statusCode === 200) {
         setCartData(data.result);
       } else {
-        toast.error(message || "Failed to fetch cart data");
+        // toast.error( "Failed to fetch cart data");
       }
     } catch (error) {
       console.error("Error fetching cart data:", error);

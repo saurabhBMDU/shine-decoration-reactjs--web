@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { filterProducts } from '../../../action/filterAction';
+import PriceFilter from '../filter components/PriceFilter';
+import CategoryFilter from '../filter components/CategoryFilter';
 
 const Sidebar = ({ Open, onClose }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [sortBy, setSortBy] = useState({});
   const [SizeBy, setSizeBy] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [showSizeFilter, setShowSizeFilter] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(10000);
+  const [selectedCategory ,setSelectedCategory] = useState('')
   const filters = [
     'Categories',
-    'Designers',
     'Price',
     'Size',
     'Color',
@@ -44,7 +51,8 @@ const Sidebar = ({ Open, onClose }) => {
   const handleClearAll = () => {
     setSelectedFilter(null);
   };
-
+ 
+ 
   const colors = [
     { name: 'Beige', hex: '#f5f5dc' },
     { name: 'White', hex: '#fff' },
@@ -105,13 +113,60 @@ const Sidebar = ({ Open, onClose }) => {
     }
   };
 
-  const handleRadioFilter = (option) => {
-    navigate(`/filtered/${option}`)
-    
+  const handleRadioFilter = useCallback(async (key, value) => {
+    try {
+      let filterKey;
+      switch(value) {
+        case 'Popularity':
+          filterKey = 'popular';
+          break;
+        case 'New Arrivals':
+          filterKey = 'arrival';
+          break;
+        case 'Price Low to High':
+          filterKey = 'low';
+          break;
+        case 'Price High to Low':
+          filterKey = 'high';
+          break;
+        case 'Discount Products':
+         filterKey = 'discount';
+         break;
+        default:
+          return;
+      }
+      await dispatch(filterProducts(key, filterKey)).then(()=>{
+        navigate(`/filtered/${value}`);
+      })
+    } catch (error) {
+      console.error('Error in filtering products:', error);
+    }
+  }, [dispatch, navigate]);
+   
+  const handleSubFilter = useCallback(async(filterName, value)=>{
+      console.log('subfilter running',filterName, value)
+      try {
+        await dispatch(filterProducts(filterName, value)).then(() => {
+          navigate(`/filtered/${value}`);
+        });
+      } catch (error) {
+        console.error('Error in subfiltering products:', error);
+      }
+    },[dispatch,navigate])
 
-  }
-
-
+   const handleApplyFunction = useCallback(async()=>{
+    try {
+  
+      navigate('/filtered/price')
+        console.log('running');
+       await dispatch(filterProducts(maxPrice,minPrice,'price')).then(
+       )
+      
+      
+    } catch (error) {
+      
+    }
+   },[maxPrice,minPrice])
 
 
   return (
@@ -161,7 +216,7 @@ const Sidebar = ({ Open, onClose }) => {
             <div className="sort-section">
               <h6 className='fw-bold'>Sort by</h6>
               <div className="sort-options px-2">
-                {['Popularity', 'New Arrivals', 'Price Low to High', 'Price High to Low', 'Discount High to Low'].map(option => (
+                {['Popularity', 'New Arrivals', 'Price Low to High', 'Price High to Low', 'Discount Products'].map(option => (
                   <div key={option} className="sort-option">
                     <input
                       type="radio"
@@ -170,7 +225,7 @@ const Sidebar = ({ Open, onClose }) => {
                       value={option}
                       checked={sortBy === option}
                       onChange={() => setSortBy(option)}
-                      onClick={()=>handleRadioFilter(option)}
+                      onClick={() => handleRadioFilter('filter', String(option))}
                     />
                     <label htmlFor={option}>{option}</label>
                   </div>
@@ -201,9 +256,9 @@ const Sidebar = ({ Open, onClose }) => {
             </div>
           </div>
         ) : (
-          // Size filter section
+          // Dynamic filter content based on selected filter
           <div className="filter-content">
-            {showSizeFilter ? (
+            {selectedFilter === 'Size' && (
               // Size filter section
               <div className="sort-options px-2">
                 {['S', 'M', 'L'].map(option => (
@@ -213,7 +268,7 @@ const Sidebar = ({ Open, onClose }) => {
                       id={option}
                       name="size"
                       value={option}
-                      checked={SizeBy.includes(option)}
+                      checked={SizeBy}
                       onChange={() => handleSizeSelection(option)}
                       className="large-checkbox"
                     />
@@ -221,7 +276,8 @@ const Sidebar = ({ Open, onClose }) => {
                   </div>
                 ))}
               </div>
-            ) : (
+            )}
+            {selectedFilter === 'Color' && (
               // Color filter section
               <div className="color-filter-container">
                 <div className="color-list">
@@ -242,6 +298,12 @@ const Sidebar = ({ Open, onClose }) => {
                 </div>
               </div>
             )}
+            {selectedFilter === 'Price' && (
+              <PriceFilter maxPrice={maxPrice} setMaxPrice={setMaxPrice} setMinPrice={setMinPrice} minPrice={minPrice} />
+            )}
+            {selectedFilter === 'Categories' && (
+              <CategoryFilter handleSubFilter={handleSubFilter} />
+            )}
           </div>
         )}
       </div>
@@ -253,8 +315,8 @@ const Sidebar = ({ Open, onClose }) => {
             <button className="clear-button" onClick={handleClearAll}>
               CLEAR ALL
             </button>
-            <button className="apply-button">
-              APPLY
+            <button onClick={handleApplyFunction} className='btn btn-warning'>
+              apply
             </button>
           </>
         )}
