@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { filterProducts } from '../../../action/filterAction';
 import PriceFilter from '../filter components/PriceFilter';
 import CategoryFilter from '../filter components/CategoryFilter';
+import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 
 const Sidebar = ({ Open, onClose }) => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Sidebar = ({ Open, onClose }) => {
   const [SizeBy, setSizeBy] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [showSizeFilter, setShowSizeFilter] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState([])
   const [selectedColor, setSelectedColor] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [minPrice, setMinPrice] = useState(0);
@@ -21,11 +23,19 @@ const Sidebar = ({ Open, onClose }) => {
   const filters = [
     'Categories',
     'Price',
-    'Size',
+    // 'Size',
     'Color',
-    'Shipping Time',
-    'Occasion'
+  
   ];
+
+  useEffect(()=>{
+
+    const button = document.querySelector('#apply');
+     console.log(getMouseEventOptions(button))
+  },[selectedFilter,])
+
+
+  
 
   const handleFilterClick = (filter) => {
     
@@ -56,7 +66,7 @@ const Sidebar = ({ Open, onClose }) => {
   const colors = [
     { name: 'Beige', hex: '#f5f5dc' },
     { name: 'White', hex: '#fff' },
-    { name: 'Off White', hex: '#fff' },
+    { name: 'OffWhite', hex: '#fff' },
     { name: 'Yellow', hex: '#FFFF00' },
     { name: 'Black', hex: '#000000' },
     { name: 'Blue', hex: '#0000ff' },
@@ -144,7 +154,7 @@ const Sidebar = ({ Open, onClose }) => {
   }, [dispatch, navigate]);
    
   const handleSubFilter = useCallback(async(filterName, value)=>{
-      console.log('subfilter running',filterName, value)
+      console.log('subfilter running',selectedColor)
       try {
         await dispatch(filterProducts(filterName, value)).then(() => {
           navigate(`/filtered/${value}`);
@@ -154,19 +164,29 @@ const Sidebar = ({ Open, onClose }) => {
       }
     },[dispatch,navigate])
 
-   const handleApplyFunction = useCallback(async()=>{
-    try {
-  
-      navigate('/filtered/price')
-        console.log('running');
-       await dispatch(filterProducts(maxPrice,minPrice,'price')).then(
-       )
-      
-      
-    } catch (error) {
-      
-    }
-   },[maxPrice,minPrice])
+    const handleApplyFunction = useCallback(async (e,filterName,value) => {
+      e.preventDefault();
+      try {
+       
+        console.log('Apply button clicked','color:',selectedColor);
+        if (selectedFilter === 'Price') {
+          console.log('Navigating to filtered/price');
+          navigate('/filtered/price');
+          await dispatch(filterProducts(maxPrice, minPrice, 'price'));
+          console.log('Dispatched successfully');
+        } else if ( selectedFilter === 'Categories'){
+          navigate('/filtered/category');        
+          await dispatch(filterProducts('category', categoryFilter, 'Categories'));
+        } else if (selectedFilter === 'Color'){
+          navigate('/filtered/color');
+          await dispatch(filterProducts('color', selectedColor, 'color'));
+
+
+        }
+      } catch (error) {
+        console.error('Error in applying filters:', error);
+      }
+    }, [dispatch, selectedFilter, maxPrice, minPrice, navigate, categoryFilter ,selectedColor]);
 
 
   return (
@@ -195,9 +215,10 @@ const Sidebar = ({ Open, onClose }) => {
         <p onClick={onClose}><i className="fa-solid fa-xmark"></i></p>
       </div>
       <div className='justify-content-between px-3 mt-2'>
-        {selectedFilter === null ? (
+        {selectedFilter === null || selectedFilter ==='Price' || selectedFilter === 'Size' ? (
           ""
         ) : (
+          
           <div className="search-container mb-1">
             <input
               type="text"
@@ -302,7 +323,7 @@ const Sidebar = ({ Open, onClose }) => {
               <PriceFilter maxPrice={maxPrice} setMaxPrice={setMaxPrice} setMinPrice={setMinPrice} minPrice={minPrice} />
             )}
             {selectedFilter === 'Categories' && (
-              <CategoryFilter handleSubFilter={handleSubFilter} />
+              <CategoryFilter setCategoryFilter={setCategoryFilter}  searchQuery={searchQuery}/>
             )}
           </div>
         )}
@@ -311,14 +332,16 @@ const Sidebar = ({ Open, onClose }) => {
         {selectedFilter === null ? (
           ''
         ) : (
-          <>
+          <section>
+
             <button className="clear-button" onClick={handleClearAll}>
               CLEAR ALL
             </button>
-            <button onClick={handleApplyFunction} className='btn btn-warning'>
-              apply
+            <button  onClick={(e)=>handleApplyFunction(e)} className='apply-button'>
+              Apply
             </button>
-          </>
+          </section>           
+          
         )}
       </div>
     </div>

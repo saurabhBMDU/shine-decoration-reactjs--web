@@ -52,7 +52,7 @@ export const addWishList = (productId) => {
 };
 
 
-export const addtoCart = ({ productId, quantity }) => {
+export const addtoCart = ({ productId, quantity=1 }) => {
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');

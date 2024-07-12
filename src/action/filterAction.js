@@ -9,6 +9,12 @@ export const filterProducts = (key,value,api='default') => {
             endpoint = `${key}=${value}`;
         }else if(api ==='price'){
             endpoint = `page=1&maxPrice=${key}&minPrice=${value}`
+        }else if ( api === 'Categories'){
+            const categories = Array.isArray(value) ? value.join(',') : value; // Handle multiple categories
+            endpoint = `page=1&${key}=${categories}`;
+        }else if  (api === 'color'){
+            const colors = Array.isArray(value) ? value.join(',') : value;
+            endpoint = `page=1&${key}=${colors}`
         }
         const token = localStorage.getItem('token');
         try {

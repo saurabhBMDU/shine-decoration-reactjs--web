@@ -2,90 +2,102 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./viewcart.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { API_URL } from "../../service/api";
-import { FaMinus, FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../action/productdetailaction";
-import { removeFromCart } from "../../action/getCartAction";
+import { getCart, removeFromCart } from "../../action/getCartAction";
+import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
+import { Card } from "react-bootstrap";
 
 export default function Viewcart() {
-  const [quantity, setQuantity] = useState(0);
-  const [cartData, setCartData] = useState(null);
-  const [updaterQ, setUpdaterQ] = useState(false);
+  const cartData = useSelector((state) => state.CartData?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [quantities, setQuantities] = useState({});
+  const [updateq, setUpdateQ] = useState({});
 
   const fetchCartData = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast.error("please log In ");
-        return;
-      }
-      const response = await fetch(`${API_URL}/mobileApi/cart/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      const { message, statusCode } = data;
-      if (statusCode === 200) {
-        setCartData(data.result);
-      } else {
-        // toast.error( "Failed to fetch cart data");
-      }
+      await dispatch(getCart());
     } catch (error) {
       console.error("Error fetching cart data:", error);
       toast.error("Failed to fetch cart data");
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  const removeCartProduct = useCallback((productId, quantity) => {
-    try {
-      dispatch(removeFromCart({ productId, quantity }));
-    } catch (error) {
-      console.error("Error removing product from cart:", error);
-    }
   }, [dispatch]);
+
+  const removeCartProduct = useCallback(
+    async (productId, quantity) => {
+      try {
+        await dispatch(removeFromCart({ productId, quantity }));
+        fetchCartData(); // Fetch the updated cart data
+      } catch (error) {
+        console.error("Error removing product from cart:", error);
+      }
+    },
+    [dispatch, fetchCartData]
+  );
 
   useEffect(() => {
     fetchCartData();
-  }, [fetchCartData, dispatch]);
+  }, [fetchCartData]);
 
-  const updateQuantity = (qnty) => {
-    setQuantity(Number(qnty));
-    setUpdaterQ(true);
+  useEffect(() => {
+    if (cartData?.cartItems) {
+      const initialQuantities = {};
+      cartData.cartItems.forEach((item) => {
+        if (item.product) {
+          initialQuantities[item.product._id] = item.quantity;
+        }
+      });
+      setQuantities(initialQuantities);
+    }
+  }, [cartData]);
+
+  const handleIncrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] + 1,
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
   };
 
-  const handleIncrease = (qnty) => {
-    if (!updaterQ) {
-      updateQuantity(qnty);
-    }
-    setQuantity((prevQuantity) => prevQuantity + 1);
-    setUpdaterQ(true);
-  };
-
-  const handleDecrease = (qnty) => {
-    if (!updaterQ) {
-      updateQuantity(qnty);
-    }
-    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-    setUpdaterQ(true);
+  const handleDecrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] > 1 ? prevQuantities[productId] - 1 : 1,
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
   };
 
   const handleUpdateCart = (productId) => {
+    const quantity = quantities[productId];
     dispatch(updateCart({ productId, quantity })).then(() => {
       fetchCartData();
+    }).then(() => {
+      setUpdateQ((prevUpdateQ) => ({
+        ...prevUpdateQ,
+        [productId]: false,
+      }));
     });
-    setQuantity(0);
-    setUpdaterQ(false);
   };
 
-  console.log(cartData, "cartData");
+  const handleQuantityChange = (productId, value) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Number(value),
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
+  };
 
   return (
     <>
@@ -93,112 +105,89 @@ export default function Viewcart() {
         <div className="loader"></div>
       ) : (
         <section className="containerCart">
-          <div className="cards">
-            {cartData && cartData.cartItems && cartData.cartItems.length > 0 ? (
-              cartData.cartItems.map((item) => (
-                <main className="cartCard" key={item.productId}>
-                  <div className="cartcardTopContainer">
-                    <div>
-                      <img
-                        src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRr_QzMJ350TxU4PYbQv74ryOyEO6-94rSpH_0eU6U2Xx5SUir3UeOSyI_Epa_DJvC3nmEMXFwqWbg19c8q0h-0RCxWxjTZhxGlZtFTEdkpHmAlWKF19YPbvg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="cartTexttop">
-                      <p>{item.product.product_name}</p>
-                      <p>{item.product.description}</p>
-                      <p>
-                        <span>₹{item.product.mrp_price}</span>{" "}
-                        <span>₹{item.product.selling_price}</span>{" "}
-                        <span className="off">
-                          ₹{`${item.product.mrp_price - item.product.selling_price}`} saves
-                        </span>{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="cartbottom">
-                    <div className="buttonbox">
-                      <div className="buttongrp">
-                        <div>
-                          <FaMinus onClick={() => handleDecrease(item.quantity)} />
+          <>
+            <div className="cards">
+              {cartData?.cartItems && cartData.cartItems.length > 0 ? (
+                cartData.cartItems.map((item) => (
+                  item.product && (
+                    <section className="cartcard-container" key={item.product._id}>
+                      <div className="cartcard">
+                        <div className="cartcartImgContainer">
+                          <img src={item.product.productImage} alt={item.product.product_name} />
                         </div>
-                        {updaterQ ? (
-                          <input
-                            type="number"
-                            min="1"
-                            onChange={(e) => setQuantity(e.target.value)}
-                            value={quantity}
-                            style={{ width: "3rem", padding: "3px 4px", textAlign: "center" }}
-                          />
-                        ) : (
-                          <div>{item.quantity}</div>
-                        )}
-                        <div>
-                          <FaPlus onClick={() => handleIncrease(item.quantity)} />
+                        <div className="cartcard-textPart">
+                          <div>
+                            <div>
+                              <h5>{item.product.product_name}</h5>
+                              <p>delivery in 5pm | <span className="text-success">FREE</span></p>
+                            </div>
+                            <p className="text-muted text-capitalize m-0">{item.product.category}</p>
+                          </div>
+                          <div className="cartcardPrice-sec">
+                            <p>₹{item.product.mrp_price}</p>
+                            <p>₹{item.product.selling_price}</p>
+                            <p>{(((item.product.mrp_price - item.product.selling_price) / item.product.mrp_price) * 100).toFixed(0)}% off</p>
+                          </div>
                         </div>
                       </div>
-                      <div className="buttongrp2">
-                        {updaterQ ? (
-                          <>
-                            <button
-                              onClick={() => handleUpdateCart(item.product._id)}
-                              className="py-1 px-2 fs-6 btn"
-                            >
-                              save
-                            </button>
-                            <button
-                              onClick={() => setUpdaterQ(false)}
-                              className="py-2 px-2 fs-6 badge bg-secondary"
-                            >
-                              cancel
-                            </button>
-                          </>
-                        ) : null}
-                        <div
-                          className="remove"
-                          style={{ fontWeight: "700" }}
-                          onClick={() => removeCartProduct(item.product._id, item.quantity)}
-                        >
-                          Remove
+                      <div className="cartcard-buttons">
+                        <div className="quantity-buttons">
+                          <CiCircleMinus size={35} onClick={() => handleDecrease(item.product._id)} />
+                          <div>
+                            <input
+                              type="number"
+                              value={quantities[item.product._id] || item.quantity}
+                              onChange={(e) => handleQuantityChange(item.product._id, e.target.value)}
+                              onFocus={() => setUpdateQ((prevUpdateQ) => ({
+                                ...prevUpdateQ,
+                                [item.product._id]: true,
+                              }))}
+                              min="1"
+                              style={{ width: "3rem", padding: "3px 4px", textAlign: "center" }}
+                            />
+                          </div>
+                          <CiCirclePlus size={35} onClick={() => handleIncrease(item.product._id)} />
                         </div>
+                        <button onClick={() => removeCartProduct(item.product._id, item.quantity)}>Remove</button>
+                        {updateq[item.product._id] && <button className="card-button" onClick={() => handleUpdateCart(item.product._id)}>Update</button>}
                       </div>
-                    </div>
-                  </div>
-                  <div className="last">
-                    <button className="orderbutton">Place Order</button>
-                  </div>
-                </main>
-              ))
-            ) : (
-              <div className="cards mx-auto" style={{ width: '50%', textAlign: 'center', marginTop: '3rem', fontSize: '1rem' }}>
-                <p style={{ fontWeight: 500, fontSize: '140%' }} className="--bs-warning">NO products in cart</p>
-                <Link className="text-center badge text-bg-warning fs-3 mt-4" to={'/'}>shop now</Link>
-              </div>
-            )}
-          </div>
-          <div className="col-md-4">
+                    </section>
+                  )
+                ))
+              ) : (
+                <div className="cards mx-auto" style={{ width: '50%', textAlign: 'center', marginTop: '3rem', fontSize: '1rem' }}>
+                  <p style={{ fontWeight: 500, fontSize: '140%' }} className="--bs-warning">No Products in Cart</p>
+                  <Link className="text-center badge text-bg-warning fs-3 mt-4" to={'/'}>shop now</Link>
+                </div>
+              )}
+            { cartData?.cartItems && cartData.cartItems.length > 0 && <div className="placeorder">
+                <button>Place order</button>
+              </div>}
+            </div>
+          </>
+          {cartData?.cartItems && cartData.cartItems.length > 0 && <div className=" col-md-4">
             <div className="price-details">
               <h5 className="product-title border-bottom py-2">Price Details</h5>
               <div className="py-1">
-                Price ({cartData && cartData.totalQuantity}):{" "}
-                <span className="float-end">₹{cartData && cartData.totalPrice}</span>
+                Price ({cartData?.totalQuantity || 0} items):{" "}
+                <span className="float-end">₹{cartData?.totalPrice || 0}</span>
               </div>
               <div className="py-1">
                 Discount:{" "}
-                <span className="text-success float-end"> ₹{cartData && cartData.totalDiscountedPrice}</span>
+                <span className="text-success float-end"> ₹{cartData?.totalDiscountedPrice || 0}</span>
               </div>
               <div className="py-1 mb-3">
                 Delivery Charges: <span className="text-success float-end">Free</span>
               </div>
               <div className="total-amount py-1 border-bottom border-top py-3">
                 Total Amount
-                <span className="text-success float-end"> ₹{cartData && cartData.totalPayablePrice}</span>
+                <span className="text-success float-end"> ₹{cartData?.totalPayablePrice || 0}</span>
               </div>
               <div className="save-amount py-1">
-                You will save ₹{cartData && cartData.totalDiscountedPrice} on this order
+                You will save ₹{cartData?.totalDiscountedPrice || 0} on this order
               </div>
             </div>
-          </div>
+          </div>}
         </section>
       )}
     </>

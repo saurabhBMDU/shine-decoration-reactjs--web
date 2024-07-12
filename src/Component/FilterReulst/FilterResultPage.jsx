@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { FaRegHeart } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { FaRegStarHalfStroke as HalfStar } from "react-icons/fa6";
 import { FaStar as FullStar} from "react-icons/fa6";
 import { FaRegStar as EmptyStar } from "react-icons/fa6";
 import '../SearchResult/searchResult.css'
+import { addtoCart, addWishList } from "../../action/productdetailaction";
 
 const FilterResultPage = () => {
     const {id } = useParams()
+    const dispatch = useDispatch()
     const products = useSelector(state =>state.filteredProducts?.products?.products)
-    console.log(products,'filterrrr')
+     
+   const handleAddtoCart = useCallback((productId)=>{
+    dispatch(addtoCart({productId}))
+   })
+
+   const handleAddtoWishlist = useCallback((id)=>{
+    dispatch(addWishList(id))
+   })
   return (
     <>
         <section>
@@ -22,12 +31,12 @@ const FilterResultPage = () => {
         {products && products.map(product => {
             return (
                 <main key={product._id}>
-                <div className="s-pic-container">
+                <Link to={`/productdetail/${product._id}`} className="s-pic-container">
                     <img src={product.productImage} alt="blank" />
-                </div>
+                </Link>
                 <div className="s-text-main-container">
                     <div className="s-text-container">
-                        <Link>{product.product_name}</Link>
+                        <Link to={`/productdetail/${product._id}`} >{product.product_name}</Link>
                         <div className="rating">
                             <div>
                                Rating : <FullStar size={18} className="" /> 5
@@ -44,8 +53,8 @@ const FilterResultPage = () => {
                         </div>
                     </div>
                     <div className="s-button-container">
-                        <button>add to cart</button>
-                        <button> wishlist <FaRegHeart/>  </button>
+                        <button  onClick={()=>handleAddtoCart(product._id)}>add to cart</button>
+                        <button onClick={()=>handleAddtoWishlist(product._id)}> wishlist <FaRegHeart/>  </button>
                     </div>
                 </div>
             </main>

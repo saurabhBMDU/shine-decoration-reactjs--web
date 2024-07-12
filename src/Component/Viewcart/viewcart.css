@@ -24,150 +24,200 @@
   color: green;
 }
 
-.card-button {
-  border-top: 1px solid #f0f0f0;
-  background: #fff;
-  padding: 16px 22px;
-  box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, .1);
-}
+
 
 
 .containerCart {
   display: flex;
+  background-color: #f1f3f6;
  
 }
 
+
+
 .cards{
-  width: 80%;
+  flex: 2;
   display: flex;
   flex-direction: column;
-}
-.cartCard{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content:start;
- box-shadow: 1px 1px 5px ;
-  border-radius: 1rem;
-  padding: 1rem 1rem;
-  width: 90%;
-  margin: 2rem 4rem;
+  padding: 0rem 2rem;
+  padding-top: 2rem;
+  gap: 1rem;
 }
 
-.cartcardTopContainer{
+.cartcard-container{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 1px 5px rgb(183, 183, 183);
+  background-color: #ffffff;
+  padding: 2rem 2rem;
+  
+}
+.cartcard{
+
+ display: flex;
+ justify-content: start;
+ align-items: stretch;
+ gap: 2rem;
+ 
+}
+
+.cartcartImgContainer img{
+  width: 8rem;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.cartcard-textPart{
+ display: flex;
+ flex: 3;
+ flex-direction: column;
+ gap: 0;
+ 
+}
+
+.cartcard-textPart > div:first-child{
+  display: flex;
+ flex-direction: column;
+  margin: 0;
+}
+
+.cartcard-textPart > div:first-child div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartcard-textPart >div:first-child div p{
+  margin-right: 2rem;
+ font-weight: 300;
+  text-wrap: nowrap;
+  text-transform: capitalize;
+}
+
+.cartcard-textPart > div:first-child div h5{
+  font-weight: 400;
+  text-transform: capitalize;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; 
+  width: 100%;
+}
+
+.cartcard-textPart > .cartcardPrice-sec{
   display: flex;
   justify-content: start;
   align-items: center;
-  gap:20%;
-}
-
-.cartcardTopContainer div img {
-  object-fit: cover;
-  height: 12rem;
-  width: 15rem;
-  border-radius: 1rem;
-}
-
-.cartTexttop p:first-child{
-  font-weight: 400 !important;
-  font-size: 1rem !important
-}
-
-.cartTexttop p:nth-child(2){
-  color: rgb(113, 108, 108);
-}
-.cartTexttop p:last-child {
-  display: flex;
-  gap: 20%;
-}
-
-.cartTexttop p:last-child span:first-child{
-  color:rgb(113, 108, 108);
-  text-decoration: line-through;
-  
-}
-
-.cartTexttop p:last-child span:last-child {
-  text-decoration: solid;
-  color: black;
-  font-weight: 500;
-}
-
-.off{
-  color: green;
-  font-weight: 500;
-}
-
-.buttonbox{
-  display: flex;
   gap: 1rem;
-  justify-content:center;
-  align-items: center;
+
 }
 
-.buttonbox .buttongrp div{
-  box-shadow: 2px 4px 5px lightgray;
-  padding: 2px 5px;
-  border-radius: 1rem;
-  transition: all .8s;
+.cartcardPrice-sec>p{
+  margin: 0;
+}
+.cartcardPrice-sec p:first-child{
+  font-weight: 300;
+  text-decoration: line-through;
 }
 
-.buttonbox .buttongrp div:nth-child(1):hover , .buttonbox div:nth-child(3):hover {
- background: lightgray;
- 
+.cartcardPrice-sec p:nth-child(2){
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
-.buttonbox .buttongrp div:nth-child(1):active , .buttonbox div:nth-child(3):active {
-  background: white;
- }
+.cartcardPrice-sec p:nth-child(3){
+  color: green;
+  font-weight: 400;
+  text-transform: uppercase;
+}
 
-.buttongrp2{
-  
-  width:200px;
+
+.cartcard-buttons{
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
-
-}
-
-.cartbottom{
-  display: flex;
-  margin-top: 2rem;
-   align-items: center;
-   justify-content: start;
-   gap: 10%;
-}
-
-.remove{
-  transition: all .8s;
-  color: red;
-  border-radius: .3rem;
-  font-size: 1rem;
-  padding: 3px 5px;
-  box-shadow: 2px 2px 5px rgb(86, 84, 84);
-  cursor: pointer;
-}
-
-.remove:hover{
-  color: rgb(93, 6, 6);
-}
-.last {
+  gap: 2rem;
   margin-top: 1rem;
-  padding-top: .5rem;
-  border-top: solid rgba(128, 128, 128, 0.341);
-  display: flex;
-  align-items: center;
-  justify-content: end;
-} 
-
-.orderbutton{
-  background: rgb(226, 233, 10);
-  padding: 8px 16px;
-  border-radius: 5px;
-  font-weight: 700;
-  align-self: last flex-end;
 
 }
+.cartcard-buttons > button{
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+ border: none !important;
+ outline: none !important;
+  background-color: inherit;
+
+}
+
+.quantity-buttons{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap:.4rem
+
+}
+.quantity-buttons > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quantity-buttons > div > input {
+  width: 4rem;
+  height: 1.8rem;
+  text-align: center;
+}
+.quantity-buttons > div > label{
+  width: 4rem;
+  height: auto;
+  text-align: center;
+  cursor: pointer;
+  border: gray solid;
+}
+
+.quantity-buttons > div >input[type=number]{
+  -moz-appearance: textfield;
+}
+
+
+.quantity-buttons > div >input::-webkit-outer-spin-button,
+.quantity-buttons > div >input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.placeorder{
+  position: sticky;
+  bottom: 0px;
+  display: flex;
+  justify-content: end;
+  padding: 1rem;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: -0px -2px 5px gray;
+}
+
+.placeorder > button{
+  background-color: rgb(196, 106, 2);
+  padding: 6px 14px;
+  font-size: 1.3rem;
+  color: white;
+  border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
+
 
 .off{
   display: flex;
@@ -176,173 +226,100 @@
   font-weight: 500;
 }
 
-.orderbutton:hover{
-  background-color: rgb(119, 119, 13);
-}
 
-.buttongrp{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:4px;
-  box-shadow: none;
-}
 
-.buttongrp2{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  width: 100%;
-}
-
-@media (max-width:1020px) {
+@media (max-width:950px) {
   
+
+.containerCart {
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f3f6;
+ 
+}
+
 .cards{
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-  .cartCard{
-    display: flex;
-    flex-direction: column;
-    align-content:start;
-   
-    border-radius: 1rem;
-    padding: 0rem 0rem;
-    width: 80%;
-    margin: 2rem 2rem;
-  }
+.cartcard-container{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 1px 5px rgb(183, 183, 183);
+  background-color: #ffffff;
+  padding: .5rem .5rem;
+}
   
-  .cartcardTopContainer div img {
-    object-fit: cover !important;
-    object-position: center;
-    height: 15rem;
-    width: 100% !important;
-    border-radius: 1rem;
-  }
-  
-
-  .cartcardTopContainer{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-     gap: 5%;
-     margin: 0;
-     padding: 0;
-  }
- 
-  .cartTexttop{
-    text-align: start;
-  }
-
-  .cartTexttop p:last-child {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 20%;
-  }
-
-  .cartbottom{
-    display: flex;
-    margin-top: 2rem;
-     align-items: center;
-     justify-content: center;
-     gap: 10%;
-  }
-  
-  .last {
-    margin-top: 1rem;
-    padding: .5rem;
-    border-top: solid rgba(128, 128, 128, 0.341);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } 
-
   
 }
 
 
-@media (max-width:850px) {
-  
-  .cartCard{
-    display: flex;
-    flex-direction: column;
-    align-content:start;
-    border-radius: .5rem;
-    padding: 0rem 0rem;
-    width: 70%;
-    margin: 2rem 2rem;
-  }
-  
-  .cartcardTopContainer div img {
-    object-fit: cover !important;
-    object-position: center;
-    height: 15rem;
-    width: 100% !important;
-    border-radius: 1rem;
-  }
-  
+@media (max-width:600px) {
 
-  .cartcardTopContainer{
+  .cartcard{
+
     display: flex;
-    flex-direction: column;
     justify-content: start;
-    align-items: normal;
-    width: 100%;
-     gap: 5%;
-     margin: 0;
-     padding: 0;
-  }
- 
-  .cartTexttop{
-    text-align: center;
+    align-items: stretch;
+    gap: 1rem;
   }
 
-  .cartTexttop p:last-child {
+  .cartcard-textPart > .cartcardPrice-sec{
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    gap: 5%;
+    gap: 1rem;
+  
   }
+ .cartcartImgContainer{
+  display: flex;
+  align-items: top;
+ }
 
-  .cartbottom{
-    display: flex;
-    margin-top: 2rem;
-   
-     justify-content: center;
-     text-align: center;
-     gap: 10%;
+  .cartcartImgContainer img{
+    width: 6rem;
+    height: 100%;
+    object-fit: contain;
+  
   }
   
-  .last {
-    margin-top: 1rem;
-    padding: .5rem;
-    border-top: solid rgba(128, 128, 128, 0.341);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } 
 
-  .buttonbox{
+  .cartcard-textPart > div:first-child{
+    display: flex;
+   flex-direction: column;
+    margin: 0;
+  }
+  
+  .cartcard-textPart > div:first-child div {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    justify-content:center;
-    align-items: center;
   }
-
-
-  .buttongrp2{
   
-    width:100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  
+  .cartcard-textPart >div:first-child div p{
+    margin-right: .5rem;
+   font-weight: 300;
+   font-size: .7rem;
+    text-wrap: nowrap;
+    text-transform: capitalize;
   }
+  
+  .cartcard-textPart > div:first-child div h5{
+    font-weight: 400;
+    font-size: 1rem;
+    text-transform: capitalize;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; 
+    width: 100%;
+  }
+  
+  
+ 
 }
 
 
