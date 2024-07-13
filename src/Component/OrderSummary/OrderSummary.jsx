@@ -20,7 +20,7 @@ const OrderSummary = () => {
     const [addressModal , setAddressModal] = useState(false)
     const [quantity ,setQuantity] = useState(1)
     const [updating, setUpdating] = useState(false)
-    const productDetails = useSelector(state=>state.productDetails?.product)
+    const productDetails = useSelector(state=>state.OrderSummary?.data?.cartItems)
 
     useEffect(()=>{
         dispatch(getProductDetails(id))
@@ -95,42 +95,46 @@ const OrderSummary = () => {
             <p>3</p>
             <p>Order summary</p>
           </div>
-          <main>
-            <div>
-              <img src={productDetails && productDetails.productImage} alt="" />
-            </div>
-            <section>
-              <div className={css.toptext}>
-                <main>
-                  <div className={css.productnames}>
-                    <p>{productDetails && productDetails.product_name}</p>
-                    <p>{productDetails&& productDetails.category}</p>
-                  </div>
-                  <p>seller : name</p>
-                </main>
+          {productDetails && productDetails.map(product=>{
+            return (
+              <main>
                 <div>
-                  <p>delivery is by 5th august</p>
+                  <img src={product && product.productImage} alt="" />
                 </div>
-              </div>
-              <div className={css.priceoffer}>
-                <p>₹{productDetails && productDetails.mrp_price}</p>
-                <p>₹{productDetails && productDetails.selling_price}</p>
-                <p>{productDetails&& (((productDetails.mrp_price - productDetails.selling_price)/productDetails.mrp_price)*100).toFixed(0)}% OFF</p>
-              </div>
-              <div className={css.summarybutns}>
-                 <div className={css.quantityBox}>
-                 
-                 <CiSquareMinus size={34} onClick={handleDecreaseQuantity}/>
-                 
-                 <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{quantity}</p>
-                
-                 <CiSquarePlus size={34} onClick={handleIncreaseQuantity}/>
-                
-                 </div>
-                <Link to={'/'}>Back to shopping</Link>
-              </div>
-            </section>
-          </main>
+                <section>
+                  <div className={css.toptext}>
+                    <main>
+                      <div className={css.productnames}>
+                        <p>{product && product.product_name}</p>
+                        <p>{product&& product.category}</p>
+                      </div>
+                      <p>seller : name</p>
+                    </main>
+                    <div>
+                      <p>delivery is by 5th august</p>
+                    </div>
+                  </div>
+                  <div className={css.priceoffer}>
+                    <p>₹{product && product.mrp_price}</p>
+                    <p>₹{product && product.selling_price}</p>
+                    <p>{product&& (((product.mrp_price - product.selling_price)/product.mrp_price)*100).toFixed(0)}% OFF</p>
+                  </div>
+                  <div className={css.summarybutns}>
+                    <div className={css.quantityBox}>
+                    
+                    <CiSquareMinus size={34} onClick={handleDecreaseQuantity}/>
+                    
+                    <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{quantity}</p>
+                    
+                    <CiSquarePlus size={34} onClick={handleIncreaseQuantity}/>
+                    
+                    </div>
+                    <Link to={'/'}>Back to shopping</Link>
+                  </div>
+                </section>
+              </main>
+            )
+          })}
         </div>
 
         <div className={css.continueSec}>
@@ -145,7 +149,7 @@ const OrderSummary = () => {
         <main>
           <div className={css.priceTop}>
             <p>
-              <span> price (item:{quantity}) </span> <span>₹{productDetails&& productDetails.selling_price * quantity}</span>
+              {/* <span> price (item:{quantity}) </span> <span>₹{product&& product.selling_price * quantity}</span> */}
             </p>
             <p>
               <span>delivery charges</span>
@@ -154,11 +158,11 @@ const OrderSummary = () => {
           </div>
           <div className={css.total}>
             <p>total payable</p>
-            <p>₹{productDetails&& formatNumberWithCommas( productDetails.selling_price)}</p>
+            {/* <p>₹{product&& formatNumberWithCommas( product.selling_price)}</p> */}
           </div>
           <div className={css.savings}>
             <p className="text-success">
-              your total savings on this order is ₹{productDetails&& (productDetails.mrp_price - productDetails.selling_price)*quantity}
+              {/* your total savings on this order is ₹{product&& (product.mrp_price - product.selling_price)*quantity} */}
             </p>
           </div>
         </main>

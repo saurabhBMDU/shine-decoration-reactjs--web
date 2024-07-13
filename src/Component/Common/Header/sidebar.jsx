@@ -26,16 +26,7 @@ const Sidebar = ({ Open, onClose }) => {
     // 'Size',
     'Color',
   
-  ];
-
-  useEffect(()=>{
-
-    const button = document.querySelector('#apply');
-     console.log(getMouseEventOptions(button))
-  },[selectedFilter,])
-
-
-  
+  ];  
 
   const handleFilterClick = (filter) => {
     
@@ -154,7 +145,6 @@ const Sidebar = ({ Open, onClose }) => {
   }, [dispatch, navigate]);
    
   const handleSubFilter = useCallback(async(filterName, value)=>{
-      console.log('subfilter running',selectedColor)
       try {
         await dispatch(filterProducts(filterName, value)).then(() => {
           navigate(`/filtered/${value}`);
@@ -168,20 +158,15 @@ const Sidebar = ({ Open, onClose }) => {
       e.preventDefault();
       try {
        
-        console.log('Apply button clicked','color:',selectedColor);
         if (selectedFilter === 'Price') {
-          console.log('Navigating to filtered/price');
           navigate('/filtered/price');
           await dispatch(filterProducts(maxPrice, minPrice, 'price'));
-          console.log('Dispatched successfully');
         } else if ( selectedFilter === 'Categories'){
           navigate('/filtered/category');        
           await dispatch(filterProducts('category', categoryFilter, 'Categories'));
         } else if (selectedFilter === 'Color'){
           navigate('/filtered/color');
           await dispatch(filterProducts('color', selectedColor, 'color'));
-
-
         }
       } catch (error) {
         console.error('Error in applying filters:', error);

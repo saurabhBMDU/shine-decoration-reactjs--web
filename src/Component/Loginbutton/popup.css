@@ -55,3 +55,22 @@
     font-size: large;
 
 }
+
+
+@media (max-width:700px) {
+    .pop-m{
+        box-shadow: 3px -5px 8px rgb(65, 62, 62);
+        transform: translatex(-50%);
+        left: 50%;
+        border-radius: 5%;
+        width: 20rem;
+        height: max-content;
+       background-color: wheat;
+       display: flex;
+       flex-direction: column;
+       position: fixed;
+       padding: 15px 15px;
+        
+    }
+    
+}

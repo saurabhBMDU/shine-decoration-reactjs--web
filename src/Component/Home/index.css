@@ -545,6 +545,9 @@
     
 }
 
+.banner2-img{
+    width: 40%;
+}
 
 .product-badge::before{
     position: absolute;

@@ -39,3 +39,5 @@ export const ADD_NEW_ADDRESS ='ADD_NEW_ADdRESS';
  export const UPDATE_ADDRESS ='UPDATE_ADDRESS';
 
  export const FILTER_PRODUCTS ='FILTER_PRODUCTS'
+
+ export const ADD_TO_SUMMARY  =`ADD_TO_SUMMARY`;

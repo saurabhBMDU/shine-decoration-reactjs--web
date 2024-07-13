@@ -10,7 +10,6 @@ const initialState = {
 };
 
 const getCartReducer = (state = initialState, action) => {
-  console.log(action.type, 'from getCart reducer');
   switch (action.type) {
     case GET_CART:
       return {

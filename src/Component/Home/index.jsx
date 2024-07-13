@@ -21,6 +21,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '../../service/api';
 import MainCarousel from './MainCarousal';
+import { checkUser } from '../../assest/js/checker';
+import { combineSlices } from '@reduxjs/toolkit';
 
 function Home() {
   const dispatch = useDispatch();
@@ -30,7 +32,10 @@ function Home() {
   const toaken = localStorage.getItem('token')
   // const recentProducts = useSelector(state => state.recentProducts?.products);
   const [recentProducts , setRecentProducts] = useState([])
- console.log(recentProducts,'recent')
+  
+
+ 
+
   const getRecent = useCallback(async()=> {
 
    try {
@@ -59,31 +64,14 @@ function Home() {
 }, []);
 
 useEffect(() => {
+
+  
   getRecent();
     dispatch(getUser());
     dispatch(getCategory());
     dispatch(fetchImages());
     
   }, [dispatch, getRecent]);
-  console.log(recentProducts)
-  // console.log("dsf", data);
-  // console.log("dsf__________", products);
-  // console.log('category @ home ' ,category)
-
-
-
- 
-  // const settingone = {
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  //   autoplay: true,
-  //   arrows: true,
-  //   nextArrow: <NextArrow />,
-  //   prevArrow: <PrevArrow />,
-  //   autoplaySpeed: 3000,
-  // };
 
 
  
@@ -106,7 +94,7 @@ useEffect(() => {
         toaken && recentProducts.length > 0? (
           <section className="container-fluid py-4">
           <h3>Recently Viewed Stores</h3>
-          :<Sliders products={recentProducts}/>
+          <Sliders products={recentProducts}/>
         </section>
         ) :(
           <section className="container-fluid py-2">

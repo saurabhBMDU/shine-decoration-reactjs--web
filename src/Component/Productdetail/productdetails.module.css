@@ -1,0 +1,30 @@
+.p{
+    line-height: 20px;
+    font-size: 1rem;
+}
+
+.pbutton{
+    border: solid rgba(20, 98, 223, 0) 2px ;
+    cursor: pointer;;
+    transition: all .5s;
+    border-radius: 1px;
+    padding: 5px 7px;
+}
+.pbutton:hover{
+    border: solid rgb(20, 98, 223) 2px ;
+   
+}
+
+.pbutton .pbuttonSelected{
+    border: rgb(20, 98, 223) 2px  ;
+}
+
+.highlights{
+    font-size:.9rem;
+ 
+}
+
+.highlights > li{
+    list-style: disc;
+   color: gray;
+}

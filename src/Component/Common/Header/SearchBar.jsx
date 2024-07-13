@@ -5,19 +5,25 @@ import SuggestionsList from "./SuggestionList";
 import { fetchProduct } from "../../../action";
 import { useNavigate } from 'react-router-dom';
 import { getSearchResult } from "../../../action/searchResultAction";
+import UseTypewriterEffect from "../../UserTyperwriter/UseTypewriterEffect";
 
 export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
     const dispatch = useDispatch();
     const [query, setQuery] = useState('');
-    const products = useSelector((state) => state.productData.data?.result?.products || []);
+    const products = useSelector((state) => state.productData.data?.result?.products || [] );
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [active, setActive] = useState(false);
     const navigate = useNavigate();
     const queryRef = useRef(query);
 
     useEffect(() => {
+        dispatch(fetchProduct());
+    }, [dispatch]);
+
+    useEffect(() => {
         queryRef.current = query;
-    }, [query]);
+        handleSearch(query); // Call this here to avoid re-triggering
+    }, [query]); // Ensure this only runs when `query` changes
 
     const handleQuery = useCallback((e) => {
         const { value } = e.target;
@@ -32,19 +38,19 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
             product.sub_category.toLowerCase().includes(lowercasedQuery) ||
             product.tag_keywords.toLowerCase().includes(lowercasedQuery)
         );
-        setFilteredProducts(results);
-    }, [products]);
+        setFilteredProducts(results); // Set filtered products
+    }, [products]); // Dependency on products
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        const searchQuery = queryRef.current;
+        const searchQuery = queryRef.current.trim();
+        if (!searchQuery) return; // Prevent empty searches
         handleSearch(searchQuery); // Update filteredProducts
-        setActive(false);
-        setQuery('');
-        // Dispatch with the updated filteredProducts
         dispatch(getSearchResult(filteredProducts));
         navigate(`/result/${searchQuery}`);
-    }, [dispatch, navigate, filteredProducts, handleSearch]);
+        setActive(false);
+        setQuery('');
+    }, [dispatch, navigate, filteredProducts, handleSearch]); // Include filteredProducts
 
     const listSearch = useCallback((search) => {
         handleSearch(search); // Update filteredProducts
@@ -52,19 +58,15 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
         setActive(false);
     }, [handleSearch]);
 
-    useEffect(() => {
-        dispatch(fetchProduct());
-    }, [dispatch]);
-
-    useEffect(() => {
-        handleSearch(query); // Initial search on mount or query change
-    }, [query, handleSearch]);
+    // Use the custom hook for the typewriter effect
+    const placeholderTexts = ["Search Products...", "flower vase...", "furnitures..."];
+    const placeholderText = UseTypewriterEffect(placeholderTexts, 100);
 
     return (
         <form className="gi-search-group-form position-relative" onSubmit={handleSubmit}>
             <input
-                className="form-control gi-search-bar "
-                placeholder="Search Products..."
+                className="form-control gi-search-bar"
+                placeholder={placeholderText}
                 value={query}
                 onChange={handleQuery}
                 type="text"
@@ -81,7 +83,6 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
                 ></i>
             </button>
             {active && <SuggestionsList suggestions={filteredProducts} listSearch={listSearch} />}
-            
             <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
         </form>
     );

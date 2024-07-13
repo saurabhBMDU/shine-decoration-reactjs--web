@@ -9,6 +9,7 @@ import { getWishlist } from '../../../action/wishListAciton';
 import { getUser } from '../../../action/authaction';
 import { FaRegUserCircle } from 'react-icons/fa';
 import LoginPOP from '../../Loginbutton/LoginPOP';
+import { checkUser } from '../../../assest/js/checker';
 
 
 
@@ -24,10 +25,16 @@ function Header() {
   const currentURL = location.pathname;
   const user = useSelector(state => state?.getUser?.user)
   const dispatch = useDispatch();
+  const [users ,setUsers] = useState(false)
   
 
   
   useEffect(()=>{
+    if(checkUser()){
+      setUsers(true)
+    }else{
+      setUsers(false)
+    }
     dispatch(getCart())
     dispatch(getWishlist())
   },[dispatch ,wishListQuantity,cartQuantity])
@@ -57,6 +64,7 @@ function Header() {
   };
 
   const handleToggleSidebar = () => {
+    toggleSidebar()
     setSidebarOpen(!SidebarOpen);
   };
 
@@ -97,13 +105,13 @@ function Header() {
                     </Link>
                     <Link to="/wishlist" className="gi-header-btn gi-wish-toggle">
                       <div className="header-icon"><i className="fa-regular fa-heart"></i></div>
-                      <span className="gi-header-count gi-wishlist-count">3</span>
+                      <span className="gi-header-count gi-wishlist-count">{wishListQuantity || 0}</span>
                     </Link>
                     <Link to="/cart" className="gi-header-btn gi-cart-toggle">
                       <div className="header-icon"><i className="fa-solid fa-cart-shopping"></i>
                         <span className="main-label-note-new"></span>
                       </div>
-                      <span className="gi-header-count gi-cart-count">{cartQuantity}</span>
+                      <span className="gi-header-count gi-cart-count">{cartQuantity? cartQuantity :0}</span>
                     </Link>
                     <button onClick={toggleSidebar} className="gi-header-btn gi-site-menu-icon d-lg-none">
                       <i className="fa-solid fa-bars"></i>
@@ -119,10 +127,10 @@ function Header() {
               <nav>
                 <ul>
                   <div className="category-dropdown px-2">
-                    <li className="d-flex justify-content-between text-black border-bottom" onClick={toggleDropdown}>Shop by category
-                      <span>{isOpen ? '−' : '+'}</span>
+                    <li className="d-flex justify-content-between text-black border-bottom" onClick={handleToggleSidebar}>Shop by Filter
+                      <span>{isOpen ? '+' : '+'}</span>
                     </li>
-                    {isOpen && (
+                    {/* {isOpen && (
                       <div className="dropdown">
                         <ul>
                           <li><Link to="/">Bone China</Link></li>
@@ -130,7 +138,7 @@ function Header() {
                           <li><Link to="/">Ceramic</Link></li>
                         </ul>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div className="px-2">
                     <li className="border-bottom"><Link to="/profile">Profile</Link></li>
@@ -138,9 +146,24 @@ function Header() {
                   <div className="px-2">
                     <li className="border-bottom"><Link to="/profile">Order</Link></li>
                   </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Logout</Link></li>
-                  </div>
+                  { user ? (
+                    <div className="px-2">
+                      <li className="border-bottom"><Link to="/logout">Logout</Link></li>
+                    </div>
+
+                  ) :(
+                    <section>
+
+                      <div className="px-2">
+                      <li className="border-bottom"><Link to="/login">Login</Link></li>
+                     </div>
+                      <div className="px-2">
+                      <li className="border-bottom"><Link to="/register">Register</Link></li>
+                     </div>
+                    </section>
+                    
+                     
+                  )}
              
                 </ul>
               </nav>

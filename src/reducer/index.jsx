@@ -9,6 +9,8 @@ import getWhishlistReducer from './getWishlistReducer';
 import getUserReducer from './getUserDetailsReducer';
 import recentProuductsReducer from './recentProductsReducer';
 import filterReducer from './filterReducer';
+import orderSummaryReducer from './orderSummary';
+
 
 
 const rootReducer = combineReducers({
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
     getUser:getUserReducer,
     recentProducts:recentProuductsReducer,
     filteredProducts:filterReducer,
+    OrderSummary:orderSummaryReducer,
 });
 
 export default rootReducer;

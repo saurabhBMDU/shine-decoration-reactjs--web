@@ -30,8 +30,8 @@ function Login() {
   return (
     <>
       <div className="super-container">
-        <div className="row">
-          <div className="col-sm-6 col-md-7 intro-section">
+        <div className="rows">
+          <div className="intro-section">
             <div className="brand-wrapper">
               <h1 className='hh'>
                 <img src="/img/shinedecoration-logo.png" alt='logo' />
@@ -44,7 +44,7 @@ function Login() {
               </p>
             </div>
           </div>
-          <div className="col-sm-6 col-md-5 form-section">
+          <div className=" form-section">
             <div className="login-wrapper">
               <h2 className="login-title">Login</h2>
               <form onSubmit={handleSubmit}>
@@ -76,7 +76,7 @@ function Login() {
                   <button type='submit' className='badge bg-warning px-4 py-2 fs-5'>Login</button>
                   <a href="#!" className="forgot-password-link">Forgot Password?</a>
                 </div>
-                <div className='text-wrap' style={{ width: '120%' }}>
+                <div className='' style={{ width: '100%' }}>
                   By continuing, you agree to Shine Decoration's <Link to={'/termsandcondition'}>Terms of Service</Link> and <Link to={'/Privacy'}>Privacy Policy.</Link>
                 </div>
               </form>

@@ -49,7 +49,7 @@ function AppRouter() {
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path='wishlist' element={<Whishlist/>} />
-                <Route path='/productdetails/:id/ordersummary' element={<OrderSummary/>} />
+                <Route path='/cart/ordersummary' element={<OrderSummary/>} />
                 <Route element={<NotFound />} />
                 
             </Routes>

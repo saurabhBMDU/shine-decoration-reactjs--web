@@ -6,10 +6,6 @@ import { useSelector } from "react-redux";
 
 const HeaderEndBar = () => {
   const category = useSelector(state => state.categories)
-  useEffect(()=>{
-    console.log(category)
-  })
-
   const settings = {
     dots: false,
     infinite: true,
