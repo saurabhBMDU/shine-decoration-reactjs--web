@@ -60,17 +60,17 @@ const OrderSummary = () => {
         setQuantity(state=>{
           return {...state, [productId]: state[productId]+1}
         })
-        dispatch(updateOrderSummary(productId,quantity))
+        dispatch(updateOrderSummary(productId,quantity+1))
         setUpdating(false)
     }
 
     const handleDecreaseQuantity = (productId,quantity) => {
         setUpdating(true)
+         if(quantity ===1 ) return
         setQuantity(state=>{
-          if(state[productId] === 1) return state;
       return{ ...state, [productId]:state[productId]-1 }
         })
-        dispatch(updateOrderSummary(productId,quantity))
+        dispatch(updateOrderSummary(productId,quantity-1))
 
 
         setUpdating(false)
