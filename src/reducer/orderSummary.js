@@ -1,4 +1,4 @@
-import { ADD_TO_SUMMARY } from "../action/actionType";
+import { ADD_TO_SUMMARY, GET_ORDER_SUMMARY, UPDATE_SUMMARY_QUANTITY } from "../action/actionType";
 
 
 const intialState = {
@@ -9,10 +9,17 @@ const intialState = {
 
 const orderSummaryReducer = (state=intialState,action) => {
     switch(action.type){
-        case ADD_TO_SUMMARY: {
+        case GET_ORDER_SUMMARY: {
             return {
                 ...state,
-                data:{cartItems:action.payload},
+                data:action.payload,
+                loading:false
+            }
+        }
+        case UPDATE_SUMMARY_QUANTITY:{
+            return {
+                ...state,
+                data:action.payload,
                 loading:false
             }
         }

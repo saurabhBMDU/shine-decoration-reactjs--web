@@ -1,5 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import css from "../OrderSummary/ordersummary.module.css";
+import { checkUser, formatNumberWithCommas } from "../../assest/js/checker";
+import { useDispatch, useSelector } from "react-redux";
+import ChangeUser from "../OrderSummary/ChangeUser";
+import { getProductDetails } from "../../action/productdetailaction";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
+import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
+import ChangeAddress from "../OrderSummary/ChangeAddress";
 
 function Payment() {
 
@@ -7,6 +15,45 @@ function Payment() {
 
   const [captcha, setCaptcha] = useState('');
   const [input, setInput] = useState('');
+  const navigate = useNavigate()
+  const {id}= useParams()
+  const dispatch = useDispatch()
+  const userDetails = useSelector(state=>state?.getUser?.user)
+  const user = checkUser()
+  const [selectedAddress, setSelectedAddress ]= useState({ })
+  const [modal , setModal] = useState(false);
+  const [addressModal , setAddressModal] = useState(false)
+  const [quantity ,setQuantity] = useState(1)
+  const [updating, setUpdating] = useState(false)
+  const productDetails = useSelector(state=>state.OrderSummary?.data?.cartItems)
+
+  useEffect(()=>{
+      dispatch(getProductDetails(id))
+     
+  },[dispatch])
+ useEffect(()=>{
+  if(userDetails){
+    setSelectedAddress(userDetails.shipping_address[0])
+  }
+ },[userDetails])
+  // console.log(productDetails,'pro')
+  // if(productDetails){
+  // }
+  const handleAddress = useCallback(()=>{
+      setAddressModal(true)
+
+  },['abc'])
+  const handleIncreaseQuantity = () => {
+      setUpdating(true)
+      setQuantity(prev => prev + 1)
+      setUpdating(false)
+  }
+
+  const handleDecreaseQuantity = () => {
+      setUpdating(true)
+      setQuantity(prev => prev - 1)
+      setUpdating(false)
+  }
 
   const generateCaptcha = () => {
     const randomCaptcha = Math.random().toString().substring(2, 6);
@@ -40,24 +87,57 @@ function Payment() {
   //   alert(`Selected Payment Method: ${selectedMethod}`);
   // };
   return (
-    <div>
-      <div className="container-fluid py-3">
-        <div className="row">
-          <div className="col-md-8">
-            <div className='mb-3' style={{ border: "1px solid #F1F3F6" }}>
-              <div className='row px-4'>
-                <div className='p-2 col-md-10' >
-                  <h6 style={{ fontSize: "15px", color: "#878787" }}>DELIVER ADDRESS</h6>
-                  <span style={{ fontSize: "13px" }}><b>Aman</b> Office of Divisional Commissioner, Faridabad, Canal Rest House, Sector 16A, Faridabad, Haryana 121002</span>
-                </div>
-                <div className='p-2 py-3 col-md-2 d-flex justify-content-center'>
-                  <button className='text ' style={{ border: "1px solid #F1F3F6", padding: "0px 25px", color: "#EDB70B" }}>CHANGE</button>
-                </div>
-              </div>
+    <section className={css.maincontainer}>
+      <section className={css.leftcontainer}>
+        <div className={css.box}>
+          <main>
+            <div>
+              <p className="text-primary">1</p>
             </div>
-            <div className='border'>
-              <div className='p-2' style={{ background: "#EDB70B" }}>
-                <span className='text-white'>PAYMENT OPTION</span>
+            <div className={`${css.textcontent}`}>
+              <h5 className="">LOGIN</h5>
+              <p>
+                <span className="flex-nowrap">{userDetails && userDetails.name }</span>{userDetails && userDetails.mobile}
+              </p>
+            </div>
+          </main>
+          <div className={css.buttonContent}>
+            <button onClick={()=>setModal(true)}>change</button>
+          </div>
+        </div>
+       {selectedAddress ?( 
+        <div className={css.box}>
+          <main>
+            <div>
+              <p className="text-primary">2</p>
+            </div>
+            <div className={`${css.addresscontent}`}>
+              <h5 className="">DELIVERY ADDRESS</h5>
+              <p className={css.address}>
+                <span>{selectedAddress.fullName}</span> -<span>{selectedAddress.mobile}</span> ,{selectedAddress.billing_address}  <span>pinCode:{selectedAddress.pinCode}</span>
+              </p>
+            </div>
+          </main>
+          <div className={css.buttonContent}>
+            <button onClick={handleAddress}>change</button>
+          </div>
+        </div>
+      ):(null)}
+        <div className={css.paymentSummary}>
+          <div className="">
+            <p>3</p>
+            <p>Order summary</p>
+          </div>
+          <div className={`d-flex justify-content-between px-4 mt-2 ` }>
+           <p style={{fontWeight:'600'}}>5 items</p>
+            <Link to={'/cart/ordersummary'} className={css.linkbutton}>CHANGE</Link>
+          </div>
+        </div>
+        
+        <div className={css.paymentbox}>
+              <div  style={{ background: "#EDB70B" }}>
+                <p>4</p>
+                <p className='text-white'>PAYMENT OPTION</p>
               </div>
               <div className="p-3">
                 <form onSubmit={handleSubmit}>
@@ -168,28 +248,59 @@ function Payment() {
                   </div>
 
                   {selectedMethod && selectedMethod !== "cod" && (
-                    <button className="btn btn-primary" type="submit" onClick={() => handleSubmit()}>
+                    <button className="btn btn-warning" type="submit" onClick={() => handleSubmit()}>
                       Continue
                     </button>
                   )}
                 </form>
               </div>
             </div>
-          </div>
-          <div className="col-md-4">
-            <div className="price-details">
-              <h5 className="product-title border-bottom py-2">Price Details</h5>
-              <div className='py-1'>Price (1 item): <span className='float-end'>₹14,990</span></div>
-              <div className='py-1'>Discount: <span className="text-success float-end"> ₹3,740</span></div>
-              <div className='py-1 py-2'>Delivery Charges: <span className="text-success float-end">Free</span></div>
-              <div className="total-amount py-1 border-bottom border-top py-3">Total Amount<span className="text-success float-end">₹11,250</span></div>
-              <div className="save-amount py-1">You will save ₹3,740 on this order</div>
-              {/* <button className="btn btn-warning w-100">PLACE ORDER</button> */}
-            </div>
-          </div>
+
+     
+      </section>
+      <section className={css.priceDetails}>
+        <div>
+          <h4>price details</h4>
         </div>
-      </div >
-    </div >
+        <main>
+          <div className={css.priceTop}>
+            <p>
+              {/* <span> price (item:{quantity}) </span> <span>₹{product&& product.selling_price * quantity}</span> */}
+            </p>
+            <p>
+              <span>delivery charges</span>
+              <span className="text-success">free</span>
+            </p>
+          </div>
+          <div className={css.total}>
+            <p>total payable</p>
+            {/* <p>₹{product&& formatNumberWithCommas( product.selling_price)}</p> */}
+          </div>
+          <div className={css.savings}>
+            <p className="text-success">
+              {/* your total savings on this order is ₹{product&& (product.mrp_price - product.selling_price)*quantity} */}
+            </p>
+          </div>
+        </main>
+      </section>
+      {userDetails ? (
+        <>
+            {modal ? (
+                <ChangeUser user={userDetails} setModal={setModal}/>
+            )  : (
+                null
+            )}
+          { addressModal ?  (
+            <ChangeAddress userDetails={userDetails} setModal={setAddressModal} currentAdress={selectedAddress} setSelectedAddress={setSelectedAddress}/>
+          ):(null)}
+        </>
+          
+      
+      ):(
+        null
+      )}
+    </section>
+    
   )
 }
 export default Payment;

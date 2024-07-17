@@ -64,7 +64,7 @@ function Header() {
   };
 
   const handleToggleSidebar = () => {
-    toggleSidebar()
+    setIsOpen(false)
     setSidebarOpen(!SidebarOpen);
   };
 

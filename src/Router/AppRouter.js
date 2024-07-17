@@ -44,12 +44,13 @@ function AppRouter() {
                 <Route path='/result/:id' element={<SearchResult/>} />
                 <Route path='/filtered/:id' element={<FilterResultPage/>} />
                 <Route path='/shop' element={<Shop />} />
-                <Route path='/checkout' element={<Checkout />} />
+                <Route path='/cart/ordersummary/checkout' element={<Payment/>} />
                 <Route path='/category/:id' element={<CategoryResult/>} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path='wishlist' element={<Whishlist/>} />
                 <Route path='/cart/ordersummary' element={<OrderSummary/>} />
+               
                 <Route element={<NotFound />} />
                 
             </Routes>

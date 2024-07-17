@@ -24,7 +24,6 @@ export const addRecentProduct = (productId) => {
             const datas = await response.json();
             const {data, message , statusCode} = datas
           if (statusCode === 200) {
-            console.log(datas)
             // toast.success(message);
             dispatch({ type: GET_RECENT_PRODUCT, payload: data });
             } else {

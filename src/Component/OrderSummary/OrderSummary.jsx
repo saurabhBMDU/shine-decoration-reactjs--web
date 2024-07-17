@@ -8,10 +8,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
 import ChangeAddress from "./ChangeAddress";
+import { getOrderSummary, updateOrderSummary } from "../../action/orderSummaryAction";
+import Productdetail from "../Productdetail/productdetail";
+import { retry } from "@reduxjs/toolkit/query";
 
 const OrderSummary = () => {
     const navigate = useNavigate()
-    const {id}= useParams()
     const dispatch = useDispatch()
     const userDetails = useSelector(state=>state?.getUser?.user)
     const user = checkUser()
@@ -20,12 +22,27 @@ const OrderSummary = () => {
     const [addressModal , setAddressModal] = useState(false)
     const [quantity ,setQuantity] = useState(1)
     const [updating, setUpdating] = useState(false)
-    const productDetails = useSelector(state=>state.OrderSummary?.data?.cartItems)
+    const productDetails = useSelector(state => state.OrderSummary?.data)
 
-    useEffect(()=>{
-        dispatch(getProductDetails(id))
-       
-    },[dispatch])
+  useEffect(()=>{
+       dispatch(getOrderSummary())
+  },[dispatch])
+    
+ useEffect(() => {
+    let quantityPack;
+     if(productDetails.orderItems){
+        productDetails.orderItems.map(product=>{
+           quantityPack= {
+            ...quantityPack,
+            [product.product._id]: product.quantity
+           }
+        })
+        console.log(quantityPack,'qunnnnnnnnnnnnn')
+        setQuantity(quantityPack)
+     }
+
+  },[productDetails])
+
    useEffect(()=>{
     if(userDetails){
       setSelectedAddress(userDetails.shipping_address[0])
@@ -38,17 +55,30 @@ const OrderSummary = () => {
         setAddressModal(true)
 
     })
-    const handleIncreaseQuantity = () => {
+    const handleIncreaseQuantity = (productId,quantity) => {
         setUpdating(true)
-        setQuantity(prev => prev + 1)
+        setQuantity(state=>{
+          return {...state, [productId]: state[productId]+1}
+        })
+        dispatch(updateOrderSummary(productId,quantity))
         setUpdating(false)
     }
 
-    const handleDecreaseQuantity = () => {
+    const handleDecreaseQuantity = (productId,quantity) => {
         setUpdating(true)
-        setQuantity(prev => prev - 1)
+        setQuantity(state=>{
+          if(state[productId] === 1) return state;
+      return{ ...state, [productId]:state[productId]-1 }
+        })
+        dispatch(updateOrderSummary(productId,quantity))
+
+
         setUpdating(false)
     }
+
+    const handleContinue = useCallback(()=>{
+      navigate('/cart/ordersummary/checkout')
+    })
 
    
 
@@ -95,18 +125,18 @@ const OrderSummary = () => {
             <p>3</p>
             <p>Order summary</p>
           </div>
-          {productDetails && productDetails.map(product=>{
+          {productDetails.orderItems && productDetails.orderItems.map(product=>{
             return (
-              <main>
+              <main key={product.product._id}>
                 <div>
-                  <img src={product && product.productImage} alt="" />
+                  <img src={product && product.product.productImage} alt="" />
                 </div>
                 <section>
                   <div className={css.toptext}>
                     <main>
                       <div className={css.productnames}>
-                        <p>{product && product.product_name}</p>
-                        <p>{product&& product.category}</p>
+                        <p>{product && product.product.product_name}</p>
+                        <p>{product&& product.product.category}</p>
                       </div>
                       <p>seller : name</p>
                     </main>
@@ -115,18 +145,18 @@ const OrderSummary = () => {
                     </div>
                   </div>
                   <div className={css.priceoffer}>
-                    <p>₹{product && product.mrp_price}</p>
-                    <p>₹{product && product.selling_price}</p>
-                    <p>{product&& (((product.mrp_price - product.selling_price)/product.mrp_price)*100).toFixed(0)}% OFF</p>
+                    <p>₹{product && product.product.mrp_price}</p>
+                    <p>₹{product && product.product.selling_price}</p>
+                    <p>{product&& (((product.product.mrp_price - product.product.selling_price)/product.product.mrp_price)*100).toFixed(0)}% OFF</p>
                   </div>
                   <div className={css.summarybutns}>
                     <div className={css.quantityBox}>
                     
-                    <CiSquareMinus size={34} onClick={handleDecreaseQuantity}/>
+                    <CiSquareMinus size={34} onClick={()=>handleDecreaseQuantity(product.product._id, product.quantity)}/>
                     
-                    <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{quantity}</p>
+                    <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{quantity[product.product._id]}</p>
                     
-                    <CiSquarePlus size={34} onClick={handleIncreaseQuantity}/>
+                    <CiSquarePlus size={34} onClick={()=>handleIncreaseQuantity(product.product._id, product.quantity)}/>
                     
                     </div>
                     <Link to={'/'}>Back to shopping</Link>
@@ -139,9 +169,10 @@ const OrderSummary = () => {
 
         <div className={css.continueSec}>
           <p>order confirmation will be sent to registered mobile number</p>
-          <button>continue</button>
+          <button onClick={handleContinue}>continue</button>
         </div>
       </section>
+      {productDetails && 
       <section className={css.priceDetails}>
         <div>
           <h4>price details</h4>
@@ -149,7 +180,7 @@ const OrderSummary = () => {
         <main>
           <div className={css.priceTop}>
             <p>
-              {/* <span> price (item:{quantity}) </span> <span>₹{product&& product.selling_price * quantity}</span> */}
+              <span> price (item:{productDetails.totalQuantity}) </span> <span>₹{productDetails.totalPrice}</span>
             </p>
             <p>
               <span>delivery charges</span>
@@ -158,15 +189,15 @@ const OrderSummary = () => {
           </div>
           <div className={css.total}>
             <p>total payable</p>
-            {/* <p>₹{product&& formatNumberWithCommas( product.selling_price)}</p> */}
+            <p>₹{productDetails && productDetails.totalPayablePrice}</p>
           </div>
           <div className={css.savings}>
             <p className="text-success">
-              {/* your total savings on this order is ₹{product&& (product.mrp_price - product.selling_price)*quantity} */}
+              your total savings on this order is ₹{productDetails&& (productDetails.totalDiscountedPrice)}
             </p>
           </div>
         </main>
-      </section>
+      </section>}
       {userDetails ? (
         <>
             {modal ? (

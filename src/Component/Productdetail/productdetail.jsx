@@ -10,9 +10,9 @@ import { addtoCart, getProductDetails } from '../../action/productdetailaction';
 import { addWishList } from '../../action/productdetailaction'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { addRecentProduct } from '../../action/recentProductAction';
-import { addtoSummary } from '../../action/orderSummaryAction';
+import { addSingleToOrderSummary } from '../../action/orderSummaryAction';
 
-
+ 
 
 
 
@@ -49,9 +49,10 @@ function Productdetail() {
     console.log(quantity,'qnty from details')
   },[quantity,dispatch])
 
-  const handleBuynow = useCallback(()=>{
-    dispatch(addtoSummary(product))
-    navigate('/cart/ordersummary')
+  const handleBuynow = useCallback( async()=>{
+     await dispatch(addSingleToOrderSummary(product._id)).then(()=>{
+      navigate('/cart/ordersummary')
+    })
   })
   
 
