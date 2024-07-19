@@ -163,8 +163,14 @@ export const updateCart = ({productId,quantity}) => {
 export const getProductDetails = (id) => {
 
   return async dispatch => {
+     const token = localStorage.getItem('token')
     try {
-      const response = await axios.get(`${API_URL}/admin/product/product/${id}`);
+      const response = await axios.get(`${API_URL}/admin/product/product/${id}`,{
+        headers: {
+            ...(token &&{'Authorization':`Bearer ${token}`}),
+            'Content-Type': 'application/json' 
+        } 
+      });
       const { data: { message, statusCode, result } = {} } = response;
       if (statusCode === 200) {
         dispatch({

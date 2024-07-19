@@ -7,11 +7,10 @@ import axios from "axios";
 import { API_URL } from "../../service/api";
 import { removeFromWishlist } from "../../action/wishListAciton";
 
-const HeartButton = ({ productId }) => {
+const HeartButton = ({ productId , check=false}) => {
     const dispatch = useDispatch();
     const products = useSelector(state=>state.productData?.data?.result);
-
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(check);
     
     const handleAddToWishlist = useCallback(() => {
         console.count('calling add to wishlist');

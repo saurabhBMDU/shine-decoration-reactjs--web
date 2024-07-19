@@ -1,18 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./viewcart.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../action/productdetailaction";
 import { getCart, removeFromCart } from "../../action/getCartAction";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { Card } from "react-bootstrap";
+import { CartToOrderSummary } from "../../action/orderSummaryAction";
 
 export default function Viewcart() {
   const cartData = useSelector((state) => state.CartData?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [quantities, setQuantities] = useState({});
+  const navigate = useNavigate()
   const [updateq, setUpdateQ] = useState({});
 
   const fetchCartData = useCallback(async () => {
@@ -99,6 +101,13 @@ export default function Viewcart() {
     }));
   };
 
+  const handleContinue =async () =>{
+   await dispatch(CartToOrderSummary()).then(()=>{
+    navigate('/cart/ordersummary')
+   })
+
+  }
+
   return (
     <>
       {loading ? (
@@ -161,7 +170,7 @@ export default function Viewcart() {
                 </div>
               )}
             { cartData?.cartItems && cartData.cartItems.length > 0 && <div className="placeorder">
-                <button>Place order</button>
+                <button onClick={()=>handleContinue()}>Place order</button>
               </div>}
             </div>
           </>

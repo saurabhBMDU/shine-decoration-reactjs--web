@@ -8,7 +8,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
 import ChangeAddress from "./ChangeAddress";
-import { getOrderSummary, updateOrderSummary } from "../../action/orderSummaryAction";
+import { getOrderSummary, removeFromOrderSummary, updateOrderSummary } from "../../action/orderSummaryAction";
 import Productdetail from "../Productdetail/productdetail";
 import { retry } from "@reduxjs/toolkit/query";
 
@@ -24,20 +24,22 @@ const OrderSummary = () => {
     const [updating, setUpdating] = useState(false)
     const productDetails = useSelector(state => state.OrderSummary?.data)
 
+
   useEffect(()=>{
-       dispatch(getOrderSummary())
-  },[dispatch])
+    if(!updating){
+      dispatch(getOrderSummary())
+    }
+  },[dispatch,updating])
     
  useEffect(() => {
-    let quantityPack;
-     if(productDetails.orderItems){
+   if(productDetails&& productDetails.orderItems){
+       let quantityPack ={};
         productDetails.orderItems.map(product=>{
            quantityPack= {
             ...quantityPack,
-            [product.product._id]: product.quantity
+            [product.product&& product.product._id]: product.quantity
            }
         })
-        console.log(quantityPack,'qunnnnnnnnnnnnn')
         setQuantity(quantityPack)
      }
 
@@ -48,38 +50,50 @@ const OrderSummary = () => {
       setSelectedAddress(userDetails.shipping_address[0])
     }
    },[userDetails])
-    // console.log(productDetails,'pro')
-    // if(productDetails){
-    // }
+ 
     const handleAddress = useCallback(()=>{
         setAddressModal(true)
-
     })
     const handleIncreaseQuantity = (productId,quantity) => {
         setUpdating(true)
-        setQuantity(state=>{
-          return {...state, [productId]: state[productId]+1}
+        setQuantity(state => ({
+          ...state,
+          [productId]: (state[productId] || 0) + 1
+        }));
+        dispatch(updateOrderSummary(productId,quantity+1)).then(()=>{
+          setUpdating(false)
+        }).catch(()=>{
+          setUpdating(false)
         })
-        dispatch(updateOrderSummary(productId,quantity+1))
-        setUpdating(false)
     }
 
     const handleDecreaseQuantity = (productId,quantity) => {
         setUpdating(true)
          if(quantity ===1 ) return
-        setQuantity(state=>{
-      return{ ...state, [productId]:state[productId]-1 }
+         setQuantity(state => ({
+          ...state,
+          [productId]: (state[productId] || 0) - 1
+        }));
+        dispatch(updateOrderSummary(productId,quantity-1)).then(()=>{
+          setUpdating(false)
+        }).catch(()=>{
+          setUpdating(false)
         })
-        dispatch(updateOrderSummary(productId,quantity-1))
-
-
-        setUpdating(false)
     }
 
     const handleContinue = useCallback(()=>{
       navigate('/cart/ordersummary/checkout')
-    })
+    },[])
+   
+    const handleRemove = useCallback((productId)=>{
+      setUpdating(true)
+      dispatch(removeFromOrderSummary(productId)).then(()=>{
+        setUpdating(false)
+      }).catch(()=>{
+        setUpdating(false)
+      })
 
+    },[dispatch])
    
 
 
@@ -125,18 +139,18 @@ const OrderSummary = () => {
             <p>3</p>
             <p>Order summary</p>
           </div>
-          {productDetails.orderItems && productDetails.orderItems.map(product=>{
+          {productDetails.orderItems && productDetails.orderItems.length > 0 && productDetails.orderItems.map(product=>{
             return (
-              <main key={product.product._id}>
+              <main key={ product.product && product.product._id}>
                 <div>
-                  <img src={product && product.product.productImage} alt="" />
+                  <img src={product.product && product.product.productImage} alt="" />
                 </div>
                 <section>
                   <div className={css.toptext}>
                     <main>
                       <div className={css.productnames}>
-                        <p>{product && product.product.product_name}</p>
-                        <p>{product&& product.product.category}</p>
+                        <p>{product.product && product.product.product_name}</p>
+                        <p>{product.product && product.product.category}</p>
                       </div>
                       <p>seller : name</p>
                     </main>
@@ -145,19 +159,20 @@ const OrderSummary = () => {
                     </div>
                   </div>
                   <div className={css.priceoffer}>
-                    <p>₹{product && product.product.mrp_price}</p>
-                    <p>₹{product && product.product.selling_price}</p>
-                    <p>{product&& (((product.product.mrp_price - product.product.selling_price)/product.product.mrp_price)*100).toFixed(0)}% OFF</p>
+                    <p>₹{product.product && product.product.mrp_price}</p>
+                    <p>₹{product.product && product.product.selling_price}</p>
+                    <p>{product.product && (((product.product.mrp_price - product.product.selling_price)/product.product.mrp_price)*100).toFixed(0)}% OFF</p>
                   </div>
                   <div className={css.summarybutns}>
                     <div className={css.quantityBox}>
                     
                     <CiSquareMinus size={34} onClick={()=>handleDecreaseQuantity(product.product._id, product.quantity)}/>
                     
-                    <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{quantity[product.product._id]}</p>
+                    <p className={css.statQuantity} style={{fontVariantNumeric:'tabular-nums'}}>{product.product &&  quantity[product.product&& product.product._id]}</p>
                     
                     <CiSquarePlus size={34} onClick={()=>handleIncreaseQuantity(product.product._id, product.quantity)}/>
                     
+                    <button onClick={()=>handleRemove(product.product._id)}>Remove</button>
                     </div>
                     <Link to={'/'}>Back to shopping</Link>
                   </div>
@@ -187,9 +202,13 @@ const OrderSummary = () => {
               <span className="text-success">free</span>
             </p>
           </div>
+          <div className="d-flex justify-content-between">
+            <p style={{textTransform:"capitalize",fontWeight:500}}>discounted Price</p>
+            <p className="text-success" style={{fontWeight:400}}>₹{productDetails&&productDetails.totalDiscountedPrice}</p>
+          </div>
           <div className={css.total}>
             <p>total payable</p>
-            <p>₹{productDetails && productDetails.totalPayablePrice}</p>
+            <p>₹{productDetails.totalPayablePrice &&  formatNumberWithCommas(productDetails.totalPayablePrice)}</p>
           </div>
           <div className={css.savings}>
             <p className="text-success">

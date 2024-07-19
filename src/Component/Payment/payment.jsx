@@ -25,35 +25,24 @@ function Payment() {
   const [addressModal , setAddressModal] = useState(false)
   const [quantity ,setQuantity] = useState(1)
   const [updating, setUpdating] = useState(false)
-  const productDetails = useSelector(state=>state.OrderSummary?.data?.cartItems)
+  const orderDetails  = useSelector(state => state.OrderSummary?.data)
 
   useEffect(()=>{
       dispatch(getProductDetails(id))
      
   },[dispatch])
+
  useEffect(()=>{
   if(userDetails){
     setSelectedAddress(userDetails.shipping_address[0])
   }
  },[userDetails])
-  // console.log(productDetails,'pro')
-  // if(productDetails){
-  // }
+
   const handleAddress = useCallback(()=>{
       setAddressModal(true)
 
-  },['abc'])
-  const handleIncreaseQuantity = () => {
-      setUpdating(true)
-      setQuantity(prev => prev + 1)
-      setUpdating(false)
-  }
+  },[])
 
-  const handleDecreaseQuantity = () => {
-      setUpdating(true)
-      setQuantity(prev => prev - 1)
-      setUpdating(false)
-  }
 
   const generateCaptcha = () => {
     const randomCaptcha = Math.random().toString().substring(2, 6);
@@ -129,7 +118,7 @@ function Payment() {
             <p>Order summary</p>
           </div>
           <div className={`d-flex justify-content-between px-4 mt-2 ` }>
-           <p style={{fontWeight:'600'}}>5 items</p>
+           <p style={{fontWeight:'600'}}>Items ({orderDetails && orderDetails.totalQuantity} )</p>
             <Link to={'/cart/ordersummary'} className={css.linkbutton}>CHANGE</Link>
           </div>
         </div>
@@ -265,7 +254,7 @@ function Payment() {
         <main>
           <div className={css.priceTop}>
             <p>
-              {/* <span> price (item:{quantity}) </span> <span>₹{product&& product.selling_price * quantity}</span> */}
+              <span> price (item:{orderDetails&& orderDetails.totalQuantity}) </span> <span>₹{orderDetails && orderDetails.totalPayablePrice}</span>
             </p>
             <p>
               <span>delivery charges</span>
@@ -274,12 +263,7 @@ function Payment() {
           </div>
           <div className={css.total}>
             <p>total payable</p>
-            {/* <p>₹{product&& formatNumberWithCommas( product.selling_price)}</p> */}
-          </div>
-          <div className={css.savings}>
-            <p className="text-success">
-              {/* your total savings on this order is ₹{product&& (product.mrp_price - product.selling_price)*quantity} */}
-            </p>
+            <p>₹{orderDetails.totalPayablePrice && formatNumberWithCommas(  orderDetails.totalPayablePrice)}</p>
           </div>
         </main>
       </section>
