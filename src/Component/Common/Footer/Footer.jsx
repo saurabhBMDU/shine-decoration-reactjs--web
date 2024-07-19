@@ -126,7 +126,7 @@ function Footer() {
           <div className="footer-bottom">
             <div className="container-fluid">
               <div className="row">
-                <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine decoration </Link>
+                <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine Lure </Link>
                   all
                   rights reserved. Powered by  <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>BMDU </Link>.</div>
               </div>

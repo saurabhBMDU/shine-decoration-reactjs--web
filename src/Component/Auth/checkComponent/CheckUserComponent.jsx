@@ -1,14 +1,16 @@
-import React, { Children } from "react";
+import React from "react";
 import './checkuser.css';
 
-export function CheckUserComponent({Children}) {
-  return <section className="check-main-container">
-                <div>
-                    <img src="/img/cart-not-login.webp" alt=""  style={{width:'30%',}}/>
-                </div>
-                <div>
-                  {Children}
-                </div>
-        </section>;
+export function CheckUserComponent({children}) {
+  return(
+          <section className="check-main-container">
+              <div className="d-flex justify-content-center">
+                  <img src="/img/cart-not-login.webp" alt="" />
+              </div>
+              
+              {children}
+        </section>
+        );
+        
 }
   

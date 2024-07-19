@@ -20,10 +20,10 @@ function Productdetail() {
   const id = params.id;
   const [mainImage, setMainImage] = useState(null);
   const dispatch = useDispatch();
-  const [buttonLoader,setButtonLoader] = useState({
-    addtocart:false,
-    buynow :false
-  })
+  const [buttonLoader, setButtonLoader] = useState({
+    addtocart: false,
+    buynow: false
+  });
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -87,7 +87,7 @@ function Productdetail() {
             <>
               <div className="col-lg-5">
                 <div className='position-sticky top-0'>
-                  <div className='d-flex justify-content-start'>
+                  <div className='d-flex justify-content-start '>
                     <div className='p-1 d-none d-md-block'>
                       {product.image_gallery.map((image, index) => (
                         <img
@@ -100,7 +100,7 @@ function Productdetail() {
                         />
                       ))}
                     </div>
-                    <div className='image-magnify-container' style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
+                    <div className='image-magnify-container' style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece'}}>
                       <ReactImageMagnify {...{
                         smallImage: {
                           alt: 'e-commerce',
@@ -111,10 +111,10 @@ function Productdetail() {
                           src: mainImage || product.productImage,
                           width: 1200,
                           height: 1800,
-                          style: { borderRadius: '10px', zIndex: 99 }
+                          style: { borderRadius: '10px' }
                         },
                         enlargedImagePosition: 'beside',
-                        enlargedImageContainerStyle: { zIndex: 60 },
+                        enlargedImageContainerStyle: { zIndex: 20},
                         enlargedImageContainerDimensions: { width: '200%', height: '130%' }
                       }} />
                       <div style={{ position: 'absolute', top: '30px', right: '10px', color: 'gray', fontSize: '24px', cursor: 'pointer' }}>
@@ -124,23 +124,24 @@ function Productdetail() {
                   </div>
                   <div className="d-flex justify-content-center flex-wrap mt-2">
                     <button className="px-4 py-3 me-2 text-white" onClick={() => handeaddtoCart(product._id)} style={{ background: "#FF9F00", width: "200px" }}>
-                      {buttonLoader.addtocart? (
-                        <div className="spinner "  ></div>
-                      ) :(
-                      <>
-                      <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
-                      </>)}
+                      {buttonLoader.addtocart ? (
+                        <div className="spinner"></div>
+                      ) : (
+                        <>
+                          <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
+                        </>
+                      )}
                     </button>
                     <button className="px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
-                      <button className='text-white' onClick={handleBuynow}> 
-                         {buttonLoader.buynow ?(
+                      <button className='text-white' onClick={handleBuynow}>
+                        {buttonLoader.buynow ? (
                           <div className="spinner"></div>
-                         ) :(
+                        ) : (
                           <>
-                         <i className="fas fa-bolt px-2"></i> BUY NOW
-                         </>
+                            <i className="fas fa-bolt px-2"></i> BUY NOW
+                          </>
                         )}
-                        </button>
+                      </button>
                     </button>
                   </div>
                 </div>
@@ -171,8 +172,8 @@ function Productdetail() {
                       <FontAwesomeIcon icon={faPlus} />
                     </button>
                   </div>
-                  <section style={{ padding: '20px' }} className='d-flex flex-column gap-4 mt-4 '>
-                    <section className='d-flex justify-content-start align-items-start' style={{ gap: '10%' }}>
+                  <section style={{ padding: '20px' }} className='d-flex flex-column gap-4 mt-4  position-static'>
+                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '10%' }}>
                       <div>
                         <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Delivery</p>
                       </div>
@@ -182,11 +183,11 @@ function Productdetail() {
                         <p className={`${css.p}`} style={{ fontWeight: '400' }}>extra</p>
                       </div>
                     </section>
-                    <section className='d-flex justify-content-start align-items-start' style={{ gap: '10%', verticalAlign: 'text-top' }}>
+                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '10%', verticalAlign: 'text-top' }}>
                       <div>
                         <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Version</p>
                       </div>
-                      <div className='d-flex justify-content-start'>
+                      <div className='d-flex justify-content-start position-static'>
                         <div className='d-flex justify-content-start align-items-center gap-3'>
                           <p className={`${css.p} ${css.pbutton} ${css.pbuttonSelected} p-2`} style={{ fontWeight: '400' }}>version 1</p>
                           <p className={`${css.p} ${css.pbutton} ${css.pbuttonSelected} p-2`} style={{ fontWeight: '400' }}>version 2</p>
@@ -194,7 +195,7 @@ function Productdetail() {
                         </div>
                       </div>
                     </section>
-                    <section className='d-flex justify-content-start align-items-start' style={{ gap: '10%', verticalAlign: 'text-top' }}>
+                    <section className='position-static d-flex justify-content-start align-items-start' style={{ gap: '10%', verticalAlign: 'text-top' }}>
                       <div>
                         <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Highlights</p>
                       </div>
@@ -207,7 +208,7 @@ function Productdetail() {
                         </ul>
                       </div>
                     </section>
-                    <section className='d-flex justify-content-start align-items-start' style={{ gap: '15%', verticalAlign: 'text-top' }}>
+                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '15%', verticalAlign: 'text-top' }}>
                       <div>
                         <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Policy</p>
                       </div>

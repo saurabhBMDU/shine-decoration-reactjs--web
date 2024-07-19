@@ -69,6 +69,10 @@ const Whishlist = () => {
     // navigate('/cart')
   },[dispatch])
 
+  const handleNavigate = useCallback(()=>{
+    navigate('/login')
+  })
+  
  
 
 
@@ -132,6 +136,11 @@ const Whishlist = () => {
       </section>
     ) :(
       <CheckUserComponent    >
+        <div className='mt-4 d-flex flex-column  justify-center' style={{color:'black'}}>
+        <p  className='text-center' style={{fontWeight:500}}>Missing Wishlist items?</p>
+        <p className='text-center' style={{fontWeight:300}}>Login to see the items you added previously</p>
+        <button className='btn  px-4' onClick={handleNavigate}> login</button>
+        </div>
 
       </CheckUserComponent>
     )}

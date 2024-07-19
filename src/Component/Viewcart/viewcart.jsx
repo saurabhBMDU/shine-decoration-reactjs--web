@@ -8,8 +8,11 @@ import { getCart, removeFromCart } from "../../action/getCartAction";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { Card } from "react-bootstrap";
 import { CartToOrderSummary } from "../../action/orderSummaryAction";
+import { checkUser } from "../../assest/js/checker";
+import { CheckUserComponent } from "../Auth/checkComponent/CheckUserComponent";
 
 export default function Viewcart() {
+  const [loggedIn ,setLoggedIn] =  useState(checkUser())
   const cartData = useSelector((state) => state.CartData?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -108,11 +111,17 @@ export default function Viewcart() {
 
   }
 
+  const handleNavigate = useCallback(()=>{
+    navigate('/login')
+  })
+  
+
   return (
     <>
-      {loading ? (
+      {    loading ? (
         <div className="loader"></div>
       ) : (
+        loggedIn ?(
         <section className="containerCart">
           <>
             <div className="cards">
@@ -198,6 +207,16 @@ export default function Viewcart() {
             </div>
           </div>}
         </section>
+        ):(
+          <CheckUserComponent    >
+          <div className='mt-4 d-flex flex-column  justify-center' style={{color:'black'}}>
+          <p  className='text-center' style={{fontWeight:500}}>Missing Cart items?</p>
+          <p className='text-center' style={{fontWeight:300}}>Login to see the items you added previously</p>
+          <button className='btn  px-4' onClick={handleNavigate}> login</button>
+          </div>
+  
+        </CheckUserComponent>
+        )
       )}
     </>
   );
