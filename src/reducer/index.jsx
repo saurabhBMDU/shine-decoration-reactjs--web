@@ -10,6 +10,7 @@ import getUserReducer from './getUserDetailsReducer';
 import recentProuductsReducer from './recentProductsReducer';
 import filterReducer from './filterReducer';
 import orderSummaryReducer from './orderSummary';
+import orderDetailsReducer from './orderedDetails';
 
 
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
     recentProducts:recentProuductsReducer,
     filteredProducts:filterReducer,
     OrderSummary:orderSummaryReducer,
+    orderDetails:orderDetailsReducer,
 });
 
 export default rootReducer;

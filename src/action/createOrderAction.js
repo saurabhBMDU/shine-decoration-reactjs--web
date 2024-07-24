@@ -26,7 +26,7 @@ export const createOrder = (products)=>{
             if(response.status === 200){
                 const datas= await response.json();
                 console.log(datas,"dataaaaaaaaaaaaaaaaas")
-                const {data:{result,statusCode,message} } = datas;
+                const {result,statusCode,message } = datas;
                 dispatch({
                     type:CREATE_ORDER,
                     payload:result

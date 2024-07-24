@@ -9,6 +9,7 @@ import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
 import ChangeAddress from "../OrderSummary/ChangeAddress";
 import { createOrder } from "../../action/createOrderAction";
+import { verifyPayment } from "../../action/paymentVerifyAction";
 
 function Payment() {
   const [selectedMethod, setSelectedMethod] = useState('');
@@ -26,7 +27,8 @@ function Payment() {
   const [updating, setUpdating] = useState(false);
   const orderDetails = useSelector(state => state.OrderSummary?.data);
   const [reqProducts, setReqProducts] = useState({});
-
+  const orderedList = useSelector(state=>state.orderDetails.data);
+  const [orderCreated ,setOrderCreated] = useState(false)
   useEffect(() => {
     dispatch(getProductDetails(id));
   }, [dispatch, id]);
@@ -58,7 +60,15 @@ function Payment() {
     setSelectedMethod(e.target.value);
   };
 
-  const handleReqBody = () => {
+  const handlePaymentConfig = useCallback(()=>{
+    if(orderDetails.data){
+        // Open Razorpay checkout
+    
+    }
+
+  })
+
+  const handleReqBody = useCallback(() => {
     let products = [];
     orderDetails.orderItems.forEach(product => {
       let obj = {};
@@ -68,15 +78,64 @@ function Payment() {
       obj.payable_price = product.selling_price; // Fixed key
       obj.discount = product.discounting_price; // Fixed key
       products.push(obj);
-    });
-    setReqProducts({ ...reqProducts, products, shippingAddress: selectedAddress.billing_address, billingAddress: selectedAddress.billing_address, shippingMethod: 'Standard Shipping' });
+    },[orderDetails]);
+    return { products, shippingAddress: selectedAddress.billing_address, billingAddress: selectedAddress.billing_address, shippingMethod: 'Standard Shipping' };
+  }, [orderDetails, selectedAddress]);
+
+  const handlePaymentSuccess = useCallback(async(response)=>{
+    await dispatch(verifyPayment(response))
+    console.log('successss payment')
+
+  })
+ const handleRazorConfig = useCallback(()=>{
+  console.log(orderedList , 'oooo')
+  const options = {
+    key:process.env.REACT_APP_RAZORPAY_ID_KEY, // Replace with your Razorpay key ID
+    amount: parseInt(orderedList.amount),
+    currency: orderedList.currency,
+    name: 'Shine Decorations',
+    description: 'Test Transaction',
+    order_id: orderedList.id,
+    handler: handlePaymentSuccess,
+    prefill: {
+      name: userDetails.name,
+      email: userDetails.email,
+      contact: userDetails.mobile
+    },
+    notes: {
+      address: selectedAddress.billing_address
+    },
+    theme: {
+      color: '#F37254'
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const rzp = new window.Razorpay(options);
+  console.log(rzp,"rzp")
+  rzp.open();
+
+ },[orderedList,dispatch, selectedMethod])
+
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    handleReqBody();
-    await dispatch(createOrder(reqProducts));
-  };
+    const updatedReqProducts = handleReqBody();
+    setReqProducts(updatedReqProducts);
+
+    await dispatch(createOrder(updatedReqProducts)).then(async()=>{
+      setOrderCreated(true)
+    })
+
+  },  [selectedMethod,dispatch,handleReqBody]);
+
+  useEffect(()=>{
+    if(orderCreated){
+      handleRazorConfig()
+      setOrderCreated(false)
+    }
+  },[orderCreated,handleRazorConfig])
+
+  console.log(orderedList,'ordereddd',);
 
   return (
     <section className={css.maincontainer}>
@@ -147,7 +206,6 @@ function Payment() {
                     <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif" alt="UPI" height="20" /> UPI<br /><small>Pay by any UPI app</small>
                   </label>
                 </div>
-                {selectedMethod === 'upi' && <input type="text" placeholder='Enter UPI ID' style={{ width: '14rem' }} />}
               </div>
 
               <div className="form-check py-2">
@@ -162,7 +220,7 @@ function Payment() {
                 <label htmlFor="wallets" className="form-check-label">
                   <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif" alt="Wallets" height="20" /> Wallets
                 </label>
-                {selectedMethod === 'wallets' && <input type="text" placeholder='Enter Wallet ID' style={{ width: '14rem' }} />}
+                
               </div>
 
               <div className="form-check py-2">
@@ -177,13 +235,7 @@ function Payment() {
                 <label htmlFor="card" className="form-check-label">
                   Credit / Debit / ATM Card<br /><small>Add and secure cards as per RBI guidelines</small>
                 </label>
-                {selectedMethod === 'card' &&
-                  <div>
-                    <input type="text" placeholder='Card Number' style={{ width: '14rem' }} />
-                    <input type="text" placeholder='Card Expiry' style={{ width: '14rem', marginTop: '0.5rem' }} />
-                    <input type="text" placeholder='CVV' style={{ width: '14rem', marginTop: '0.5rem' }} />
-                  </div>
-                }
+                
               </div>
 
               <div className="form-check py-2">
