@@ -74,7 +74,7 @@ function Login() {
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-5">
                   <button type='submit' className='badge bg-warning px-4 py-2 fs-5'>Login</button>
-                  <a href="#!" className="forgot-password-link">Forgot Password?</a>
+                  <Link to={'/forgot'} className="forgot-password-link">Forgot Password?</Link>
                 </div>
                 <div className='' style={{ width: '100%' }}>
                   By continuing, you agree to Shine Decoration's <Link to={'/termsandcondition'}>Terms of Service</Link> and <Link to={'/Privacy'}>Privacy Policy.</Link>

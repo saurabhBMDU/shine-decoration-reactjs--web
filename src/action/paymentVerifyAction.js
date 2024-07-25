@@ -1,7 +1,8 @@
 import { API_URL } from "../service/api";
 import { VERIFY_PAYMENT } from "./actionType";
 
-export const verifyPayment = (response ) =>{
+export const verifyPayment = (responses ) =>{
+
     return async(dispatch) => {
     try {
         const token = localStorage.getItem('token');
@@ -9,7 +10,8 @@ export const verifyPayment = (response ) =>{
             console.log('please log in');
             return
         }
-
+            
+        console.log('this is response from ra' ,responses)
        
         const response =await fetch(`${API_URL}/mobileApi/order/payment-verify`,{
             method:'POST',
@@ -17,7 +19,7 @@ export const verifyPayment = (response ) =>{
                 'Authorization':`Bearer ${token}`,
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify(response)
+            body:JSON.stringify(responses)
 
         });
         console.log(response)

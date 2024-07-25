@@ -83,6 +83,8 @@ function Payment() {
   }, [orderDetails, selectedAddress]);
 
   const handlePaymentSuccess = useCallback(async(response)=>{
+    debugger
+    console.log('payment from payment',response)
     await dispatch(verifyPayment(response))
     console.log('successss payment')
 

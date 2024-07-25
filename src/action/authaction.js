@@ -4,8 +4,11 @@ import {
   ADD_NEW_ADDRESS,
   DELETE_ADDRESS,
   GET_PROFILE,
-  REGISTER_SUCCES,
+  FORGOT_PASSWORD_SUCCESS,
   UPDATE_ADDRESS,
+  FORTGOT_OTP_SUCCESS,
+  FORTGOT_OTP_FAILED,
+  REGISTER_SUCCESS,
 } from './actionType';
 import { toast } from 'react-toastify';
 
@@ -18,7 +21,7 @@ export const doRegister = (form, callback) => {
         const { data: { message, statusCode } = {} } = response;
         if (statusCode === 200) {
           dispatch({
-            type: REGISTER_SUCCES,
+            type: REGISTER_SUCCESS,
             payload: response.data.result
           });
           // toast.success(message);
@@ -78,7 +81,7 @@ export const forgotPassword = (form, callback) => {
          const { data: { message, statusCode } = {} } = response;
         if (statusCode === 200) {
           dispatch({
-            type: REGISTER_SUCCES,
+            type:  FORGOT_PASSWORD_SUCCESS,
             payload: response.data.result
           });
           // toast.success(message);
@@ -107,7 +110,7 @@ export const otpVerification = (form, callback) => {
         const { data: { message, statusCode } = {} } = response;
         if (statusCode === 200) {
           dispatch({
-            type: REGISTER_SUCCES,
+            type: FORTGOT_OTP_SUCCESS,
             payload: response.data.result
           });
           // toast.success(message);
@@ -119,7 +122,10 @@ export const otpVerification = (form, callback) => {
       .catch(error => {
         if (error.response) {
           const { data: { message } } = error.response;
-          toast.error(message);
+           dispatch({
+            type:FORTGOT_OTP_FAILED,
+            payload:message
+           })
         } else {
           return error
         }

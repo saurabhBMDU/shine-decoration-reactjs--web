@@ -11,11 +11,14 @@ import recentProuductsReducer from './recentProductsReducer';
 import filterReducer from './filterReducer';
 import orderSummaryReducer from './orderSummary';
 import orderDetailsReducer from './orderedDetails';
+import authreducer from './authreducer';
+import { forgotPassword } from '../action/authaction';
 
 
 
 const rootReducer = combineReducers({
     data: dataReducer,
+    forgotPasswordData:authreducer,
     productData: productReducer,
     productDetails: productdetailReducer,
     categories:categoryReducer,
