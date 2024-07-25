@@ -45,6 +45,7 @@ const Register = () => {
         otpRefs.current[index + 1].focus();
       }
     } else if (e.keyCode === 8 && index > 0) {
+      
       const newOtp = [...otp];
       newOtp[index] = '';
       setOtp(newOtp);
@@ -60,8 +61,8 @@ const Register = () => {
     <div className="register-container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow" style={{ width: '100%', maxWidth: '420px', borderRadius: '10px' }}>
         <div className="text-center">
-          <h3><i className="fa fa-lock fa-3x"></i></h3>
-          <h2 className="text-center mb-2">Forgot Password?</h2>
+          <h3><i className="fa fa-lock fa-4x"></i></h3>
+          <h2 className="text-center mb-4">Forgot Password?</h2>
           <p>You can reset your password here.</p>
           <div className="panel-body">
             {!otpSent ? (
