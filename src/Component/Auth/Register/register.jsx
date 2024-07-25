@@ -75,10 +75,9 @@ function Register() {
 
       
       <section className="main-container">
+          {!otpVerify ? (
         <form className="form" onSubmit={handleSubmit}>
           <img src="/img/shinedecoration-logo.png" alt="" style={{ objectFit: "contain", height: "3rem", margin: "0" }} />
-          {!otpVerify ? (
-               <>
                <div className="title">Welcome</div>
                <div className="subtitle">Let's create your account!</div>
                <div className="input-container ic1">
@@ -158,16 +157,35 @@ function Register() {
                <button type="submit" className="submit">
                  Send OTP
                </button>
-             </>
+               </form>
           )
           :(
+            <form onSubmit={handleSubmit}>
             <div>
-              
+              <div className="input-container ic2">
+                <div>
+                 <input
+                   required
+                   id="repeatPassword"
+                   className="input"
+                   name="repeatPassword"
+                   type="password"
+                   onChange={handleInputChange}
+                   value={form.repeatPassword}
+                   placeholder=" "
+                 />
+                </div>
+                 <label htmlFor="repeatPassword" className="placeholder">
+                   Confirm Password
+                 </label>
+               </div>
+
             </div>
+            </form>
 
           )}
        
-        </form>
+ 
 
             
 
