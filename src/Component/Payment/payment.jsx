@@ -28,7 +28,8 @@ function Payment() {
   const orderDetails = useSelector(state => state.OrderSummary?.data);
   const [reqProducts, setReqProducts] = useState({});
   const orderedList = useSelector(state=>state.orderDetails.data);
-  const [orderCreated ,setOrderCreated] = useState(false)
+  const [orderCreated ,setOrderCreated] = useState(false);
+  
   useEffect(() => {
     dispatch(getProductDetails(id));
   }, [dispatch, id]);
@@ -115,6 +116,9 @@ function Payment() {
   const rzp = new window.Razorpay(options);
   console.log(rzp,"rzp")
   rzp.open();
+  rzp.on('payment.failed', async function (response){
+    await dispatch(verifyPayment(response))
+})
 
  },[orderedList,dispatch, selectedMethod])
 

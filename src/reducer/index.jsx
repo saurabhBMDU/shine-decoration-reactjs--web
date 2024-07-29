@@ -13,11 +13,15 @@ import orderSummaryReducer from './orderSummary';
 import orderDetailsReducer from './orderedDetails';
 import authreducer from './authreducer';
 import { forgotPassword } from '../action/authaction';
+import registerReducer from './Registeration';
+import { checkDelivery } from '../action/Delivery';
+import { CheckDeliveryReducer } from './checkDelivery';
 
 
 
 const rootReducer = combineReducers({
     data: dataReducer,
+    registerVerify:registerReducer,
     forgotPasswordData:authreducer,
     productData: productReducer,
     productDetails: productdetailReducer,
@@ -30,6 +34,7 @@ const rootReducer = combineReducers({
     filteredProducts:filterReducer,
     OrderSummary:orderSummaryReducer,
     orderDetails:orderDetailsReducer,
+    checkDelivery:CheckDeliveryReducer,
 });
 
 export default rootReducer;

@@ -130,7 +130,7 @@ const ProductCard = ({ product }) => {
                         <img src={currentImage} className="card-img-top" alt="Product" style={{ height: "240px" }} />
                     </Link>
                     <div className="product-badge" data-badge="Trending"></div>
-                    <HeartButton productId={product._id} />
+                    <HeartButton productId={product._id} check={product.isWishlist}/>
                 </div>
                 <Link to={`/productdetail/${product._id}`}>
                     <div className="card-body" style={{ width: '100%' }}>

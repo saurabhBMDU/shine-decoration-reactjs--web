@@ -35,3 +35,24 @@
       display: none;
     }
   }
+
+
+
+.deliveryinfo{
+  margin: 0;
+  padding: 0;
+  line-height: 15px;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

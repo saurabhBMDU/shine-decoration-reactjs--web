@@ -1,38 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { forgotPassword, otpVerification } from '../../../action/authaction';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword, updateOtpVerified } from '../../../action/authaction';
+import { registerVerifyOtp } from '../../../action/RegisterationAction';
 import './register.css';
 import { LuPhone } from "react-icons/lu";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [form, setForm] = useState({});
+  const [inputError, setInputError] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState(new Array(6).fill(''));
+  const [otpExpiry, setOtpExpiry] = useState(30);
   const dispatch = useDispatch();
   const otpRefs = useRef([]);
+  const intervalId = useRef(null);
+  const forgotPasswordOtp = useSelector(state => state.forgotPasswordData?.data?.otp);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (otpSent) {
-      otpRefs.current[0]?.focus();
+    if (otpSent && !intervalId.current) {
+      intervalId.current = setInterval(() => {
+        setOtpExpiry(prev => {
+          if (prev <= 1) {
+            clearInterval(intervalId.current);
+            intervalId.current = null;
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
+
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+        intervalId.current = null;
+      }
+    };
   }, [otpSent]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     if (otpSent) {
       const otpValue = otp.join('');
-      dispatch(otpVerification({ ...form, otp: otpValue }, () => {
-        setForm({});
-        setOtpSent(false);
-        setOtp(new Array(6).fill(''));
-      }));
+      if (Number(otpValue) === forgotPasswordOtp && forgotPasswordOtp) {
+        const updatedForm = { ...form, otp: Number(otpValue) };
+        setForm(updatedForm);
+        try {
+          const response = await registerVerifyOtp(updatedForm);
+          if(response.status){
+             dispatch(updateOtpVerified(form.mobile))
+             navigate('/resetpassword')
+          }
+          // Handle success or failure response
+          setOtpSent(false);
+          setOtp(new Array(6).fill(''));
+          setOtpExpiry(30);
+        } catch (err) {
+          
+        }
+      } else {
+        setInputError('OTP is not matching');
+      }
     } else {
-      dispatch(forgotPassword(form, () => {
-        setOtpSent(true);
-        setForm({ mobile: '' });
-      }));
+      if (form.mobile?.length === 10 && !isNaN(Number(form.mobile))) {
+        setInputError('');
+        dispatch(forgotPassword(form, () => {
+          setOtpSent(true);
+          setOtpExpiry(30);
+        }));
+      } else {
+        setInputError('Please enter a valid mobile number');
+      }
     }
-  };
+  }, [otpSent, dispatch, form, otp, forgotPasswordOtp]);
 
   const handleOtpChange = (e, index) => {
     const { value } = e.target;
@@ -42,16 +84,37 @@ const Register = () => {
       setOtp(newOtp);
 
       if (index < 5) {
-        otpRefs.current[index + 1].focus();
+        otpRefs.current[index + 1]?.focus();
       }
-    } else if (e.keyCode === 8 && index > 0) {
-      
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
       const newOtp = [...otp];
       newOtp[index] = '';
       setOtp(newOtp);
-      otpRefs.current[index - 1].focus();
+
+      if (index > 0) {
+        otpRefs.current[index - 1]?.focus();
+      }
     }
   };
+
+  const handleResendOtp = useCallback((e) => {
+    e.preventDefault();
+    if (intervalId.current) {
+      clearInterval(intervalId.current);
+      intervalId.current = null;
+    }
+    setOtp(new Array(6).fill(''));
+    setOtpExpiry(30);
+    setInputError('');
+    dispatch(forgotPassword(form, () => {
+      setOtpSent(true);
+    }));
+  }, [dispatch, form]);
 
   const handleInputChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -66,7 +129,7 @@ const Register = () => {
           <p>You can reset your password here.</p>
           <div className="panel-body">
             {!otpSent ? (
-              <form onSubmit={handleSubmit} id="register-form"  autoComplete="off" className="d-flex flex-column justify-content-center align-items-center gap-2">
+              <form onSubmit={handleSubmit} id="register-form" autoComplete="off" className="d-flex flex-column justify-content-center align-items-center gap-2">
                 <div className="form-group">
                   <div className="input-group">
                     <span className="input-group-addon mx-3"><LuPhone size={24} color='black'/></span>
@@ -78,14 +141,18 @@ const Register = () => {
                       type="tel"
                       value={form.mobile || ''}
                       onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+                      onBlur={() => setInputError('')}
                       required
                     />
                   </div>
                 </div>
+                <div>
+                  <label htmlFor="" className='text-danger'>{inputError}</label>
+                </div>
                 <button type="submit" className="btn btn-lg btn-warning btn-block">Send OTP</button>
               </form>
             ) : (
-              <form onSubmit={handleSubmit} id="otp-form"  autoComplete="off" className="d-flex flex-column justify-content-center align-items-center gap-0 otp-form">
+              <form onSubmit={handleSubmit} id="otp-form" autoComplete="off" className="d-flex flex-column justify-content-center align-items-center gap-0 otp-form">
                 <div className="title text-black">
                   <h3>OTP VERIFICATION</h3>
                   <p className="text-primary">An OTP has been sent to your Mobile Number</p>
@@ -99,14 +166,21 @@ const Register = () => {
                       className={`otp__digit otp__field__${index + 1}`}
                       value={digit}
                       onChange={(e) => handleOtpChange(e, index)}
+                      onKeyDown={(e) => handleKeyDown(e, index)}
                       ref={(el) => otpRefs.current[index] = el}
                       maxLength={1}
-                      onKeyDown={(e) => e.key === 'Backspace' && handleOtpChange(e, index)}
                     />
                   ))}
                 </div>
-                <div className="result"><p id="_otp" className="_notok"></p></div>
-                <button type="submit" className="btn btn-lg btn-warning btn-block mt-2">Verify OTP</button>
+                <div>
+                  <label htmlFor="">The OTP will expire in {otpExpiry} seconds</label>
+                  <label htmlFor="" className='text-danger pt-1'>{inputError}</label>
+                </div>
+                {otpExpiry === 0 ? (
+                  <button onClick={handleResendOtp} className="btn btn-lg btn-warning btn-block mt-2">Resend OTP</button>
+                ) : (
+                  <button type="submit" className="btn btn-lg btn-warning btn-block mt-2">Verify OTP</button>
+                )}
               </form>
             )}
           </div>

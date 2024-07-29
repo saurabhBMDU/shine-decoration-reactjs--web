@@ -15,7 +15,7 @@ const HeartButton = ({ productId , check=false}) => {
     const handleAddToWishlist = useCallback(() => {
         console.count('calling add to wishlist');
         dispatch(addWishList(productId));
-    }, [dispatch, productId]);
+    }, [dispatch, productId,check]);
 
     const handleHeartButton = () => {
         setLike(prevLike => {

@@ -24,6 +24,9 @@ import FilterResultPage from '../Component/FilterReulst/FilterResultPage';
 import OrderSummary from '../Component/OrderSummary/OrderSummary';
 import MangaeAdress from '../Component/ManageAdress/MangaeAdress';
 import UpdateAddress from '../Component/UpdateAddress/UpdateAddress';
+import OrderPage from '../Component/orders page/OrdersPage';
+import ResetPasswords from '../Component/Auth/Forgot/ResetPassword';
+import ProtectedRoute from '../Component/protectedRoute/ProtectedRoute';
 
 function AppRouter() {
     return (
@@ -35,24 +38,29 @@ function AppRouter() {
                 <Route path="/forgot" element={<Forgot />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
-                <Route path='/privacy' element={<PrivacyPolicy/>}/>
-                <Route path='/termsandcondition' element={<TermsOfService/>}/>
+                <Route path='/privacy' element={<PrivacyPolicy />} />
+                <Route path='/termsandcondition' element={<TermsOfService />} />
                 <Route path='/cart' element={<Viewcart />} />
-                <Route path='/profile/address' element={<MangaeAdress/>} />
+                <Route path='/profile/address' element={<MangaeAdress />} />
                 <Route path='/profile/updateaddress/:id' element={<UpdateAddress />} />
-                <Route path='/logout' element={<LogoutUser/>}/>
-                <Route path='/result/:id' element={<SearchResult/>} />
-                <Route path='/filtered/:id' element={<FilterResultPage/>} />
+                <Route path='/logout' element={<LogoutUser />} />
+                <Route path='/result/:id' element={<SearchResult />} />
+                <Route path='/filtered/:id' element={<FilterResultPage />} />
                 <Route path='/shop' element={<Shop />} />
-                <Route path='/cart/ordersummary/checkout' element={<Payment/>} />
-                <Route path='/category/:id' element={<CategoryResult/>} />
+                <Route path='/cart/ordersummary/checkout' element={<Payment />} />
+                <Route path='/user/orders' element={<OrderPage />} />
+                <Route path='/category/:id' element={<CategoryResult />} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
-                <Route path='wishlist' element={<Whishlist/>} />
-                <Route path='/cart/ordersummary' element={<OrderSummary/>} />
-               
-                <Route element={<NotFound />} />
-                
+                <Route path='wishlist' element={<Whishlist />} />
+                <Route path='/cart/ordersummary' element={<OrderSummary />} />
+                {/* Protected route for resetting password */}
+                <Route path='/resetpassword' element={
+                    <ProtectedRoute>
+                        <ResetPasswords />
+                    </ProtectedRoute>
+                } />
+                <Route path='*' element={<NotFound />} />
             </Routes>
             <Footer />
         </BrowserRouter>

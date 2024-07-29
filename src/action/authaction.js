@@ -9,8 +9,10 @@ import {
   FORTGOT_OTP_SUCCESS,
   FORTGOT_OTP_FAILED,
   REGISTER_SUCCESS,
+  VERIFIED_FORGOT_PASSWORD,
 } from './actionType';
 import { toast } from 'react-toastify';
+
 
 
 export const doRegister = (form, callback) => {
@@ -101,6 +103,24 @@ export const forgotPassword = (form, callback) => {
   };
 };
 
+
+export const updateOtpVerified = (mobile)=>{
+  return dispatch => {
+    try {
+
+      dispatch({
+        type:VERIFIED_FORGOT_PASSWORD,
+        payload:{
+          mobile:mobile,
+          otpVerified:true
+        }
+      })
+      
+    } catch (error) {
+      
+    }
+  }
+}
 
 export const otpVerification = (form, callback) => {
   return dispatch => {

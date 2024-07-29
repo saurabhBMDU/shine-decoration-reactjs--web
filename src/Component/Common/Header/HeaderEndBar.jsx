@@ -101,7 +101,7 @@ const HeaderEndBar = () => {
                   />
                 </Link>
                 <p
-                 
+                 style={{fontSize:'.9rem' ,fontWeight:600}}
                   className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-capitalize"
                 >
                   {cat.name}

@@ -536,7 +536,7 @@ input[type=number] {
     
 
 
-@media (max-width:1040px) {
+@media (max-width:1340px) {
     .maincontainer{
         display: flex;
         flex-direction: column;
@@ -608,7 +608,7 @@ input[type=number] {
     
 }
 
-@media (max-width:500px) {
+@media (max-width:600px) {
     .box{
         display: flex;
         flex-direction: column;

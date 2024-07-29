@@ -7,15 +7,20 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addtoCart, getProductDetails } from '../../action/productdetailaction';
 import { addWishList } from '../../action/productdetailaction';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { addRecentProduct } from '../../action/recentProductAction';
 import { addSingleToOrderSummary } from '../../action/orderSummaryAction';
 import HeartButton from '../Home/HeartButton';
+import { checkDelivery } from '../../action/Delivery';
 
 function Productdetail() {
   const navigate = useNavigate();
+  const [deliveryData , setDeliveryData] = useState([])
+  const [pincodeError, setPincodeError] = useState('')
+  const [timeOutId, setTimeoutId] = useState('');
   const product = useSelector(state => state.productDetails.product);
   const [quantity, setQuantity] = useState(1);
+  const [pincode,setPincode] = useState('')
   const params = useParams();
   const id = params.id;
   const [mainImage, setMainImage] = useState(null);
@@ -24,11 +29,13 @@ function Productdetail() {
     addtocart: false,
     buynow: false
   });
+  const checkDeliveryData = useSelector(state=>state.checkDelivery?.data?.delivery_codes)
+
 
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(addRecentProduct(id));
-  }, [dispatch, id]);
+  }, [dispatch, id,buttonLoader.addtocart]);
 
   useEffect(() => {
     if (product) {
@@ -78,7 +85,36 @@ function Productdetail() {
       navigate('/cart/ordersummary');
     });
   }, [dispatch, navigate, product, quantity]);
+ 
+const handlePincodeChange = useCallback(async(e) => {
+  
+  const newPincode = e.target.value;
+  setPincode(newPincode);
+  clearTimeout(timeOutId);
+    
+  if (newPincode.length < 6 || isNaN(Number(e.target.value))) {
+    setPincodeError('please Enter valid pincode')
+    console.log('error in pincode')
+    return
+  }else{
+    setPincodeError('')
+    const timePincodeTimeOut = setTimeout(() => {
+        dispatch(checkDelivery(Number(newPincode)))
+        console.log(Number(newPincode))
+        console.log('deliivery')
+    }, 2000);
+    console.log('success pincode');
+    
+      setTimeoutId(timePincodeTimeOut);
+  }
 
+}, [timeOutId,pincodeError,checkDeliveryData]);
+  
+  useCallback(()=>{
+    return clearTimeout(timeOutId)
+   },[handlePincodeChange,setTimeoutId])
+
+   console.log(checkDeliveryData,'delivery data')
   return (
     <>
       <section className="container-fluid py-3">
@@ -118,11 +154,18 @@ function Productdetail() {
                         enlargedImageContainerDimensions: { width: '200%', height: '130%' }
                       }} />
                       <div style={{ position: 'absolute', top: '30px', right: '10px', color: 'gray', fontSize: '24px', cursor: 'pointer' }}>
-                        <HeartButton productId={product._id} check={false} />
+                        <HeartButton productId={product._id} check={product.isWishlist} />
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex justify-content-center flex-wrap mt-2">
+                  <div className="d-flex justify-content-center  mt-2">
+                    {product.isCart ? (
+                       <Link to={'/cart'} className="px-4 py-3 me-2 text-white"  style={{ background: "#FF9F00", width: "200px" }}>
+                       <i className="fas fa-shopping-cart px-2"></i> Go to Cart
+                       </Link>
+
+                    ):(
+
                     <button className="px-4 py-3 me-2 text-white" onClick={() => handeaddtoCart(product._id)} style={{ background: "#FF9F00", width: "200px" }}>
                       {buttonLoader.addtocart ? (
                         <div className="spinner"></div>
@@ -132,6 +175,7 @@ function Productdetail() {
                         </>
                       )}
                     </button>
+                    )}
                     <button className="px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
                       <button className='text-white' onClick={handleBuynow}>
                         {buttonLoader.buynow ? (
@@ -178,9 +222,25 @@ function Productdetail() {
                         <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Delivery</p>
                       </div>
                       <div>
-                        <p className={`${css.p}`} style={{ fontWeight: '400' }}>Delivery by 20 Jul, Saturday | <span className='text-success'>Free</span></p>
-                        <p className={`${css.p}`} style={{ fontSize: '.6rem' }}>if order before 5pm</p>
-                        <p className={`${css.p}`} style={{ fontWeight: '400' }}>extra</p>
+                      <div className='deliv'>
+                      <p className={`${css.p}`} style={{ fontWeight: '400' }}> Check Delivery Available</p>
+                      <label className='d-block'>Enter your pincode</label>
+                      <input type="text" 
+                      className='numinputt' 
+                      pattern='\d{6}' 
+                      maxLength={6}
+                      required
+                      value={pincode}
+                      onBlur={()=>setPincodeError('')}
+                      onChange={(e)=>handlePincodeChange(e)}
+                      style={{ width:'8rem',height:'2rem' ,padding:'0 5px'}}/>
+                        
+                      </div>
+                     
+                        <p className={`${css.p} text-danger`} style={{ fontSize: '.6rem' }}>{pincodeError&& pincodeError}</p>
+                        {checkDeliveryData && checkDeliveryData.map(item=>(
+                        <p className={`${css.deliveryinfo} ${item.postal_code.cod==='Y' || item.pre_paid==='Y' ? 'text-success':'text-danger'} `} style={{ fontWeight: '400' }}>{ item.postal_code.cod==='Y' || item.pre_paid==='Y' ? 'Available for Delivery' : 'Currently not Available'}</p>
+                        ))}
                       </div>
                     </section>
                     <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '10%', verticalAlign: 'text-top' }}>

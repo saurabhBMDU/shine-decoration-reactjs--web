@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doRegister } from "../../../action/authaction";
 import Modal from "../../modals/Modal";
+import { registerVerifyMobile, registerVerifyOtp } from "../../../action/RegisterationAction";
 
 function Register() {
   const [form, setForm] = useState({
@@ -13,13 +14,17 @@ function Register() {
     repeatPassword: "",
     agreeTerms: false,
   });
-  const [otpVerify, setOtpVerify] = useState(true);
+  const [otpError, setOtpError] = useState([]);
+  const [otpVerify, setOtpVerify] = useState(false);
+  const [otpExpired, setOtpExpired] = useState(false);
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const registerOtp = useSelector((state) => state.registerVerify?.data?.otp);
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const otpRef = useRef([]);
+  const [timer, setTimer] = useState(30);
 
   const validateForm = () => {
     const newErrors = {};
@@ -43,6 +48,18 @@ function Register() {
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
+  const handleOtpKey = (e, index) => {
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      const newOtp = [...otp];
+      if (index > 0) {
+        otpRef.current[index - 1].focus();
+      }
+      newOtp[index] = '';
+      setOtp(newOtp);
+    }
+  };
+
   const handleOtpChange = (e, index) => {
     const { value } = e.target;
     if (/^[0-9]$/.test(value) && value.length === 1) {
@@ -54,32 +71,106 @@ function Register() {
         otpRef.current[index + 1].focus();
       }
     } else if (e.keyCode === 8 && index > 0) {
-      console.log('bakspace')
+      console.log('backspace')
       otpRef.current[index - 1].focus();
     }
   };
 
+  const handleTimer = useCallback(() => {
+    if (otpVerify) {
+      const intervalId = setInterval(() => {
+        setTimer((prev) => {
+          if (prev > 1) {
+            return prev - 1;
+          } else {
+            clearInterval(intervalId);
+            setOtpExpired(true); // Set OTP expired to true
+            return 0;
+          }
+        });
+      }, 1000);
+      return () => clearInterval(intervalId);
+    } else {
+      setTimer(30);
+    }
+  }, [otpVerify]);
+
+  useEffect(() => {
+    const cleanup = handleTimer();
+    return cleanup;
+  }, [handleTimer]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!otpVerify) {
+      setShowModal(false)
       const formErrors = validateForm();
       if (Object.keys(formErrors).length === 0) {
         const removableProps = ["repeatPassword", "agreeTerms"];
         removableProps.forEach((prop) => delete form[prop]);
         setOtpVerify(true);
+        handleTimer();
+        dispatch(registerVerifyMobile({ mobile: form.mobile }));
       } else {
         setErrors(formErrors);
         setShowModal(true);
       }
-    } else {
-      // Handle OTP verification logic here
-      console.log("OTP:", otp.join(""));
-      // After successful OTP verification, proceed with registration
-      // dispatch(doRegister(form, () => {
-      //   navigate("/");
-      // }));
     }
   };
+
+  const handleOtpVerification = async (e) => {
+    e.preventDefault();
+    setOtpError([]);
+    
+    const unFilledOtp = otp.every(item => item !== '');
+    if (otpVerify && timer > 0) {
+           if (otp.length === 0) {
+            setOtpError(['Please enter OTP']);
+            return;
+        }
+        if (!unFilledOtp) {
+            setOtpError(['Please fill in all fields']);
+            return;
+        }
+        
+        if (Number(otp.join('')) === Number(registerOtp)) {
+            try {
+                const response = await registerVerifyOtp({
+                    mobile: Number(form.mobile),
+                    otp: Number(otp.join(''))
+                });
+                
+                if (response.status) {
+                    dispatch(doRegister(form, () => {
+                        navigate("/login");
+                    }));
+                } else {
+                    console.log('OTP verification failed');
+                    setOtpError([response.message]);
+                }
+            } catch (error) {
+                console.error('Error during OTP verification:', error);
+                setOtpError(['An error occurred during verification. Please try again.']);
+            }
+        } else {
+            setOtp(new Array(6).fill(""));
+            setOtpError(['OTP is not matching, please try again']);
+        }
+    } else {
+        setOtpError(['OTP verification not allowed at this time.']);
+    }
+};
+
+  const handleResendOtp = useCallback(() => {
+    setOtpError([]);
+    if (otpVerify && timer === 0) {
+      setOtp(new Array(6).fill(""));
+      setOtpExpired(false);
+      setTimer(30);
+      dispatch(registerVerifyMobile({ mobile: form.mobile }));
+      handleTimer();
+    }
+  }, [otpVerify, timer, form.mobile, handleTimer, dispatch]);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -89,7 +180,7 @@ function Register() {
     <>
       <section className="main-container">
         {!otpVerify ? (
-          <form className="form" onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit} autoComplete="true">
             <img
               src="/img/shinedecoration-logo.png"
               alt=""
@@ -133,6 +224,7 @@ function Register() {
                 id="password"
                 className="input"
                 name="password"
+                autoComplete="true"
                 type="password"
                 onChange={handleInputChange}
                 value={form.password}
@@ -146,6 +238,7 @@ function Register() {
               <input
                 required
                 id="repeatPassword"
+                autoComplete="true"
                 className="input"
                 name="repeatPassword"
                 type="password"
@@ -179,7 +272,8 @@ function Register() {
           </form>
         ) : (
           <form
-            onSubmit={handleSubmit}
+            autoComplete="true"
+            onSubmit={handleOtpVerification}
             className="form d-flex flex-column justify-content-center align-items-center gap-2"
           >
             <div className="d-flex flex-column gap-2 justify-content-center align-items-center">
@@ -193,14 +287,35 @@ function Register() {
                     ref={(el) => (otpRef.current[index] = el)}
                     onChange={(e) => handleOtpChange(e, index)}
                     maxLength={1}
+                    onKeyDown={(e) => handleOtpKey(e, index)}
                     type="text"
                   />
                 ))}
               </div>
             </div>
-            <button type="submit" className="btn btn-warning ">
-              Submit
-            </button>
+            <div className=" text-secondary px-1">
+              <p>The OTP will expire in <span className="text-warning m-0">{timer}</span> seconds</p>
+            </div>
+            {otpExpired ? (
+              <button onClick={handleResendOtp} className="btn btn-warning">
+                Resend OTP
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-warning">
+                Submit
+              </button>
+            )}
+            {otpError.length > 0 ? (
+              <div className="d-flex justify-content-center align-items-center text-danger ">
+                <ul className="d-flex justify-content-center align-items-center">
+                  {otpError.map((item, index) => (
+                    <li key={index} className="text-danger px-2" style={{ fontSize: '.8rem', listStyle: 'disc' }}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              ''
+            )}
           </form>
         )}
 
