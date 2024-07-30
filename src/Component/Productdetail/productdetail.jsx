@@ -124,8 +124,8 @@ const handlePincodeChange = useCallback(async(e) => {
               <div className="col-lg-5">
                 <div className='position-sticky top-0'>
                   <div className='d-flex justify-content-start '>
-                    <div className='p-1 d-none d-md-block'
-                     style={{ maxHeight: '480px', overflowY: 'auto' }}>
+                    <div className={`${css.picGrid} d-none d-md-block`}
+                      >
                       {product.image_gallery.map((image, index) => (
                         <img
                           key={index}
@@ -137,7 +137,7 @@ const handlePincodeChange = useCallback(async(e) => {
                         />
                       ))}
                     </div>
-                    <div className='image-magnify-container' style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece'}}>
+                    <div className={css.imageMagnifyContainer} style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece'}}>
                       <ReactImageMagnify {...{
                         smallImage: {
                           alt: 'e-commerce',
@@ -146,8 +146,8 @@ const handlePincodeChange = useCallback(async(e) => {
                         },
                         largeImage: {
                           src: mainImage || product.productImage,
-                          width: 1200,
-                          height: 1800,
+                          width: 600,
+                          height: 800,
                           style: { borderRadius: '10px' }
                         },
                         enlargedImagePosition: 'beside',

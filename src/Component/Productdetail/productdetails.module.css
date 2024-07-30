@@ -56,3 +56,39 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+.picGrid{
+  overflow-y: scroll !important;
+  max-height: 480px !important;
+  /* height: 430px !important; */
+}
+
+.picGrid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.picGrid {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* productdetails.module.css */
+
+.imageMagnifyContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d0cece;
+  height: 480px;
+  width: 480px;
+}
+
+@media (max-width: 768px) {
+  .imageMagnifyContainer {
+    height: 300px;
+    width: 300px;
+  }
+}
