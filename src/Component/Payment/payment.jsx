@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import css from "../OrderSummary/ordersummary.module.css";
 import { checkUser, formatNumberWithCommas } from "../../assest/js/checker";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,10 @@ import ChangeUser from "../OrderSummary/ChangeUser";
 import { getProductDetails } from "../../action/productdetailaction";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons/faLessThanEqual";
 import ChangeAddress from "../OrderSummary/ChangeAddress";
 import { createOrder } from "../../action/createOrderAction";
 import { verifyPayment } from "../../action/paymentVerifyAction";
+import CryptoJS from "crypto-js";
 
 function Payment() {
   const [selectedMethod, setSelectedMethod] = useState('');
@@ -27,8 +27,10 @@ function Payment() {
   const [updating, setUpdating] = useState(false);
   const orderDetails = useSelector(state => state.OrderSummary?.data);
   const [reqProducts, setReqProducts] = useState({});
-  const orderedList = useSelector(state=>state.orderDetails.data);
-  const [orderCreated ,setOrderCreated] = useState(false);
+  const orderedList = useSelector(state => state.orderDetails.data);
+  const [orderCreated, setOrderCreated] = useState(false);
+  const paymentId = useRef(null);
+  const paymentMethod = useRef(null);
   
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -61,14 +63,6 @@ function Payment() {
     setSelectedMethod(e.target.value);
   };
 
-  const handlePaymentConfig = useCallback(()=>{
-    if(orderDetails.data){
-        // Open Razorpay checkout
-    
-    }
-
-  })
-
   const handleReqBody = useCallback(() => {
     let products = [];
     orderDetails.orderItems.forEach(product => {
@@ -79,69 +73,129 @@ function Payment() {
       obj.payable_price = product.selling_price; // Fixed key
       obj.discount = product.discounting_price; // Fixed key
       products.push(obj);
-    },[orderDetails]);
+    });
     return { products, shippingAddress: selectedAddress.billing_address, billingAddress: selectedAddress.billing_address, shippingMethod: 'Standard Shipping' };
   }, [orderDetails, selectedAddress]);
 
-  const handlePaymentSuccess = useCallback(async(response)=>{
-    debugger
-    console.log('payment from payment',response)
-    await dispatch(verifyPayment(response))
-    console.log('successss payment')
+  const handlePaymentSuccess = useCallback(async(message, response)=>{
+       if(message==='succeeded'){
+          const newResponse = {...response,paymentInfo :{paymentMethod:paymentMethod.current}}
+         console.log('Payment success response:', message, 'response: ',newResponse);
+         await dispatch(verifyPayment(newResponse));
+       }else{
+        alert('payment Failed please try again')
+        console.log('resp on failed',response)
+         await dispatch(verifyPayment(response))
+       }
+  }, [dispatch]);
 
-  })
- const handleRazorConfig = useCallback(()=>{
-  console.log(orderedList , 'oooo')
-  const options = {
-    key:process.env.REACT_APP_RAZORPAY_ID_KEY, // Replace with your Razorpay key ID
-    amount: parseInt(orderedList.amount),
-    currency: orderedList.currency,
-    name: 'Shine Decorations',
-    description: 'Test Transaction',
-    order_id: orderedList.id,
-    handler: handlePaymentSuccess,
-    prefill: {
-      name: userDetails.name,
-      email: userDetails.email,
-      contact: userDetails.mobile
-    },
-    notes: {
-      address: selectedAddress.billing_address
-    },
-    theme: {
-      color: '#F37254'
-    }
-  };
+  const handleRazorConfig = useCallback(() => {
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_ID_KEY, // Replace with your Razorpay key ID
+      amount: parseInt(orderedList.amount),
+      currency: orderedList.currency,
+      name: 'Shine Decorations',
+      description: 'Test Transaction',
+      order_id: orderedList.id,
+      handler: (response) => {
+        console.log('succeeded');
+        console.log(response);
+        paymentId.current = response.razorpay_payment_id;
+        const signature = CryptoJS.HmacSHA256(
+          `${orderedList.id}|${response.razorpay_payment_id}`,
+          process.env.REACT_APP_RAZORPAY_SECRET_KEY
+        ).toString(CryptoJS.enc.Hex);
+  
+        // Verify if the generated hash matches the Razorpay signature
+        const succeeded = signature === response.razorpay_signature;
+  
+        if (succeeded) {
+          handlePaymentSuccess('succeeded', {
+            razorpay_order_id: orderedList.id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          });
+        } else {
+          handlePaymentSuccess('failed', {
+            razorpay_order_id: orderedList.id,
+            razorpay_payment_id: response.razorpay_payment_id,
+          });
+        }
+      },
+      modal: {
+        confirm_close: true, // this is set to true, if we want confirmation when clicked on cross button.
+        // This function is executed when checkout modal is closed
+        // There can be 3 reasons when this modal is closed.
+        ondismiss: async (reason) => {
+          const {
+            reason: paymentReason, field, step, code,
+          } = reason && reason.error ? reason.error : {};
+          // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly. 
+          if (reason === undefined) {
+            console.log('cancelled');
+            handlePaymentSuccess('Cancelled');
+          } 
+          // Reason 2 - When modal is auto closed because of time out
+          else if (reason === 'timeout') {
+            console.log('timedout');
+            handlePaymentSuccess('timedout');
+          } 
+          // Reason 3 - When payment gets failed.
+          else {
+            console.log('failed');
+            handlePaymentSuccess('failed', {
+              razorpay_order_id: orderedList.id,
+            });
+          }
+        },
+      },
+      // This property allows to enble/disable retries.
+      // This is enabled true by default. 
+      retry: {
+        enabled: false,
+      },
+      timeout: 900, // Time limit in Seconds
+      theme: {
+        color: '', // Custom color for your checkout modal.
+      },
+    };
 
-  const rzp = new window.Razorpay(options);
-  console.log(rzp,"rzp")
-  rzp.open();
-  rzp.on('payment.failed', async function (response){
-    await dispatch(verifyPayment(response))
-})
+    const rzp1 = new window.Razorpay(options);
 
- },[orderedList,dispatch, selectedMethod])
+    // If you want to retreive the chosen payment method.
+    rzp1.on('payment.submit', (response) => {
+      console.log('success and calledback',response)
+      paymentMethod.current = response.method;
+    });
 
+    // To get payment id in case of failed transaction.
+    rzp1.on('payment.failed', (response) => {
+      console.log('failed and calleback',response);
+      paymentId.current = response.error.metadata.payment_id;
+    });
+
+    // to open razorpay checkout modal.
+    rzp1.open();
+  }, [orderedList, dispatch, selectedMethod, userDetails, selectedAddress, handlePaymentSuccess]);
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     const updatedReqProducts = handleReqBody();
     setReqProducts(updatedReqProducts);
 
-    await dispatch(createOrder(updatedReqProducts)).then(async()=>{
-      setOrderCreated(true)
-    })
+    await dispatch(createOrder(updatedReqProducts)).then(async () => {
+      setOrderCreated(true);
+    });
+  }, [dispatch, handleReqBody]);
 
-  },  [selectedMethod,dispatch,handleReqBody]);
-
-  useEffect(()=>{
-    if(orderCreated){
-      handleRazorConfig()
-      setOrderCreated(false)
+  useEffect(() => {
+    if (orderCreated) {
+      handleRazorConfig();
+      setOrderCreated(false);
     }
-  },[orderCreated,handleRazorConfig])
+  }, [orderCreated, handleRazorConfig]);
 
-  console.log(orderedList,'ordereddd',);
+
 
   return (
     <section className={css.maincontainer}>

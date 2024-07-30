@@ -124,7 +124,8 @@ const handlePincodeChange = useCallback(async(e) => {
               <div className="col-lg-5">
                 <div className='position-sticky top-0'>
                   <div className='d-flex justify-content-start '>
-                    <div className='p-1 d-none d-md-block'>
+                    <div className='p-1 d-none d-md-block'
+                     style={{ maxHeight: '480px', overflowY: 'auto' }}>
                       {product.image_gallery.map((image, index) => (
                         <img
                           key={index}
