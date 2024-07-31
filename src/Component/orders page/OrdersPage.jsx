@@ -1,33 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './orderss.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { myOrderAction } from '../../action/myorderActions';
 
-const orders = [
-  {
-    id: 1,
-    productName: 'Product Name 1',
-    orderNumber: '#123456',
-    orderDate: '01/01/2024',
-    status: 'Delivered',
-    productImage: 'path/to/product-image1.jpg'
-  },
-  {
-    id: 2,
-    productName: 'Product Name 2',
-    orderNumber: '#123457',
-    orderDate: '02/01/2024',
-    status: 'Processing',
-    productImage: 'path/to/product-image2.jpg'
-  }
-  // Add more orders as needed
-];
+
+
 
 const OrderPage = () => {
+
+ const dispatch = useDispatch();
+ const myOrders = useSelector(state=>state.myOrder?.data)
+
+ useEffect(()=>{
+  dispatch(myOrderAction())
+ },[])
+
+ console.log(myOrders)
+
+
+
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">My Orders</h1>
-      {orders.map((order) => (
-        <div key={order.id} className="order-card card mb-3">
+      {myOrders&& myOrders.orders.map((order) => (
+        <div key={order.orderNumber} className="order-card card mb-3">
+          {order.products.map(item=>(
           <div className="card-body">
             <div className="row justify-content-between">
               <div className="col-md-2">
@@ -44,6 +42,7 @@ const OrderPage = () => {
               </div>
             </div>
           </div>
+          ))}
         </div>
       ))}
     </div>

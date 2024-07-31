@@ -16,6 +16,8 @@ import { forgotPassword } from '../action/authaction';
 import registerReducer from './Registeration';
 import { checkDelivery } from '../action/Delivery';
 import { CheckDeliveryReducer } from './checkDelivery';
+import MyordersReducer from './myOrder';
+import singleOrder from './singleOrder';
 
 
 
@@ -35,6 +37,8 @@ const rootReducer = combineReducers({
     OrderSummary:orderSummaryReducer,
     orderDetails:orderDetailsReducer,
     checkDelivery:CheckDeliveryReducer,
+    myOrder:MyordersReducer,
+    singleOrder:singleOrder,
 });
 
 export default rootReducer;
