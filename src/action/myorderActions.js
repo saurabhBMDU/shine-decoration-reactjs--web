@@ -1,6 +1,6 @@
 import axios from "axios"
 import { API_URL } from "../service/api"
-import { GET_MY_ORDER } from "./actionType"
+import { GET_MY_ORDER, GET_MY_ORDER_SINGLE_DETAIL } from "./actionType"
 
 export const myOrderAction = ()=>{
     return async dispatch => {
@@ -28,4 +28,33 @@ export const myOrderAction = ()=>{
           console.log(error.message)
        }
     }
+}
+
+
+
+export const getsingleOrderDetails = (id)=>{
+   return async dispatch => {
+      try {
+          const token = localStorage.getItem('token');
+         const response = axios.get(`${API_URL}/mobileApi/order/order/${id}`,{
+            headers:{
+               Authorization:`Bearer ${token}`,
+               'Content-Type':'application/json'
+            }
+         })
+         console.log(response);
+         if(response){
+            const {data:{result}={}}=response;
+            dispatch({
+               type:GET_MY_ORDER_SINGLE_DETAIL,
+               payload:result
+            })
+         }else{
+            throw Error(response)
+         }
+      } catch (error) {
+         console.log(error.message)
+         
+      }
+   }
 }

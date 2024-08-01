@@ -38,8 +38,8 @@ const ChangeAddress = ({ userDetails, setModal, setSelectedAddress ,currentAdres
               <h6>{item.mobile}</h6>
               <div className="d-flex justify-content-start text-wrap-wrap">
                 <p className="m-0 p-0">{item.billing_address} </p>
-                <span>{item.district}</span> ,<span>{item.state}</span>,
-              <p> pin:{item.pinCode}</p>
+                <br /><span>{item.district}</span> , <span>{item.state}</span>,
+              <br /> <p> pin:{item.pinCode}</p>
               </div>
             </div>
           </div>
