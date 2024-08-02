@@ -12,8 +12,6 @@ export const myOrderAction = ()=>{
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(response,'response of my order')
-
              if(response.status===200){
                 const {data:{result}={}} = response;
                 dispatch({
@@ -36,15 +34,14 @@ export const getsingleOrderDetails = (id)=>{
    return async dispatch => {
       try {
           const token = localStorage.getItem('token');
-         const response = axios.get(`${API_URL}/mobileApi/order/order/${id}`,{
+         const response = await axios.get(`${API_URL}/mobileApi/order/order/${id}`,{
             headers:{
                Authorization:`Bearer ${token}`,
                'Content-Type':'application/json'
             }
          })
-         console.log(response);
-         if(response){
-            const {data:{result}={}}=response;
+         if(response.status===200){
+            const {data:{result}={}}=  response;
             dispatch({
                type:GET_MY_ORDER_SINGLE_DETAIL,
                payload:result

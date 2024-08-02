@@ -1,62 +1,66 @@
 import React, { useEffect } from 'react';
-
-import './orderss.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { myOrderAction } from '../../action/myorderActions';
+import './orderss.css';
+import { Link } from 'react-router-dom';
 
-const orders= [
-  {
-    orderNumber:23,
-    products:[
-
-      {
-
-      }
-    ]
-  }
-]
-
+const orderStatus = {
+  'Pending': 'gray',
+  'Order confirmed': 'green',
+  'Shipped': 'green',
+  'Out for Delivery': 'yellow',
+  'Delivered': 'green',
+  'Cancelled': 'red'
+};
 
 const OrderPage = () => {
+  const dispatch = useDispatch();
+  const myOrders = useSelector(state => state.myOrder?.data?.orders);
+  const loading = useSelector(state => state.myOrder?.loading);
+  const error = useSelector(state => state.myOrder?.error);
 
- const dispatch = useDispatch();
- const myOrders = useSelector(state=>state.myOrder?.data)
-
- useEffect(()=>{
-  dispatch(myOrderAction())
- },[])
-
- console.log(myOrders)
-
-
+  useEffect(() => {
+    dispatch(myOrderAction());
+  }, [dispatch]);
 
   return (
-<></>
-    // <div className="container mt-5">
-    //   <h1 className="text-center mb-4">My Orders</h1>
-    //   {myOrders&& Orders.orders.map((order) => (
-    //     <div key={order.orderNumber} className="order-card card mb-3">
-    //       {order.products.map(item=>(
-    //       <div className="card-body">
-    //         <div className="row justify-content-between">
-    //           <div className="col-md-2">
-    //             <img src={'/img/pottery3.jpg'} className="img-fluid" alt="Product" />
-    //           </div>
-    //           <div className="col-md-8">
-    //             <h5 className="card-title">{order.productName}</h5>
-    //             <p className="card-text">Order Number: {order.orderNumber}</p>
-    //             <p className="card-text">Order Date: {order.orderDate}</p>
-    //             <p className="card-text">
-    //               Status: <span className={`badge ${order.status === 'Delivered' ? 'badge-success' : 'badge-warning'}`}>{order.status}</span>
-    //             </p>
-    //             <a href="#" className="btn btn-primary">View Details</a>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       ))}
-    //     </div>
-    //   ))}
-    // </div>
+    <div className="container mt-5">
+      <h1 className="text-center mb-4">My Orders</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-danger">Error: {error}</p>}
+      {myOrders && myOrders.length > 0 ? (
+        myOrders.map((order) => (
+          <div key={order.orderNumber} className="order-card card mb-3">
+            {order.product.map((item, index) => (
+              <div key={item.product._id} className="card-body">
+                <div className="row justify-content-between">
+                  <div className="col-md-2">
+                    <img src={item.product.productImage} className="img-fluid" alt="Product" />
+                  </div>
+                  <div className="col-md-8">
+                    <h5 className="card-title">{item.product_name}</h5>
+                    <p className="card-text">Order Number: {order.orderNumber}</p>
+                    <p className="card-text">Order Date: {order.createdAt}</p>
+                    <p className="card-text d-flex align-items-center gap-2">
+                      Status: 
+                      <span 
+                        className={`badge ${orderStatus[order.trackingInfo[order.trackingInfo.length - 1].status] }`} 
+                        // style={{ backgroundColor: orderStatus[order.trackingInfo[order.trackingInfo.length - 1].status] }}
+                      >
+                      </span>
+                        {order.trackingInfo[order.trackingInfo.length - 1].status}
+                    </p>
+                    <Link to={`/user/orders/${order.orderId}`} className="btn btn-primary">View Details</Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))
+      ) : (
+        !loading && <p>No orders found.</p>
+      )}
+    </div>
   );
 };
 

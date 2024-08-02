@@ -27,8 +27,11 @@ body {
     margin-bottom: 10px;
   }
   
-  .order-card .badge {
-    font-size: 0.7rem;
+  .card-text .badge {
+    width: 10px ;
+    height: 12px;
+    border-radius: 50%;
+    background-color: green;
   }
   
   .order-card .btn {

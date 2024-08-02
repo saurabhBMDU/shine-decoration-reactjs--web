@@ -193,3 +193,13 @@
 }
 .order-tracking:first-child:before{display: none;}
 .order-tracking.completed:before{background-color: #27aa80;}
+
+
+.ratinglink{
+	background-color: #27aa80;;
+	color: white;
+	border-radius: 5px;
+	padding: 3px 10px;
+	text-transform: capitalize;
+	margin-top: 5px;
+}

@@ -1,17 +1,34 @@
-import React, { useState } from "react";
-import { FaStar } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { FaMinusCircle, FaStar } from "react-icons/fa";
 import './Reviews.css'
 
 const ReviewandRatingsPage = () => {
   const [reviewForm, setReviewForm] = useState({
     reviewTitle: '',
     reviewDescription: '',
-    rating: 0
+    rating: 0,
+    selectedFiles: []
   });
-
+   const uploadLimitRef = useRef()
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [inputError,setInputError] = useState([]) 
+   
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if(name==='reviewDescription' && value!==''){
+      document.getElementById('titleArea').style.color='#0d7eee'
+    }else{
+      document.getElementById('titleArea').style.color='black'
+    }
+
+    if(name==='reviewTitle' && value!==''){
+      
+     document.getElementById('reviewTitle').style.color='#0d7eee'
+    }else{
+         document.getElementById('reviewTitle').style.color='#000'
+    }
     setReviewForm(prevForm => ({
       ...prevForm,
       [name]: value
@@ -26,13 +43,59 @@ const ReviewandRatingsPage = () => {
     }));
   };
 
-  const handleSubmit = (e)=>{
-   e.preventDefault();
-   console.log(reviewForm);
-  }
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if(uploadedImages.length < 3){
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setUploadedImages(prevImages => [...prevImages, reader.result]);
+        };
+        reader.readAsDataURL(file);
+        setReviewForm(prevForm => ({
+          ...prevForm,
+          selectedFiles: [...prevForm.selectedFiles, file]
+        }));
+      }
+    }else{
+      uploadLimitRef.current.innerText='Your reached maximum upload limit'
+
+    }
+  };
+
+  // Trigger file input click
+  const triggerFileInput = () => {
+    document.getElementById('fileInput').click();
+  };
+
+  // Handle remove image
+  const handleRemoveImage = (index) => {
+    uploadLimitRef.current.innerText=''
+    setUploadedImages(prevImages => prevImages.filter((_, i) => i !== index));
+    setReviewForm(prevForm => ({
+      ...prevForm,
+      selectedFiles: prevForm.selectedFiles.filter((_, i) => i !== index)
+    }));
+  };
+
+  // Handle form submit
+  const handleSubmit = (e) => {
+    if(reviewForm.rating ===0 || reviewForm.reviewDescription==='' || reviewForm.selectedFiles.length===0){
+      setInputError(['please fill the input fields'])
+    }else{
+      setInputError([])
+      console.log('success',reviewForm)
+
+    }
+  
+    e.preventDefault();
+     
+  };
+
   return (
-    <section className="px-10 py-4"> 
-      <main className="rev-productbox d-flex px-4 py-2 gap-4 ">
+    <section className="px-10 py-4">
+      <main className="rev-productbox d-flex px-4 py-2 gap-4">
         <div>
           <img src="/img/pottery3.jpg" alt="Product" />
         </div>
@@ -40,7 +103,7 @@ const ReviewandRatingsPage = () => {
           <label>Product Name</label>
           <p>Product Category</p>
           <div className="rating-cont">
-            <FaStar color="white"/> <span>4.5</span>
+            <FaStar color="white" /> <span>4.5</span>
           </div>
         </div>
       </main>
@@ -49,67 +112,94 @@ const ReviewandRatingsPage = () => {
           <div className="ratebox">
             <h4>Rate Product</h4>
             <div className="rate d-block justify-self-start">
-              {[5, 4, 3, 2, 1].map(star => (
-                <React.Fragment key={star}>
-                  <input
-                    type="radio"
-                    id={`star${star}`}
-                    name="rating"
-                    value={star}
-                    checked={reviewForm.rating === star}
-                    onChange={handleRatingChange}
-                    required
-                  />
-                  <label htmlFor={`star${star}`} title={`${star} stars`}>{star} stars</label>
-                </React.Fragment>
-              ))}
+              <input type="radio" id="star5" name="rate" value="5" onChange={handleRatingChange} />
+              <label htmlFor="star5" title="5 stars">5 stars</label>
+              <input type="radio" id="star4" name="rate" value="4" onChange={handleRatingChange} />
+              <label htmlFor="star4" title="4 stars">4 stars</label>
+              <input type="radio" id="star3" name="rate" value="3" onChange={handleRatingChange} />
+              <label htmlFor="star3" title="3 stars">3 stars</label>
+              <input type="radio" id="star2" name="rate" value="2" onChange={handleRatingChange} />
+              <label htmlFor="star2" title="2 stars">2 stars</label>
+              <input type="radio" id="star1" name="rate" value="1" onChange={handleRatingChange} />
+              <label htmlFor="star1" title="1 star">1 star</label>
             </div>
           </div>
           <div>
             <h4>Review this Product</h4>
-            <form onSubmit=''>
-
             <main className="text-area-cont">
               <div className="d-flex px-4 justify-content-between py-2 text-heading-area">
-                <label htmlFor="reviewDescription">Description</label>
-                <label htmlFor="reviewDescription">cannot be empty</label>
+                <label htmlFor="" id="titleArea">Description</label>
+                {reviewForm.reviewDescription === '' ? (
+                    <label htmlFor="" id="empty">Cannot be empty</label>
+                  ) : (
+                    <label htmlFor="" id="empty"></label>
+                  )}
+
               </div>
               <textarea
-              required
-                id="reviewDescription"
                 name="reviewDescription"
                 placeholder="Description...."
+                id=""
                 className="px-4"
-                style={{padding:0}}
+                style={{ padding: 0 }}
                 value={reviewForm.reviewDescription}
                 onChange={handleInputChange}
-              />
+              ></textarea>
               <div className="ratetitle-cont px-4">
-                <label htmlFor="reviewTitle" style={{fontSize:'.85rem', fontWeight:500}}>Title (optional)</label>
+                <label htmlFor="" id="reviewTitle" style={{ fontSize: '.85rem', fontWeight: 500 }}>Title (optional)</label>
                 <input
-                  id="reviewTitle"
-                  name="reviewTitle"
                   type="text"
+                  name="reviewTitle"
                   placeholder="Review title..."
-                  style={{fontSize:'.9rem'}}
+                  style={{ fontSize: '.9rem' }}
                   value={reviewForm.reviewTitle}
                   onChange={handleInputChange}
                 />
               </div>
             </main>
-            <div className="mt-5 add-photo-cont px-4 ">
-              <input type="file" />
-              {/* <img src="https://icon-library.com/images/add-photo-icon/add-photo-icon-19.jp" alt="Add photo" /> */}
+            <div className="mt-5 add-photo-cont px-4 d-flex gap-4">
+              <div className="">
+                <input
+                  type="file"
+                  id="fileInput"
+                  className="hidden-input"
+                  onChange={handleFileChange}
+                />
+                <img
+                  src="https://icon-library.com/images/add-photo-icon/add-photo-icon-19.jpg"
+                  alt="AddPhoto"
+                  onClick={triggerFileInput}
+                  style={{ cursor: 'pointer' }}
+                />
+              </div>
+              <div className="d-flex align-items-center gap-2 uploaded-images position-relative">
+                {uploadedImages.map((item, index) => (
+                  <div key={index} className="position-relative">
+                    <img src={item} alt="Uploaded" className="uploaded-img" />
+                    <FaMinusCircle
+                      color="red"
+                      size={25}
+                      className="position-absolute translate-middle-x"
+                      style={{ left: '50%', top: '50%', cursor: 'pointer' }}
+                      onClick={() => handleRemoveImage(index)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="submit-rate-button-cont d-flex justify-content-end">
-              <button className="submit-rate-button" type="submit">Submit</button>
+                <p id="uploadLimit " className="px-4" style={{color:'red', display:'block' ,fontWeight:400}} ref={uploadLimitRef}></p>
+                <p id="uploadLimit " className="px-4" style={{color:'red', display:'block' ,fontWeight:400}} >
+                  {inputError&& inputError[0]}
+                </p>
+
+            <div className='submit-rate-button-cont d-flex justify-content-end'>
+              <button className="submit-rate-button" onClick={handleSubmit}>Submit</button>
             </div>
-            </form>
           </div>
         </div>
       </main>
     </section>
-  )
+  );
 };
 
 export default ReviewandRatingsPage;

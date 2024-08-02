@@ -114,9 +114,20 @@ input[type="file"] {
     width: 5rem;
     background-color: black;
   }
+  .uploadedimages{
   
+    width: 20rem;
+    padding: 0rem 1rem;
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
   
-
+  .uploadedimages::-webkit-scrollbar{
+    display: none;
+  }
 .rate {
     float: left;
     height: 46px;

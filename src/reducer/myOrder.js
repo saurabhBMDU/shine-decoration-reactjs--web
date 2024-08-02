@@ -4,15 +4,17 @@ import { GET_MY_ORDER } from "../action/actionType"
 
 
 const intialState = {
-    data:{},
-    loading: false,
+    data:{
+        
+    },
+    loading: true,
     error: null
 }
 
 const MyordersReducer = (state=intialState,action)=>{
     switch(action.type){
         case GET_MY_ORDER:{
-            return {...state,loading:true,error:null,data:action.payload}
+            return {...state,loading:false,error:null,data:action.payload}
         }
 
             default : return state

@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import  './orderDetails.css'
 import { FaStar } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useFetcher, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getsingleOrderDetails } from "../../action/myorderActions";
 const OrderDetails = () => {
+    const {id} = useParams();
+    const dispatch = useDispatch();
+    const  order = useSelector(state=>state.singleOrder?.data)
+    useEffect(()=>{
+        dispatch(getsingleOrderDetails(id))
+    },[dispatch])
+
+    console.log(order,'orrrr')
   return (
     
     <section className="od-main">
@@ -41,20 +51,20 @@ const OrderDetails = () => {
                     </div>
                 </div>
                 
-                <div class="container " style={{margin:0,padding:0}}>
-                    <div class="row">
-						<div class="col-12 col-md-10 hh-grayBox pt45 pb20">
-							<div class="row justify-content-between">
-								<div class="order-tracking completed">
-									<span class="is-complete"></span>
+                <div className="container " style={{margin:0,padding:0}}>
+                    <div className="row">
+						<div className="col-12 col-md-10 hh-grayBox pt45 pb20">
+							<div className="row justify-content-between">
+								<div className="order-tracking completed">
+									<span className="is-complete"></span>
 									<p>Ordered<br/><span>Mon, June 24</span></p>
 								</div>
-								<div class="order-tracking completed">
-									<span class="is-complete"></span>
+								<div className="order-tracking completed">
+									<span className="is-complete"></span>
 									<p>Shipped<br/><span>Tue, June 25</span></p>
 								</div>
-								<div class="order-tracking">
-									<span class="is-complete"></span>
+								<div className="order-tracking">
+									<span className="is-complete"></span>
 									<p>Delivered<br/><span>Fri, June 28</span></p>
 								</div>
 							</div>
@@ -63,7 +73,7 @@ const OrderDetails = () => {
                 </div>
             </section>
             <div className="d-flex justify-content-center align-items-center mt-2 " style={{borderTop:'1px solid lightgray'}}>
-                <Link className="text-center pt-1 " style={{fontWeight:500,fontSize:'.9rem'}}><FaStar color="green"/> Rate & Review Product</Link>
+                <Link to={`/product/review/${22}`} className="text-center pt-1 ratinglink d-flex justify-content-center align-items-center gap-2" style={{fontWeight:500,fontSize:'.9rem'}}><FaStar color="whited"/> Rate & Review Product</Link>
             </div>
             <div className="px-3 od-returnpolicy">
                 <p style={{margin:0,fontWeight:400,textTransform:"capitalize",fontSize:'.8rem'}}>product return policy:</p>
