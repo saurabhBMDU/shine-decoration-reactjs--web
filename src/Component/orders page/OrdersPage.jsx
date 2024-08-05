@@ -29,8 +29,8 @@ const OrderPage = () => {
       {loading && <p>Loading...</p>}
       {error && <p className="text-danger">Error: {error}</p>}
       {myOrders && myOrders.length > 0 ? (
-        myOrders.map((order) => (
-          <div key={order.orderNumber} className="order-card card mb-3">
+        myOrders.map((order,index) => (
+          <div key={index} className="order-card card mb-3">
             {order.product.map((item, index) => (
               <div key={item.product._id} className="card-body">
                 <div className="row justify-content-between">
