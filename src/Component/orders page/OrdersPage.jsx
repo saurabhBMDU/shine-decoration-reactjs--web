@@ -50,7 +50,7 @@ const OrderPage = () => {
                       </span>
                         {order.trackingInfo[order.trackingInfo.length - 1].status}
                     </p>
-                    <Link to={`/user/orders/${order.orderId}`} className="btn btn-primary">View Details</Link>
+                    <Link to={`/user/orders/${order.orderId}+${item.product._id}`} className="btn btn-primary">View Details</Link>
                   </div>
                 </div>
               </div>
