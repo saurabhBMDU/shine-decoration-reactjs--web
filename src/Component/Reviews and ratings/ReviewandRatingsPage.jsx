@@ -1,18 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaMinusCircle, FaStar } from "react-icons/fa";
 import './Reviews.css'
+import { sendReview } from "../../action/ReviewActions";
+import { useFetcher, useNavigate, useParams } from "react-router-dom";
+import { MdVerifiedUser } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetails } from "../../action/productdetailaction";
 
 const ReviewandRatingsPage = () => {
   const [reviewForm, setReviewForm] = useState({
     reviewTitle: '',
     reviewDescription: '',
     rating: 0,
-    selectedFiles: []
+   images: []
   });
+  const {id} = useParams()
    const uploadLimitRef = useRef()
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [inputError,setInputError] = useState([]) 
-   
+  const [inputError,setInputError] = useState([])
+  const [direct,setDirect] = useState(false) 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const product = useSelector(state=>state.productDetails.product)
+  useEffect(()=>{
+    dispatch(getProductDetails(id))
+  },[dispatch])
+ 
+  console.log(product)
+
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +70,7 @@ const ReviewandRatingsPage = () => {
         reader.readAsDataURL(file);
         setReviewForm(prevForm => ({
           ...prevForm,
-          selectedFiles: [...prevForm.selectedFiles, file]
+         images: [...prevForm.images, file]
         }));
       }
     }else{
@@ -75,17 +90,32 @@ const ReviewandRatingsPage = () => {
     setUploadedImages(prevImages => prevImages.filter((_, i) => i !== index));
     setReviewForm(prevForm => ({
       ...prevForm,
-      selectedFiles: prevForm.selectedFiles.filter((_, i) => i !== index)
+     images: prevForm.images.filter((_, i) => i !== index)
     }));
   };
 
   // Handle form submit
-  const handleSubmit = (e) => {
-    if(reviewForm.rating ===0 || reviewForm.reviewDescription==='' || reviewForm.selectedFiles.length===0){
+  const handleSubmit = async(e) => {
+    if(reviewForm.rating ===0 || reviewForm.reviewDescription==='' ){
       setInputError(['please fill the input fields'])
     }else{
       setInputError([])
-      console.log('success',reviewForm)
+      const response =await sendReview(id, reviewForm)
+      if(response){
+        setReviewForm({
+          reviewTitle: '',
+          reviewDescription: '',
+          rating: 0,
+         images: []
+        })
+        setUploadedImages([]);
+        setDirect(true)
+        setTimeout(() => {
+          navigate('/')
+        }, 3000);
+      }else{
+        alert('failed')
+      }
 
     }
   
@@ -93,20 +123,37 @@ const ReviewandRatingsPage = () => {
      
   };
 
+  if(direct){
+      return (
+        <>
+        <div className="d-flex flex-column justify-content-center align-items-center mx-auto " style={{margin:'10% 0' ,fontSize:'1.3rem' ,fontWeight:600}}>
+        <div>
+          Thank you for your Valuable Feedback <MdVerifiedUser color="green" size={30}/>
+        </div>
+          <p style={{fontSize:'.7rem'} }>you will be redirected shortly</p>
+        </div>
+        </>
+      )
+  }
+ 
+
+
   return (
     <section className="px-10 py-4">
+      {product &&
       <main className="rev-productbox d-flex px-4 py-2 gap-4">
         <div>
-          <img src="/img/pottery3.jpg" alt="Product" />
+          <img src={product.productImage} alt="Product" />
         </div>
         <div className="rev-productTextbox">
-          <label>Product Name</label>
-          <p>Product Category</p>
+          <label>{product.product_name}</label>
+          <p>{product.category}</p>
           <div className="rating-cont">
-            <FaStar color="white" /> <span>4.5</span>
+            <FaStar color="white" /> <span>{product.averageRating}</span>
           </div>
         </div>
       </main>
+      }
       <main className="rating-sec">
         <div className="form-area-review d-flex flex-column gap-2">
           <div className="ratebox">

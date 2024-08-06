@@ -1,0 +1,121 @@
+.container-fluid {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.rating-box {
+    text-align: center;
+}
+
+.rating-box h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.rating-box p {
+    margin: 0;
+}
+
+.fa-star {
+    color: #f8ce0b;
+}
+
+.star-active {
+    color: #f8ce0b;
+}
+
+.star-inactive {
+    color: #e4e5e9;
+}
+
+.rating-bar0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rating-bar {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.bar-container {
+    background: #e4e5e9;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar-5 {
+    width: 90%;
+    background: #f8ce0b;
+    height: 100%;
+}
+
+.bar-4 {
+    width: 70%;
+    background: #f8ce0b;
+    height: 100%;
+}
+
+.bar-3 {
+    width: 50%;
+    background: #f8ce0b;
+    height: 100%;
+}
+
+.bar-2 {
+    width: 30%;
+    background: #f8ce0b;
+    height: 100%;
+}
+
+.bar-1 {
+    width: 10%;
+    background: #f8ce0b;
+    height: 100%;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.pic {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.like, .unlike {
+    display: flex;
+    align-items: center;
+}
+
+.like img, .unlike img {
+    width: 20px;
+    height: 20px;
+}
+
+.blue-text {
+    color: #007bff;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.text-left {
+    text-align: left;
+}

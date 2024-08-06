@@ -29,6 +29,7 @@ import ResetPasswords from '../Component/Auth/Forgot/ResetPassword';
 import ProtectedRoute from '../Component/protectedRoute/ProtectedRoute';
 import OrderDetails from '../Component/orderDetailsPage/OrderDetails';
 import ReviewandRatingsPage from '../Component/Reviews and ratings/ReviewandRatingsPage';
+import Faq from '../Component/Faq/Faq';
 
 function AppRouter() {
     return (
@@ -58,6 +59,7 @@ function AppRouter() {
                 <Route path='/cart/ordersummary' element={<OrderSummary />} />
                 <Route path={`/user/orders/:id`} element={<OrderDetails/>}/>
                 <Route path='/product/review/:id' element={<ReviewandRatingsPage/>}/>
+                <Route path='/faq' element={<Faq/>}/>
                 {/* Protected route for resetting password */}
                 <Route path='/resetpassword' element={
                     <ProtectedRoute>

@@ -12,15 +12,16 @@ import { addRecentProduct } from '../../action/recentProductAction';
 import { addSingleToOrderSummary } from '../../action/orderSummaryAction';
 import HeartButton from '../Home/HeartButton';
 import { checkDelivery } from '../../action/Delivery';
+import ReviewComments from '../ReviewDisplay/Reviewcomments';
 
 function Productdetail() {
   const navigate = useNavigate();
-  const [deliveryData , setDeliveryData] = useState([])
-  const [pincodeError, setPincodeError] = useState('')
+  const [deliveryData, setDeliveryData] = useState({});
+  const [pincodeError, setPincodeError] = useState('');
   const [timeOutId, setTimeoutId] = useState('');
   const product = useSelector(state => state.productDetails.product);
   const [quantity, setQuantity] = useState(1);
-  const [pincode,setPincode] = useState('')
+  const [pincode, setPincode] = useState('');
   const params = useParams();
   const id = params.id;
   const [mainImage, setMainImage] = useState(null);
@@ -29,13 +30,12 @@ function Productdetail() {
     addtocart: false,
     buynow: false
   });
-  const checkDeliveryData = useSelector(state=>state.checkDelivery?.data?.delivery_codes)
-
+  const checkDeliveryData = useSelector(state => state.checkDelivery?.data?.delivery_codes);
 
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(addRecentProduct(id));
-  }, [dispatch, id,buttonLoader.addtocart]);
+  }, [dispatch, id, buttonLoader.addtocart]);
 
   useEffect(() => {
     if (product) {
@@ -85,36 +85,34 @@ function Productdetail() {
       navigate('/cart/ordersummary');
     });
   }, [dispatch, navigate, product, quantity]);
- 
-const handlePincodeChange = useCallback(async(e) => {
-  
-  const newPincode = e.target.value;
-  setPincode(newPincode);
-  clearTimeout(timeOutId);
-    
-  if (newPincode.length < 6 || isNaN(Number(e.target.value))) {
-    setPincodeError('please Enter valid pincode')
-    console.log('error in pincode')
-    return
-  }else{
-    setPincodeError('')
-    const timePincodeTimeOut = setTimeout(() => {
-        dispatch(checkDelivery(Number(newPincode)))
-        console.log(Number(newPincode))
-        console.log('deliivery')
-    }, 2000);
-    console.log('success pincode');
-    
+
+  const handlePincodeChange = useCallback(async (e) => {
+    const newPincode = e.target.value;
+    console.log(newPincode,'live code')
+    setPincode(newPincode);
+    clearTimeout(timeOutId);
+
+    if (newPincode.length < 6 || isNaN(Number(e.target.value))) {
+      setPincodeError('Please enter a valid pincode');
+      return;
+    } else {
+      setPincodeError('');
+      const timePincodeTimeOut = setTimeout(() => {
+        dispatch(checkDelivery(Number(newPincode)));
+        console.timeStamp()
+      }, 2000);
+       setDeliveryData(prev=>checkDeliveryData && checkDeliveryData[0].postal_code)
+
       setTimeoutId(timePincodeTimeOut);
-  }
+    }
+  }, [timeOutId, pincodeError, checkDeliveryData ,pincode,deliveryData]);
 
-}, [timeOutId,pincodeError,checkDeliveryData]);
-  
-  useCallback(()=>{
-    return clearTimeout(timeOutId)
-   },[handlePincodeChange,setTimeoutId])
+  useCallback(() => {
+    return clearTimeout(timeOutId);
+  }, [handlePincodeChange, setTimeoutId]);
 
-   console.log(checkDeliveryData,'delivery data')
+  const specification = product?.specifications[0] || null;
+    console.log(deliveryData)
   return (
     <>
       <section className="container-fluid py-3">
@@ -124,9 +122,8 @@ const handlePincodeChange = useCallback(async(e) => {
               <div className="col-lg-5">
                 <div className='position-sticky top-0'>
                   <div className='d-flex justify-content-start '>
-                    <div className={`${css.picGrid} d-none d-md-block`}
-                      >
-                      {product.image_gallery.map((image, index) => (
+                    <div className={`${css.picGrid} d-none d-md-block`}>
+                      {product.image_gallery && product.image_gallery.map((image, index) => (
                         <img
                           key={index}
                           src={image}
@@ -137,7 +134,7 @@ const handlePincodeChange = useCallback(async(e) => {
                         />
                       ))}
                     </div>
-                    <div className={css.imageMagnifyContainer} style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece'}}>
+                    <div className={css.imageMagnifyContainer} style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
                       <ReactImageMagnify {...{
                         smallImage: {
                           alt: 'e-commerce',
@@ -151,7 +148,7 @@ const handlePincodeChange = useCallback(async(e) => {
                           style: { borderRadius: '10px' }
                         },
                         enlargedImagePosition: 'beside',
-                        enlargedImageContainerStyle: { zIndex: 20},
+                        enlargedImageContainerStyle: { zIndex: 20 },
                         enlargedImageContainerDimensions: { width: '200%', height: '130%' }
                       }} />
                       <div style={{ position: 'absolute', top: '30px', right: '10px', color: 'gray', fontSize: '24px', cursor: 'pointer' }}>
@@ -159,23 +156,21 @@ const handlePincodeChange = useCallback(async(e) => {
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex justify-content-center  mt-2">
+                  <div className="d-flex justify-content-center mt-2">
                     {product.isCart ? (
-                       <Link to={'/cart'} className="px-4 py-3 me-2 text-white"  style={{ background: "#FF9F00", width: "200px" }}>
-                       <i className="fas fa-shopping-cart px-2"></i> Go to Cart
-                       </Link>
-
-                    ):(
-
-                    <button className="px-4 py-3 me-2 text-white" onClick={() => handeaddtoCart(product._id)} style={{ background: "#FF9F00", width: "200px" }}>
-                      {buttonLoader.addtocart ? (
-                        <div className="spinner"></div>
-                      ) : (
-                        <>
-                          <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
-                        </>
-                      )}
-                    </button>
+                      <Link to={'/cart'} className="px-4 py-3 me-2 text-white" style={{ background: "#FF9F00", width: "200px" }}>
+                        <i className="fas fa-shopping-cart px-2"></i> Go to Cart
+                      </Link>
+                    ) : (
+                      <button className="px-4 py-3 me-2 text-white" onClick={() => handeaddtoCart(product._id)} style={{ background: "#FF9F00", width: "200px" }}>
+                        {buttonLoader.addtocart ? (
+                          <div className="spinner"></div>
+                        ) : (
+                          <>
+                            <i className="fas fa-shopping-cart px-2"></i> ADD TO CART
+                          </>
+                        )}
+                      </button>
                     )}
                     <button className="px-3 py-2 text-white" style={{ background: "#FB641B", width: "200px" }}>
                       <button className='text-white' onClick={handleBuynow}>
@@ -191,140 +186,100 @@ const handlePincodeChange = useCallback(async(e) => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-7 pl-1">
+              <div className="col-lg-7 pl-1 ">
                 <div>
-                  <h3>{product.product_name}</h3>
-                  <span style={{ fontSize: "12px" }}>{product.category} &#62; {product.sub_category}</span>
-                  <div>
-                    <div className="d-flex justify-content-start">
-                      <span className="fs-4" style={{ fontWeight: "500" }}>₹{product.selling_price}</span>
-                      <del className="px-2 py-1" style={{ fontWeight: "500", color: "gray" }}>₹{product.mrp_price}</del>
-                      <span className="px-2 py-2 text-success" style={{ fontWeight: "500", fontSize: "12px" }}>{(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed(1)}% off</span>
+                  <section className='px-4'>
+
+                    <div>
+                    <h3>{product.product_name}</h3>
+                    <span style={{ fontSize: "12px" }}>{product.category} &#62; {product.sub_category}</span>
                     </div>
-                    <span style={{ fontSize: "12px" }}>include of all taxes</span>
-                  </div>
-                  <div className="qty-container mt-2">
-                    <button className="qty-btn-minus btn-light bg-light rounded" type="button" onClick={handleDecrease}>
-                      <FontAwesomeIcon icon={faMinus} />
-                    </button>
-                    <input
-                      type="text"
-                      value={quantity}
-                      className="input-qty text-center mx-2"
-                      readOnly
-                    />
-                    <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </div>
-                  <section style={{ padding: '20px' }} className='d-flex flex-column gap-4 mt-4  position-static'>
-                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '10%' }}>
-                      <div>
-                        <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Delivery</p>
+                    <div>
+                      <div className="d-flex justify-content-start">
+                        <span className="fs-4" style={{ fontWeight: "500" }}>₹{product.selling_price}</span>
+                        <del className="px-2 py-1" style={{ fontWeight: "500", color: "gray" }}>₹{product.mrp_price}</del>
+                        <span className="px-2 py-2 text-success" style={{ fontWeight: "500", fontSize: "12px" }}>{(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed(1)}% off</span>
                       </div>
-                      <div>
-                      <div className='deliv'>
-                      <p className={`${css.p}`} style={{ fontWeight: '400' }}> Check Delivery Available</p>
-                      <label className='d-block'>Enter your pincode</label>
-                      <input type="text" 
-                      className='numinputt' 
-                      pattern='\d{6}' 
-                      maxLength={6}
-                      required
-                      value={pincode}
-                      onBlur={()=>setPincodeError('')}
-                      onChange={(e)=>handlePincodeChange(e)}
-                      style={{ width:'8rem',height:'2rem' ,padding:'0 5px'}}/>
+                      <span style={{ fontSize: "12px" }}>include of all taxes</span>
+                    </div>
+                    <div className="qty-container mt-2">
+                      <button className="qty-btn-minus btn-light bg-light rounded" type="button" onClick={handleDecrease}>
+                        <FontAwesomeIcon icon={faMinus} />
+                      </button>
+                      <input
+                        type="text"
+                        value={quantity}
+                        className="input-qty text-center mx-2"
+                        readOnly
+                      />
+                      <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                    <section className="mt-2">
+                      <div className="delivery-section">
+                        <h6>Check Delivery</h6>
+                        <div>
+                          <input
+                            type="text"
+                            value={pincode}
+                            onChange={handlePincodeChange}
+                            placeholder="Enter Pincode"
+                            maxLength={6}
+                          />
+                          {pincodeError && <span className="text-danger d-block">{pincodeError}</span>}
                         
-                      </div>
-                     
-                        <p className={`${css.p} text-danger`} style={{ fontSize: '.6rem' }}>{pincodeError&& pincodeError}</p>
-                        {checkDeliveryData && checkDeliveryData.map(item=>(
-                        <p className={`${css.deliveryinfo} ${item.postal_code.cod==='Y' || item.pre_paid==='Y' ? 'text-success':'text-danger'} `} style={{ fontWeight: '400' }}>{ item.postal_code.cod==='Y' || item.pre_paid==='Y' ? 'Available for Delivery' : 'Currently not Available'}</p>
-                        ))}
-                      </div>
-                    </section>
-                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '10%', verticalAlign: 'text-top' }}>
-                      <div>
-                        <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Version</p>
-                      </div>
-                      <div className='d-flex justify-content-start position-static'>
-                        <div className='d-flex justify-content-start align-items-center gap-3'>
-                          <p className={`${css.p} ${css.pbutton} ${css.pbuttonSelected} p-2`} style={{ fontWeight: '400' }}>version 1</p>
-                          <p className={`${css.p} ${css.pbutton} ${css.pbuttonSelected} p-2`} style={{ fontWeight: '400' }}>version 2</p>
-                          <p className={`${css.p} ${css.pbutton} ${css.pbuttonSelected} p-2`} style={{ fontWeight: '400' }}>version 3</p>
                         </div>
-                      </div>
-                    </section>
-                    <section className='position-static d-flex justify-content-start align-items-start' style={{ gap: '10%', verticalAlign: 'text-top' }}>
-                      <div>
-                        <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Highlights</p>
-                      </div>
-                      <div>
-                        <ul className={`${css.highlights}`}>
-                          <li>material: {product.material}</li>
-                          <li>this product has feature 1</li>
-                          <li>this product has feature 1</li>
-                          <li>this product has feature 1</li>
-                        </ul>
-                      </div>
-                    </section>
-                    <section className='d-flex justify-content-start align-items-start position-static' style={{ gap: '15%', verticalAlign: 'text-top' }}>
-                      <div>
-                        <p className={`${css.p} text-secondary`} style={{ fontWeight: '500' }}>Policy</p>
-                      </div>
-                      <div>
-                        <ul className={`${css.highlights}`}>
-                          <li>{product.return_policy}</li>
-                          <li>{product.shipping_option}</li>
-                        </ul>
+                        {deliveryData && pincode.length ===6 && (
+                          <div>
+                            <p className='text-success' style={{fontSize:'.8rem'}}>
+                              {deliveryData && deliveryData.cod === 'Y'? 'Delivery Available ' : 'Delivery not Available'}
+
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </section>
                   </section>
-                  <div className="container">
-                    <h3 className="mb-3 px-2">Specifications</h3>
-                    <table className="table table-bordered">
-                      <tbody>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Sales Package</th>
-                          <td>{product.salesPackage}</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Model Number</th>
-                          <td>Mystirio Black 35PC</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Color</th>
-                          <td>{product.color}</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Other Features</th>
-                          <td>Rust Proof</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Weight</th>
-                          <td>{product.weight}</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Dimensions</th>
-                          <td>{product.dimensions}</td>
-                        </tr>
-                        <tr>
-                          <th style={{ fontSize: "15px", fontWeight: "500" }}>Net Quantity</th>
-                          <td>{product.netQuantity}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    {/* <Link to="#" className="d-block mt-3">Manufacturing, Packaging and Import Info</Link> */}
-                  </div>
+                  <section className="mt-2 position-static">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12 py-2">
+                          <h6>Description</h6>
+                          <p>{product.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <section className="mt-2 position-static">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-12 py-2">
+                          <h6>Specifications</h6>
+                          <table className={css.specificationTable}>
+                            <tbody>
+                              {specification && Object.entries(specification).map(([key, value], index) => (
+                                <tr key={index}>
+                                  <th>{key}</th>
+                                  <td>{value}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </>
           ) : (
-            <div className='loader'></div>
+            <p>Loading...</p>
           )}
         </div>
       </section>
+   
+      <ReviewComments reviews={product}/>
       <Excusivecategory />
     </>
   );

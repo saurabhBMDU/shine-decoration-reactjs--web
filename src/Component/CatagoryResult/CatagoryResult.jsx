@@ -74,7 +74,7 @@ const CategoryResult = () => {
     return (
         <>
             {loading ? (
-                <div>Loading...</div>
+                <div className="loader"></div>
             ) : (
                 <section>
                     <div className="first-box">

@@ -10,13 +10,13 @@ import ChangeAddress from "../OrderSummary/ChangeAddress";
 import { createOrder } from "../../action/createOrderAction";
 import { verifyPayment } from "../../action/paymentVerifyAction";
 import CryptoJS from "crypto-js";
+import { getOrderSummary } from "../../action/orderSummaryAction";
 
 function Payment() {
   const [selectedMethod, setSelectedMethod] = useState('');
   const [captcha, setCaptcha] = useState('');
   const [input, setInput] = useState('');
   const navigate = useNavigate();
-  const { id } = useParams();
   const dispatch = useDispatch();
   const userDetails = useSelector(state => state?.getUser?.user);
   const user = checkUser();
@@ -32,9 +32,9 @@ function Payment() {
   const paymentId = useRef(null);
   const paymentMethod = useRef(null);
   
-  useEffect(() => {
-    dispatch(getProductDetails(id));
-  }, [dispatch, id]);
+  useEffect(()=>{
+    dispatch(getOrderSummary())
+  },[dispatch])
 
   useEffect(() => {
     if (userDetails) {

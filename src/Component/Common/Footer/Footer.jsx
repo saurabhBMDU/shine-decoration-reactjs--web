@@ -88,7 +88,7 @@ function Footer() {
                             <span className='mt-3'>
                               <i className="fa-solid fa-location-dot"></i>
                             </span>
-                            <p>0490D /7/13 main road surajpur greater Noida  uttar pradesh.</p>
+                            <p>0490D /7/13 main road surajpur greater Noida  Uttar Pradesh.</p>
                           </li>
                           <li className="gi-footer-link gi-foo-call">
                             <span>
