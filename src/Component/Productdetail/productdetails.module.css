@@ -30,6 +30,12 @@
 }
 
 
+.SubHeads{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
 @media (max-width: 995px) {
     .image-magnify-container {
       display: none;

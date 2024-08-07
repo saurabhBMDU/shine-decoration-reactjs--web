@@ -26,7 +26,7 @@ const ReviewandRatingsPage = () => {
     dispatch(getProductDetails(id))
   },[dispatch])
  
-  console.log(product)
+  
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -96,11 +96,13 @@ const ReviewandRatingsPage = () => {
 
   // Handle form submit
   const handleSubmit = async(e) => {
+    console.log(reviewForm,'testing the image view in console')
     if(reviewForm.rating ===0 || reviewForm.reviewDescription==='' ){
       setInputError(['please fill the input fields'])
+
     }else{
       setInputError([])
-      const response =await sendReview(id, reviewForm)
+      const response = await sendReview(id, reviewForm)
       if(response){
         setReviewForm({
           reviewTitle: '',

@@ -14,9 +14,11 @@ import HeartButton from '../Home/HeartButton';
 import { checkDelivery } from '../../action/Delivery';
 import ReviewComments from '../ReviewDisplay/Reviewcomments';
 
+
 function Productdetail() {
+  const [pincodeMessage , setPincodeMessage] = useState('')
   const navigate = useNavigate();
-  const [deliveryData, setDeliveryData] = useState({});
+  const [deliveryData, setDeliveryData] = useState(null);
   const [pincodeError, setPincodeError] = useState('');
   const [timeOutId, setTimeoutId] = useState('');
   const product = useSelector(state => state.productDetails.product);
@@ -86,30 +88,37 @@ function Productdetail() {
     });
   }, [dispatch, navigate, product, quantity]);
 
-  const handlePincodeChange = useCallback(async (e) => {
+  const handlePincodeChange = useCallback((e) => {
+    setPincodeMessage('')
     const newPincode = e.target.value;
-    console.log(newPincode,'live code')
     setPincode(newPincode);
     clearTimeout(timeOutId);
 
-    if (newPincode.length < 6 || isNaN(Number(e.target.value))) {
+    if (newPincode.length < 6 || isNaN(Number(newPincode))) {
       setPincodeError('Please enter a valid pincode');
       return;
     } else {
       setPincodeError('');
-      const timePincodeTimeOut = setTimeout(() => {
-        dispatch(checkDelivery(Number(newPincode)));
-        console.timeStamp()
-      }, 2000);
-       setDeliveryData(prev=>checkDeliveryData && checkDeliveryData[0].postal_code)
-
-      setTimeoutId(timePincodeTimeOut);
+      dispatch(checkDelivery(Number(newPincode)));
     }
-  }, [timeOutId, pincodeError, checkDeliveryData ,pincode,deliveryData]);
+  }, [timeOutId, dispatch]);
 
-  useCallback(() => {
-    return clearTimeout(timeOutId);
-  }, [handlePincodeChange, setTimeoutId]);
+  useEffect(() => {
+    if (checkDeliveryData && checkDeliveryData.length > 0) {
+        const deliveryInfo = checkDeliveryData[0]?.postal_code;
+        if (deliveryInfo) {
+            setPincodeMessage(deliveryInfo.cod === 'Y' ? 'Delivery Available' : 'Currently not Available');
+            setDeliveryData(deliveryInfo);
+        } else {
+            setPincodeMessage('Currently not Available');
+        }
+    } else {
+        setPincodeMessage('Currently not Available');
+    }
+}, [checkDeliveryData]);
+
+
+
 
   const specification = product?.specifications[0] || null;
     console.log(deliveryData)
@@ -218,7 +227,7 @@ function Productdetail() {
                     </div>
                     <section className="mt-2">
                       <div className="delivery-section">
-                        <h6>Check Delivery</h6>
+                        <h6 className={css.SubHeads}>Check Delivery</h6>
                         <div>
                           <input
                             type="text"
@@ -226,17 +235,17 @@ function Productdetail() {
                             onChange={handlePincodeChange}
                             placeholder="Enter Pincode"
                             maxLength={6}
+                            onBlur={()=>setPincodeError('')}
                           />
                           {pincodeError && <span className="text-danger d-block">{pincodeError}</span>}
                         
                         </div>
-                        {deliveryData && pincode.length ===6 && (
-                          <div>
-                            <p className='text-success' style={{fontSize:'.8rem'}}>
-                              {deliveryData && deliveryData.cod === 'Y'? 'Delivery Available ' : 'Delivery not Available'}
-
-                            </p>
-                          </div>
+                        {pincode.length === 6 && (
+                            <div>
+                                <p className={deliveryData ? 'text-success' : 'text-danger'} style={{ fontSize: '.8rem' }}>
+                                    {pincodeMessage}
+                                </p>
+                            </div>
                         )}
                       </div>
                     </section>
@@ -245,7 +254,7 @@ function Productdetail() {
                     <div className="container">
                       <div className="row">
                         <div className="col-12 py-2">
-                          <h6>Description</h6>
+                          <h6 className={css.SubHeads}>Description</h6>
                           <p>{product.description}</p>
                         </div>
                       </div>
@@ -255,7 +264,7 @@ function Productdetail() {
                     <div className="container">
                       <div className="row">
                         <div className="col-12 py-2">
-                          <h6>Specifications</h6>
+                          <h6 className={css.SubHeads}>Specifications</h6>
                           <table className={css.specificationTable}>
                             <tbody>
                               {specification && Object.entries(specification).map(([key, value], index) => (
@@ -278,8 +287,9 @@ function Productdetail() {
           )}
         </div>
       </section>
-   
-      <ReviewComments reviews={product}/>
+      {product&&
+      <ReviewComments product={product}/>
+      }
       <Excusivecategory />
     </>
   );
