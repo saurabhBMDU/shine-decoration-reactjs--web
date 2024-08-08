@@ -26,6 +26,7 @@ function Productdetail() {
   const [pincode, setPincode] = useState('');
   const params = useParams();
   const id = params.id;
+  const [updatepage, setUpdatepage] = useState(false)
   const [mainImage, setMainImage] = useState(null);
   const dispatch = useDispatch();
   const [buttonLoader, setButtonLoader] = useState({
@@ -37,7 +38,7 @@ function Productdetail() {
   useEffect(() => {
     dispatch(getProductDetails(id));
     dispatch(addRecentProduct(id));
-  }, [dispatch, id, buttonLoader.addtocart]);
+  }, [dispatch, id, buttonLoader.addtocart,updatepage]);
 
   useEffect(() => {
     if (product) {
@@ -288,7 +289,7 @@ function Productdetail() {
         </div>
       </section>
       {product&&
-      <ReviewComments product={product}/>
+      <ReviewComments product={product} setUpdatepage={setUpdatepage}/>
       }
       <Excusivecategory />
     </>

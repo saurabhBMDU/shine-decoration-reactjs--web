@@ -11,30 +11,34 @@ import { createOrder } from "../../action/createOrderAction";
 import { verifyPayment } from "../../action/paymentVerifyAction";
 import CryptoJS from "crypto-js";
 import { getOrderSummary } from "../../action/orderSummaryAction";
+import { MdVerifiedUser } from "react-icons/md";
 
 function Payment() {
-  const [selectedMethod, setSelectedMethod] = useState('');
-  const [captcha, setCaptcha] = useState('');
-  const [input, setInput] = useState('');
+  const [selectedMethod, setSelectedMethod] = useState("");
+  const [captcha, setCaptcha] = useState("");
+  const [captchaError, setCaptchaError] = useState(false);
+  const [input, setInput] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userDetails = useSelector(state => state?.getUser?.user);
+  const userDetails = useSelector((state) => state?.getUser?.user);
   const user = checkUser();
   const [selectedAddress, setSelectedAddress] = useState({});
   const [modal, setModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [updating, setUpdating] = useState(false);
-  const orderDetails = useSelector(state => state.OrderSummary?.data);
+  const orderDetails = useSelector((state) => state.OrderSummary?.data);
   const [reqProducts, setReqProducts] = useState({});
-  const orderedList = useSelector(state => state.orderDetails.data);
+  const orderedList = useSelector((state) => state.orderDetails.data);
   const [orderCreated, setOrderCreated] = useState(false);
   const paymentId = useRef(null);
   const paymentMethod = useRef(null);
-  
-  useEffect(()=>{
-    dispatch(getOrderSummary())
-  },[dispatch])
+  const [direct, setDirect] = useState(false);
+  const [timeOutId, setTimeoutId] = useState("");
+
+  useEffect(() => {
+    dispatch(getOrderSummary());
+  }, [dispatch]);
 
   useEffect(() => {
     if (userDetails) {
@@ -49,10 +53,22 @@ function Payment() {
   const generateCaptcha = () => {
     const randomCaptcha = Math.random().toString().substring(2, 6);
     setCaptcha(randomCaptcha);
+    setInput(""); // Reset input field
+    setCaptchaError(false); // Reset error state
   };
-
+  
   const handleInputChange = (e) => {
-    setInput(e.target.value);
+    const value = e.target.value;
+    setInput(value);
+    if (value.length === 4) {
+      if (value === captcha) {
+        setCaptchaError(false);
+      } else {
+        setCaptchaError(true);
+      }
+    } else {
+      setCaptchaError(false);
+    }
   };
 
   useEffect(() => {
@@ -63,9 +79,21 @@ function Payment() {
     setSelectedMethod(e.target.value);
   };
 
+  const handleDirect = useCallback(() => {
+    clearTimeout(timeOutId);
+    const id = setTimeout(() => {
+      navigate("/");
+    }, 1500);
+    setTimeoutId(id);
+  }, []);
+
+  useEffect(() => {
+    return clearTimeout(timeOutId);
+  }, []);
+
   const handleReqBody = useCallback(() => {
     let products = [];
-    orderDetails.orderItems.forEach(product => {
+    orderDetails.orderItems.forEach((product) => {
       let obj = {};
       obj.quantity = product.quantity;
       obj.product = product.product._id; // Fixed key
@@ -74,49 +102,71 @@ function Payment() {
       obj.discount = product.discounting_price; // Fixed key
       products.push(obj);
     });
-    return { products, shippingAddress: selectedAddress.billing_address, billingAddress: selectedAddress.billing_address, shippingMethod: 'Standard Shipping' };
+    return {
+      products,
+      shippingAddress: selectedAddress.billing_address,
+      billingAddress: selectedAddress.billing_address,
+      shippingMethod: "Standard Shipping",
+    };
   }, [orderDetails, selectedAddress]);
 
-  const handlePaymentSuccess = useCallback(async(message, response)=>{
-       if(message==='succeeded'){
-          const newResponse = {...response,paymentInfo :{paymentMethod:paymentMethod.current}}
-         console.log('Payment success response:', message, 'response: ',newResponse);
-         await dispatch(verifyPayment(newResponse));
-       }else{
-        alert('payment Failed please try again')
-        console.log('resp on failed',response)
-         await dispatch(verifyPayment(response))
-       }
-  }, [dispatch]);
+  const handlePaymentSuccess = useCallback(
+    async (message, response) => {
+      if (message === "succeeded") {
+        const newResponse = {
+          ...response,
+          paymentInfo: { paymentMethod: paymentMethod.current },
+        };
+        console.log(
+          "Payment success response:",
+          message,
+          "response: ",
+          newResponse
+        );
+        await dispatch(verifyPayment(newResponse)).then(() => {
+          setDirect(true);
+          handleDirect();
+        });
+      } else {
+        alert("payment Failed please try again");
+        console.log("resp on failed", response);
+        await dispatch(verifyPayment(response)).then(() => {
+          setDirect(true);
+          handleDirect();
+        });
+      }
+    },
+    [dispatch]
+  );
 
   const handleRazorConfig = useCallback(() => {
     const options = {
       key: process.env.REACT_APP_RAZORPAY_ID_KEY, // Replace with your Razorpay key ID
       amount: parseInt(orderedList.amount),
       currency: orderedList.currency,
-      name: 'Shine Decorations',
-      description: 'Test Transaction',
+      name: "Shine Decorations",
+      description: "Test Transaction",
       order_id: orderedList.id,
       handler: (response) => {
-        console.log('succeeded');
+        console.log("succeeded");
         console.log(response);
         paymentId.current = response.razorpay_payment_id;
         const signature = CryptoJS.HmacSHA256(
           `${orderedList.id}|${response.razorpay_payment_id}`,
           process.env.REACT_APP_RAZORPAY_SECRET_KEY
         ).toString(CryptoJS.enc.Hex);
-  
+
         // Verify if the generated hash matches the Razorpay signature
         const succeeded = signature === response.razorpay_signature;
-  
+
         if (succeeded) {
-          handlePaymentSuccess('succeeded', {
+          handlePaymentSuccess("succeeded", {
             razorpay_order_id: orderedList.id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
         } else {
-          handlePaymentSuccess('failed', {
+          handlePaymentSuccess("failed", {
             razorpay_order_id: orderedList.id,
             razorpay_payment_id: response.razorpay_payment_id,
           });
@@ -128,74 +178,124 @@ function Payment() {
         // There can be 3 reasons when this modal is closed.
         ondismiss: async (reason) => {
           const {
-            reason: paymentReason, field, step, code,
+            reason: paymentReason,
+            field,
+            step,
+            code,
           } = reason && reason.error ? reason.error : {};
-          // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly. 
+          // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly.
           if (reason === undefined) {
-            console.log('cancelled');
-            handlePaymentSuccess('Cancelled');
-          } 
+            console.log("cancelled");
+            handlePaymentSuccess("Cancelled");
+          }
           // Reason 2 - When modal is auto closed because of time out
-          else if (reason === 'timeout') {
-            console.log('timedout');
-            handlePaymentSuccess('timedout');
-          } 
+          else if (reason === "timeout") {
+            console.log("timedout");
+            handlePaymentSuccess("timedout");
+          }
           // Reason 3 - When payment gets failed.
           else {
-            console.log('failed');
-            handlePaymentSuccess('failed', {
+            console.log("failed");
+            handlePaymentSuccess("failed", {
               razorpay_order_id: orderedList.id,
             });
           }
         },
       },
       // This property allows to enble/disable retries.
-      // This is enabled true by default. 
+      // This is enabled true by default.
       retry: {
         enabled: false,
       },
       timeout: 900, // Time limit in Seconds
       theme: {
-        color: '', // Custom color for your checkout modal.
+        color: "", // Custom color for your checkout modal.
       },
     };
 
     const rzp1 = new window.Razorpay(options);
 
     // If you want to retreive the chosen payment method.
-    rzp1.on('payment.submit', (response) => {
-      console.log('success and calledback',response)
+    rzp1.on("payment.submit", (response) => {
+      console.log("success and calledback", response);
       paymentMethod.current = response.method;
     });
 
     // To get payment id in case of failed transaction.
-    rzp1.on('payment.failed', (response) => {
-      console.log('failed and calleback',response);
+    rzp1.on("payment.failed", (response) => {
+      console.log("failed and calleback", response);
       paymentId.current = response.error.metadata.payment_id;
     });
 
     // to open razorpay checkout modal.
     rzp1.open();
-  }, [orderedList, dispatch, selectedMethod, userDetails, selectedAddress, handlePaymentSuccess]);
+  }, [
+    orderedList,
+    dispatch,
+    selectedMethod,
+    userDetails,
+    selectedAddress,
+    handlePaymentSuccess,
+  ]);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    const updatedReqProducts = handleReqBody();
-    setReqProducts(updatedReqProducts);
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (selectedMethod === "cod") {
+        if (captcha !== input) {
+          setSelectedMethod('')
+          setCaptchaError(true);
+          return;
+        } else {
+          setCaptchaError(false);
+          const updatedReqProducts = handleReqBody();
+          setReqProducts(updatedReqProducts);
+  
+          await dispatch(
+            createOrder({
+              ...updatedReqProducts,
+              paymentMethod: "cash on delivery",
+            })
+          ).then(() => {
+            setDirect(true);
+            handleDirect();
+          });
+          return;
+        }
+      }
+      if (selectedMethod !== "cod") {
+        const updatedReqProducts = handleReqBody();
+        setReqProducts(updatedReqProducts);
 
-    await dispatch(createOrder(updatedReqProducts)).then(async () => {
-      setOrderCreated(true);
-    });
-  }, [dispatch, handleReqBody]);
+        await dispatch(createOrder(updatedReqProducts)).then(async () => {
+          setOrderCreated(true);
+        });
+      }
+    },
+    [dispatch, handleReqBody, selectedMethod]
+  );
 
   useEffect(() => {
-    if (orderCreated) {
+    if (orderCreated && selectedMethod !== "cod") {
       handleRazorConfig();
       setOrderCreated(false);
     }
   }, [orderCreated, handleRazorConfig]);
 
-
+  if (direct) {
+    return (
+      <div
+        className="d-flex flex-column justify-content-center align-items-center mx-auto "
+        style={{ margin: "10% 0", fontSize: "1.3rem", fontWeight: 600 }}
+      >
+        <div>
+          Thank you for your choosing shine Decoration your order placed{" "}
+          <MdVerifiedUser color="green" size={30} />
+        </div>
+        <p style={{ fontSize: ".7rem" }}>you will be redirected shortly</p>
+      </div>
+    );
+  }
 
   return (
     <section className={css.maincontainer}>
@@ -208,7 +308,10 @@ function Payment() {
             <div className={`${css.textcontent}`}>
               <h5 className="">LOGIN</h5>
               <p>
-                <span className="flex-nowrap">{userDetails && userDetails.name}</span>{userDetails && userDetails.mobile}
+                <span className="flex-nowrap">
+                  {userDetails && userDetails.name}
+                </span>
+                {userDetails && userDetails.mobile}
               </p>
             </div>
           </main>
@@ -225,7 +328,10 @@ function Payment() {
               <div className={`${css.addresscontent}`}>
                 <h5 className="">DELIVERY ADDRESS</h5>
                 <p className={css.address}>
-                  <span>{selectedAddress.fullName}</span> -<span>{selectedAddress.mobile}</span> ,{selectedAddress.billing_address} <span>pinCode:{selectedAddress.pinCode}</span>
+                  <span>{selectedAddress.fullName}</span> -
+                  <span>{selectedAddress.mobile}</span> ,
+                  {selectedAddress.billing_address}{" "}
+                  <span>pinCode:{selectedAddress.pinCode}</span>
                 </p>
               </div>
             </main>
@@ -233,22 +339,26 @@ function Payment() {
               <button onClick={handleAddress}>change</button>
             </div>
           </div>
-        ) : (null)}
+        ) : null}
         <div className={css.paymentSummary}>
           <div className="">
             <p>3</p>
             <p>Order summary</p>
           </div>
           <div className={`d-flex justify-content-between px-4 mt-2 `}>
-            <p style={{ fontWeight: '600' }}>Items ({orderDetails && orderDetails.totalQuantity})</p>
-            <Link to={'/cart/ordersummary'} className={css.linkbutton}>CHANGE</Link>
+            <p style={{ fontWeight: "600" }}>
+              Items ({orderDetails && orderDetails.totalQuantity})
+            </p>
+            <Link to={"/cart/ordersummary"} className={css.linkbutton}>
+              CHANGE
+            </Link>
           </div>
         </div>
 
         <div className={css.paymentbox}>
           <div style={{ background: "#EDB70B" }}>
             <p>4</p>
-            <p className='text-white'>PAYMENT OPTION</p>
+            <p className="text-white">PAYMENT OPTION</p>
           </div>
           <div className="p-3">
             <form onSubmit={handleSubmit}>
@@ -256,6 +366,7 @@ function Payment() {
                 <div>
                   <input
                     type="radio"
+                    checked={selectedMethod==='upi'}
                     id="upi"
                     name="paymentMethod"
                     value="upi"
@@ -263,7 +374,14 @@ function Payment() {
                     className="form-check-input"
                   />
                   <label htmlFor="upi" className="form-check-label">
-                    <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif" alt="UPI" height="20" /> UPI<br /><small>Pay by any UPI app</small>
+                    <img
+                      src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif"
+                      alt="UPI"
+                      height="20"
+                    />{" "}
+                    UPI
+                    <br />
+                    <small>Pay by any UPI app</small>
                   </label>
                 </div>
               </div>
@@ -272,15 +390,20 @@ function Payment() {
                 <input
                   type="radio"
                   id="wallets"
+                  checked={selectedMethod==='wallets'}
                   name="paymentMethod"
                   value="wallets"
                   onChange={handleMethodChange}
                   className="form-check-input"
                 />
                 <label htmlFor="wallets" className="form-check-label">
-                  <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif" alt="Wallets" height="20" /> Wallets
+                  <img
+                    src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/batman-returns/logos/UPI.gif"
+                    alt="Wallets"
+                    height="20"
+                  />{" "}
+                  Wallets
                 </label>
-                
               </div>
 
               <div className="form-check py-2">
@@ -289,13 +412,15 @@ function Payment() {
                   id="card"
                   name="paymentMethod"
                   value="card"
+                  checked={selectedMethod==='card'}
                   onChange={handleMethodChange}
                   className="form-check-input"
                 />
                 <label htmlFor="card" className="form-check-label">
-                  Credit / Debit / ATM Card<br /><small>Add and secure cards as per RBI guidelines</small>
+                  Credit / Debit / ATM Card
+                  <br />
+                  <small>Add and secure cards as per RBI guidelines</small>
                 </label>
-                
               </div>
 
               <div className="form-check py-2">
@@ -304,11 +429,17 @@ function Payment() {
                   id="net-banking"
                   name="paymentMethod"
                   value="net-banking"
+                  checked={selectedMethod==='net-banking'}
                   onChange={handleMethodChange}
                   className="form-check-input"
                 />
                 <label htmlFor="net-banking" className="form-check-label">
-                  Net Banking<br /><small>This instrument has low success, use UPI or cards for better experience</small>
+                  Net Banking
+                  <br />
+                  <small>
+                    This instrument has low success, use UPI or cards for better
+                    experience
+                  </small>
                 </label>
               </div>
 
@@ -316,6 +447,7 @@ function Payment() {
                 <input
                   type="radio"
                   id="cod"
+                  checked={selectedMethod==='cod'}
                   name="paymentMethod"
                   value="cod"
                   onChange={handleMethodChange}
@@ -325,12 +457,21 @@ function Payment() {
                   <div>
                     Cash on Delivery
                     <div className="mt-2">
-                      <small className="text-warning border border-danger px-3 py-1">Due to handling costs, a nominal fee of ₹10 will be charged</small>
+                      <small className="text-warning border border-danger px-3 py-1">
+                        Due to handling costs, a nominal fee of ₹10 will be
+                        charged
+                      </small>
                       <div className="d-flex align-items-center mt-3">
                         <div className="input-group">
-                          <span className="input-group-text text-success" id="captcha-image">
+                          <span
+                            className="input-group-text text-success"
+                            id="captcha-image"
+                          >
                             {captcha}
-                            <i className="fa-solid fa-arrows-rotate text-info px-2" onClick={generateCaptcha}></i>
+                            <i
+                              className="fa-solid fa-arrows-rotate text-info px-2"
+                              onClick={generateCaptcha}
+                            ></i>
                           </span>
                           <input
                             type="text"
@@ -346,6 +487,11 @@ function Payment() {
                     </div>
                   </div>
                 </label>
+                {captchaError ? (
+                  <label className="text-danger d-block">wrong captcha </label>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="form-check py-2">
@@ -358,11 +504,13 @@ function Payment() {
                   className="form-check-input"
                 />
                 <label htmlFor="emi" className="form-check-label">
-                  EMI (Easy Installments)<br /><small>Not applicable</small>
+                  EMI (Easy Installments)
+                  <br />
+                  <small>Not applicable</small>
                 </label>
               </div>
 
-              {selectedMethod && selectedMethod !== "cod" && (
+              {selectedMethod && selectedMethod !== "emi" && (
                 <button className="btn btn-warning" type="submit">
                   Continue
                 </button>
@@ -378,7 +526,11 @@ function Payment() {
         <main>
           <div className={css.priceTop}>
             <p>
-              <span> price (item:{orderDetails && orderDetails.totalQuantity}) </span> <span>₹{orderDetails && orderDetails.totalPayablePrice}</span>
+              <span>
+                {" "}
+                price (item:{orderDetails && orderDetails.totalQuantity}){" "}
+              </span>{" "}
+              <span>₹{orderDetails && orderDetails.totalPayablePrice}</span>
             </p>
             <p>
               <span>delivery charges</span>
@@ -387,25 +539,28 @@ function Payment() {
           </div>
           <div className={css.total}>
             <p>total payable</p>
-            <p>₹{orderDetails.totalPayablePrice && formatNumberWithCommas(orderDetails.totalPayablePrice)}</p>
+            <p>
+              ₹
+              {orderDetails.totalPayablePrice &&
+                formatNumberWithCommas(orderDetails.totalPayablePrice)}
+            </p>
           </div>
         </main>
       </section>
       {userDetails ? (
         <>
-          {modal ? (
-            <ChangeUser user={userDetails} setModal={setModal} />
-          ) : (
-            null
-          )}
+          {modal ? <ChangeUser user={userDetails} setModal={setModal} /> : null}
           {addressModal ? (
-            <ChangeAddress userDetails={userDetails} setModal={setAddressModal} currentAdress={selectedAddress} setSelectedAddress={setSelectedAddress} />
-          ) : (null)}
+            <ChangeAddress
+              userDetails={userDetails}
+              setModal={setAddressModal}
+              currentAdress={selectedAddress}
+              setSelectedAddress={setSelectedAddress}
+            />
+          ) : null}
         </>
-      ) : (
-        null
-      )}
+      ) : null}
     </section>
-  )
+  );
 }
 export default Payment;
