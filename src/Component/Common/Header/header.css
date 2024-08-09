@@ -314,10 +314,8 @@
 }
 
 .nav-headend-img{
-    height: 70px !important;
-    width:40% !important;
-    max-width: 100px;
-    min-width: 80px;
+    height: 65px !important;
+    width: 65px !important;
     object-fit: cover;
     border-radius: 90%;
 }

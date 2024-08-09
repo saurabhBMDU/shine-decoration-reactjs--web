@@ -21,13 +21,13 @@
 .rating-cont{
     background-color: rgb(34, 141, 34);
     color: white;
-    width: 4rem;
+    width: 3rem;
     padding: 2px 7px;
     border-radius: 5px;
     text-align: center;
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 5px;
     font-size: .9rem;
 }
 

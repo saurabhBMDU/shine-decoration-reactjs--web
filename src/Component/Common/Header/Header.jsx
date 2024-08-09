@@ -93,8 +93,8 @@ function Header() {
               </div>
               <div className="col header-top-right d-none d-lg-block">
                 <div className="header-top-right-inner d-flex justify-content-end">
-                  <Link className="gi-help" to="faq.html">Help?</Link>
-                  <Link className="gi-help" to="track-order.html">Track Order?</Link>
+                  <Link className="gi-help" to="/faq">Help?</Link>
+                  <Link className="gi-help" to="/user/orders">Track Order?</Link>
                 </div>
               </div>
               <div className="col header-top-res d-lg-none">

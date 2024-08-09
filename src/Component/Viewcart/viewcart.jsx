@@ -136,7 +136,7 @@ export default function Viewcart() {
                         <div className="cartcard-textPart">
                           <div>
                             <div>
-                              <h5>{item.product.product_name}</h5>
+                              <h5 style={{lineHeight:2}}>{item.product.product_name}</h5>
                               <p>delivery in 5pm | <span className="text-success">FREE</span></p>
                             </div>
                             <p className="text-muted text-capitalize m-0">{item.product.category}</p>
@@ -146,9 +146,30 @@ export default function Viewcart() {
                             <p>₹{item.product.selling_price}</p>
                             <p>{(((item.product.mrp_price - item.product.selling_price) / item.product.mrp_price) * 100).toFixed(0)}% off</p>
                           </div>
+                          <div className="cartcard-buttons visible-lg">
+                        <div className="quantity-buttons">
+                          <CiCircleMinus size={35} onClick={() => handleDecrease(item.product._id)} />
+                          <div>
+                            <input
+                              type="number"
+                              value={quantities[item.product._id] || item.quantity}
+                              onChange={(e) => handleQuantityChange(item.product._id, e.target.value)}
+                              onFocus={() => setUpdateQ((prevUpdateQ) => ({
+                                ...prevUpdateQ,
+                                [item.product._id]: true,
+                              }))}
+                              min="1"
+                              style={{ width: "3rem", padding: "3px 4px", textAlign: "center" }}
+                            />
+                          </div>
+                          <CiCirclePlus size={35} onClick={() => handleIncrease(item.product._id)} />
+                        </div>
+                        <button onClick={() => removeCartProduct(item.product._id, item.quantity)}>Remove</button>
+                        {updateq[item.product._id] && <button className="card-button" onClick={() => handleUpdateCart(item.product._id)}>Update</button>}
+                      </div>
                         </div>
                       </div>
-                      <div className="cartcard-buttons">
+                      <div className="cartcard-buttons visible-sm">
                         <div className="quantity-buttons">
                           <CiCircleMinus size={35} onClick={() => handleDecrease(item.product._id)} />
                           <div>
