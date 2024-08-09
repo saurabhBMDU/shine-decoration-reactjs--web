@@ -1,69 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import { NextArrow, PrevArrow } from "./Arrow";
-import HeartButton from "./HeartButton";
+import './productsliders.css'
 
-const Sliders = ({ products }) => {
-    const setting = {
-        infinite: true,
-        speed: 400,
-        autoplay: true,
-        slidesToShow: 4,
-        arrows: true,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1440,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                }
-            },
-            {
-                breakpoint: 900,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                }
-            }
-        ]
-    };
+import HeartButton from "../Home/HeartButton";
+ 
+const ProductSlider = ({products}) => {
 
     return (
-        <Slider {...setting}>
+              <>
             {products && products.map((product, index) => (
                 <ProductCard key={index} product={product} />
             ))}
-        </Slider>
+    
+              </>
     );
 };
 
@@ -103,7 +52,7 @@ const ProductCard = ({ product }) => {
     }, [intervalId]);
 
     return (
-        <div className="">
+        <div className="px-0">
             <div className="card-custom">
                 <div
                     className="position-relative card-img-container"
@@ -130,7 +79,7 @@ const ProductCard = ({ product }) => {
                             <h6 className='text-secondary fs-6' style={{ textDecoration: 'line-through' }}>₹{product.mrp_price}</h6>
                             <span className=' text-bg-warning text-center ' style={{fontSize:'.7rem' ,padding:'2px',borderRadius:'3px',fontWeight:'500'}}>{Math.ceil(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed()}% off</span>
                         </div>
-                        <p className="text-muted font-weight-bold" style={{ fontSize: '.8rem' }}>Check delivery date and more details &gt;</p>
+                
                     </div>
                 </Link>
             </div>
@@ -138,4 +87,4 @@ const ProductCard = ({ product }) => {
     );
 };
 
-export default Sliders;
+export default ProductSlider;

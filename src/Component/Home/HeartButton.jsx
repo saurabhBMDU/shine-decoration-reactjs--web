@@ -29,18 +29,12 @@ const HeartButton = ({ productId , check=false}) => {
         });
     };
 
-
-
-
-
-
-
     return (
         <div className="heartbutton-container">
             {like ? (
                 <FaHeart size={23} color="red" onClick={handleHeartButton} />
             ) : (
-                <FaRegHeart size={23} onClick={handleHeartButton} />
+                <FaRegHeart size={23} color="black" onClick={handleHeartButton} />
             )}
         </div>
     );

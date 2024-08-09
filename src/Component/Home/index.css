@@ -58,7 +58,7 @@
 
 .arrow {
     position: absolute;
-    top: 40%;
+    top: 35%;
     transform: translateY(-50%);
     z-index: 2;
     background: rgb(0, 0, 0);
@@ -73,13 +73,16 @@
 }
 
 .arrow.prev {
-    left: 13px;
+    left: -2px;
 }
 
 .arrow.next {
-    right: 13px;
+    right: -19px;
 }
 
+.slick-list{
+    padding: 0 !important;
+}
 
 /* quantity */
 .qty-container {
@@ -449,10 +452,11 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    box-shadow: 2px 1px 10px gray;
+    background-color: rgba(255, 253, 253, 0.546);
+    /* box-shadow: 2px 1px 10px gray; */
     position: absolute;
-    right: 25px;
-    bottom: -25px;
+    right: 8px;
+    top: 5px;
     
 
 }

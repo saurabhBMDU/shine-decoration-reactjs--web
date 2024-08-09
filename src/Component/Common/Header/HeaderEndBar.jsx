@@ -10,7 +10,7 @@ const HeaderEndBar = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 7,
+    slidesToShow: 10,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -18,7 +18,7 @@ const HeaderEndBar = () => {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 7,
+          slidesToShow: 12,
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,

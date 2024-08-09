@@ -69,7 +69,7 @@ function Excusivecategory() {
     return (
         <section className="container-fluid pt-1 card-container">
             <div>
-                <h3>Products</h3>
+                <h3 style={{margin:0,fontWeight:600}}>Products</h3>
             </div>
             <Slider ref={slider} {...setting} className="sliders">
                 {products && products.result.products &&

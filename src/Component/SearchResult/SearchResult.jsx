@@ -6,20 +6,41 @@ import { FaStar as FullStar} from "react-icons/fa6";
 import { FaRegStar as EmptyStar } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import NoResults from "./NoResults";
+import ProductSlider from "../product slider/ProductSlider";
 
 const SearchResult = () => {
     const param = useParams();
     const resultProducts = useSelector(state => state.searchResult.searchResult);
     console.log(resultProducts)
+   if(resultProducts.length<1){
+    return(
+        <>
+          <div className="notfound">
+            <div className="text-center " style={{paddingTop:'0rem'}}>
+                <img  className="noimg" src="/img/search-not-found.png"  alt="" />
+                <h1 style={{margin:0, lineHeight:'15px'}} className="text-white">We couldn't find any matches!</h1>
+                <p style={{fontSize:'.8rem' ,marginTop:'2rem', color:'white'}}>Please check the spelling or try searching something else</p>
+            </div>
+            <div>
+                <NoResults/>
+            </div>
+          </div>
+        </>
+    )
+   }
+
+
   return (
     <>
    <section>
-    <div className="first-box">
+    {/* <div className="first-box">
         <div className="fs-5 ml-4 ">Results for "{param.id}"</div>
-    </div>
-    <div className="s-container">
-        {resultProducts && resultProducts.map(product => {
-            return (
+    </div> */}
+    <div className="s-container ">
+        {resultProducts && <ProductSlider products={resultProducts}/>}
+
+           {/* {resultProducts && resultProducts.map(product=>(
                 <main key={product._id}>
                 <div className="s-pic-container">
                     <img src={product.productImage} alt="blank" />
@@ -48,9 +69,10 @@ const SearchResult = () => {
                     </div>
                 </div>
             </main>
+           ))} */}
+                
 
-            )
-        })}
+    
        
     </div>
    </section>
