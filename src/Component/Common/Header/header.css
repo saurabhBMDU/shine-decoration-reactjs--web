@@ -314,12 +314,12 @@
 }
 
 .nav-headend-img{
-    height: 70px !important;
-    width:40% !important;
+    height: 77px !important;
+    width:35% !important;
     max-width: 100px;
     min-width: 80px;
     object-fit: cover;
-    border-radius: 90%;
+    border-radius: 78%;
 }
 
 .suggestion-container{

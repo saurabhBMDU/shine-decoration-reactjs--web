@@ -26,7 +26,7 @@ const LoginPOP = () => {
               <img src="/img/popupbg.png" alt="" />
              </div>
           </div>
-          <div className="justify-content center align-items-center bgfordiv  " >
+          <div className="justify-content center align-items-center bgfordiv  ">
             <div className="d-flex flex-column ">
               <p className="text-light" >Explore more by Logging In </p>
               <button className="rounded"

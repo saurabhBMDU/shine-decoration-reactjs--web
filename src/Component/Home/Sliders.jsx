@@ -118,7 +118,10 @@ const ProductCard = ({ product }) => {
                             style={{ height: "240px" }}
                         />
                     </Link>
+                    {/* <div style={{}}> */}
                     <HeartButton productId={product._id} check={product.isWishlist}/>
+                    {/* </div> */}
+
                     <div className="product-badge" data-badge="new"></div>
                 </div>
                 <Link to={`/productdetail/${product._id}`}>
