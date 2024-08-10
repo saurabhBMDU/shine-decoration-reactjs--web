@@ -30,6 +30,7 @@ import ProtectedRoute from '../Component/protectedRoute/ProtectedRoute';
 import OrderDetails from '../Component/orderDetailsPage/OrderDetails';
 import ReviewandRatingsPage from '../Component/Reviews and ratings/ReviewandRatingsPage';
 import Faq from '../Component/Faq/Faq';
+import ProfilePage from '../Component/profile page/ProfilePage';
 
 function AppRouter() {
     return (
@@ -58,6 +59,7 @@ function AppRouter() {
                 <Route path='wishlist' element={<Whishlist />} />
                 <Route path='/cart/ordersummary' element={<OrderSummary />} />
                 <Route path={`/user/orders/:id`} element={<OrderDetails/>}/>
+                <Route path='/user/profile' element={<ProfilePage/>}/>
                 <Route path='/product/review/:id' element={<ReviewandRatingsPage/>}/>
                 <Route path='/faq' element={<Faq/>}/>
                 {/* Protected route for resetting password */}

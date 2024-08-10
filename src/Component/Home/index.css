@@ -58,7 +58,7 @@
 
 .arrow {
     position: absolute;
-    top: 35%;
+    top: 40%;
     transform: translateY(-50%);
     z-index: 2;
     background: rgb(0, 0, 0);
@@ -73,11 +73,11 @@
 }
 
 .arrow.prev {
-    left: -2px;
+    left: 0px;
 }
 
 .arrow.next {
-    right: -19px;
+    right: 5px;
 }
 
 .slick-list{
@@ -194,6 +194,10 @@
         padding: 0px 10px;
     }
 }
+.card-img-top{
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
 
 .card-custom div .card-img-top {
     border: none;
@@ -222,6 +226,13 @@
     border-left: 1px solid #D5D1D1;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.card-title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
 }
 
 .card-custom .btn-heart {
