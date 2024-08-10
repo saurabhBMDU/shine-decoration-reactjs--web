@@ -140,19 +140,19 @@ function Header() {
                       </div>
                     )} */}
                   </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Profile</Link></li>
-                  </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Orders</Link></li>
-                  </div>
+                  {/* <div className="px-2">
+                    <li className="border-bottom"><Link to="/user/orders">Orders</Link></li>
+                    </div> */}
                   { user ? (
                     <>
-                      <div className="px-2">
-                        <li className="border-bottom"><Link to="/logout">Logout</Link></li>
-                      </div>
+                    <div className="px-2">
+                      <li className="border-bottom"><Link to="/profile">Profile</Link></li>
+                    </div>
                       <div className="px-2">
                       <li className="border-bottom"><Link to="/user/orders">Orders</Link></li>
+                      </div>
+                      <div className="px-2">
+                        <li className="border-bottom"><Link to="/logout">Logout</Link></li>
                       </div>
                     </>
 
@@ -216,8 +216,9 @@ function Header() {
                       <ul className="gi-dropdown-menu">
                         {user ? (
                           <>
-                             <li><Link className="dropdown-item" to="/logout">logout</Link></li>
                              <li><Link className="dropdown-item" to="/user/orders">Orders</Link></li>
+                             <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                             <li><Link className="dropdown-item" to="/logout">logout</Link></li>
                           </>
 
                         ):(

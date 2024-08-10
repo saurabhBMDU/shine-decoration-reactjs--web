@@ -53,7 +53,7 @@ const ProfilePage = () => {
                                  </div>
                                 ))}
                             </div>}
-                            <Link to={`/profile/updateaddress/${'id'}`} className="profile-edit-button" onClick={handleEditClick}>
+                            <Link to={`/profile/address`} className="profile-edit-button" onClick={handleEditClick}>
                                 Edit Profile
                             </Link>
                         </div>

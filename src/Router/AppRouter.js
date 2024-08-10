@@ -59,7 +59,7 @@ function AppRouter() {
                 <Route path='wishlist' element={<Whishlist />} />
                 <Route path='/cart/ordersummary' element={<OrderSummary />} />
                 <Route path={`/user/orders/:id`} element={<OrderDetails/>}/>
-                <Route path='/user/profile' element={<ProfilePage/>}/>
+                <Route path='/profile' element={<ProfilePage/>}/>
                 <Route path='/product/review/:id' element={<ReviewandRatingsPage/>}/>
                 <Route path='/faq' element={<Faq/>}/>
                 {/* Protected route for resetting password */}
