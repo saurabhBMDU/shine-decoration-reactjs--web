@@ -80,7 +80,7 @@ useEffect(() => {
   return (
     <>
      <HeaderEndBar  />
-      <section className=" pb-1 pt-0" >
+      <section className=" pb-0 pt-0" >
         <div className='slider-container'>
 
         <MainCarousel data={data}/>
