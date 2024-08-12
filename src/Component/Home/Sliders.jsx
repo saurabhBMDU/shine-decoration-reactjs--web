@@ -103,7 +103,7 @@ const ProductCard = ({ product }) => {
     }, [intervalId]);
 
     return (
-        <div className="px-2">
+        <div className="">
             <div className="card-custom">
                 <div
                     className="position-relative card-img-container"
