@@ -320,8 +320,6 @@ export const updateAddress = (index,data)=>{
 }
 
 export const updateProfile = (form)=>{
-  debugger
-  console.log(form,"ye form hai")
   return async dispatch => {
     const token = localStorage.getItem('token');
     if (!token) {
