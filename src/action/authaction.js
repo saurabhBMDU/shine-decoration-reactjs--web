@@ -318,3 +318,36 @@ export const updateAddress = (index,data)=>{
   }
 }
 }
+
+export const updateProfile = (form)=>{
+  debugger
+  console.log(form,"ye form hai")
+  return async dispatch => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('please login')
+      return
+    }
+    try {
+      const response = await fetch(`${API_URL}/mobileApi/profile`,{
+        method:'PUT',
+        headers:{
+          Authorization:`Bearer ${token}`,
+          'Content-Type':'multipart/form-data'
+        },
+        body:form
+      })
+
+      if(response.status===200){
+        const datas = await response.json();
+        console.log(datas)
+      }else{
+        const error = await response.json()
+        throw Error(error)
+      }
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+}

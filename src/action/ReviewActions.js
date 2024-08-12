@@ -11,8 +11,7 @@ export const sendReview = async(productId,form)=>{
         }
     
        try {
-        const response = await axios.post(`${API_URL}/mobileApi/review/add-review/${productId}`,form, {
-           
+        const response = await axios.post(`${API_URL}/mobileApi/review/add-review/${productId}`,form, {         
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
@@ -39,6 +38,7 @@ export const sendReview = async(productId,form)=>{
 
 
 export const addLikesandDislikes = async(productId,form) => {
+    console.log(form,"form hai")
     const token = localStorage.getItem('token')
     try {
         const response = await fetch(`${API_URL}/mobileApi/review/review/${productId}`,{

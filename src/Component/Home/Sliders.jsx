@@ -126,14 +126,13 @@ const ProductCard = ({ product }) => {
                 </div>
                 <Link to={`/productdetail/${product._id}`}>
                     <div className="card-body" style={{ width: '100%' }}>
-                        <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.product_name}</h6>
+                        <h6 className="card-title" style={{  fontSize: "14px" }}>{product.product_name}</h6>
                         <span className="text-secondary slide-discription" style={{ fontSize: "12px" }}>{product.category}</span>
                         <div className='slider-price-container d-flex justify-content-start align-items-center' style={{ gap: '10%' }}>
                             <h5 className='fs-4 text-dark' style={{ fontWeight: 700 }}>₹{product.selling_price}</h5>
                             <h6 className='text-secondary fs-6' style={{ textDecoration: 'line-through' }}>₹{product.mrp_price}</h6>
                             <span className=' text-bg-warning text-center ' style={{fontSize:'.7rem' ,padding:'2px',borderRadius:'3px',fontWeight:'500'}}>{Math.ceil(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed()}% off</span>
                         </div>
-                        <p className="text-muted font-weight-bold" style={{ fontSize: '.8rem' }}>Check delivery date and more details &gt;</p>
                     </div>
                 </Link>
             </div>
