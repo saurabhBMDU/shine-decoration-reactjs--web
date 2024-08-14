@@ -77,11 +77,60 @@
 }
 
 .arrow.next {
-    right: -19px;
+    right: 10px;
+}
+
+.catnext{
+    right: -5px;
+
+}
+
+.catprev{
+    left: -2px;
+
 }
 
 .slick-list{
     padding: 0 !important;
+}
+
+
+@media (max-width:730px){
+    .arrow {
+        position: absolute;
+        top: 35%;
+        transform: translateY(-50%);
+        z-index: 2;
+        background: rgb(0, 0, 0);
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin: 0px -1rem;
+    }
+
+    
+    .arrow.prev {
+        left: 5px;
+    }
+    
+    .arrow.next {
+        right: 35px;
+    }
+    
+    .catnext{
+        right: 10px;
+    
+    }
+    
+    .catprev{
+        left: 9px;
+    
+    }
+
 }
 
 /* quantity */
@@ -171,7 +220,8 @@
 }
 
 .testimonial {
-    padding: 0px 170px;
+    padding: 0px 50px;
+    
 }
 
 
@@ -380,14 +430,19 @@
 
 
 .banner3-container {
+    margin-top: 3rem;
+    margin-bottom: .5rem;
     width: 100%;
-    height: 0;
-    margin-top: 30rem;
-    margin-bottom: 5rem;
+    height: 30rem;
+    background-image: url('/public/img/banner3bg.jpg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: cover;
 
 }
 
 .banner3-container div img {
+   
     width: 100%;
     height: 100%;
 }
@@ -397,8 +452,8 @@
     .banner3-container{
         width: 100%;
         height: 100%;
-        margin-top: 0rem;
-        margin-bottom: 0rem;
+        margin-top: 3rem;
+
     }
     
 }
@@ -410,12 +465,11 @@
 
 .text-overlay {
    
-    top: 30px;
-    left: 40px;
+    text-align: start;
     width: 60%;
    font-family: "Cormorant Garamond", serif !important;
     color: white;
-    margin: 20px; /* Optional margin */
+    margin: 2rem; /* Optional margin */
 }
 
 .text-overlay p:first-child{
@@ -465,6 +519,8 @@
 .pottery-main {
     width: 92% !important;
     margin: 0rem auto;
+    margin-bottom: 0;
+    margin-top: .5rem;
   
 }
 
@@ -597,4 +653,23 @@
     font-size: 14px;
     font-weight: 700;
     color: black;
+}
+
+.h3Tag{
+    font-weight: 600;
+    margin: 0 !important;
+    font-size: 2rem;
+    line-height: 20px;
+
+}
+
+@media (max-width:700px) {
+    .h3Tag{
+        font-weight: 600;
+        margin: 0 !important;
+        font-size: 1.5rem;
+        line-height: 20px;
+    
+    }
+    
 }

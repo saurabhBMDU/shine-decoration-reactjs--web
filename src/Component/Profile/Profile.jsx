@@ -4,79 +4,73 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddAPhoto } from 'react-icons/md';
 import { useToast } from 'react-toastify';
-import { updateProfile } from '../../action/authaction';
+import { getUser, updateProfile } from '../../action/authaction';
 import { faRoad } from '@fortawesome/free-solid-svg-icons';
 
 
 const Profile = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    city: '',
+    district: '',
+    state: '',
+    country: '',
 
-  // State hooks for editable fields
- const [form , setForm] = useState({
-  name: '',
-  email: '',
-  mobile:'',
-  city:'',
-  district:'',
-  state:'',
-  country:'',
-  countryCode:'',
-  profile_image:'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
-
- })
+  });
   const [isEditing, setIsEditing] = useState(false);
-  const user = useSelector((state)=>state.getUser?.user)
-  const [currentImage,setCurrentImage] = useState(null)
-  const dispatch = useDispatch()
-  // Toggle editing mode
+  const user = useSelector((state) => state.getUser?.user);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [file, setFile] = useState(null);  // Keep track of the actual file
+  const dispatch = useDispatch();
+
   const toggleEdit = () => setIsEditing(!isEditing);
 
-
-  // Handle input changes
-  const handleInputChange = (e)=>{
+  const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    if(e.target.name ==='profile_image' && files.length >0){
-      setForm({...form,profile_image:URL.createObjectURL(files[0]) })
-      const fileReader = new FileReader();
-      fileReader.onload = (e)=>{
-        setCurrentImage(e.target.result)
-      }
-      fileReader.readAsDataURL(files[0])
+    if (name === 'profile_image' && files.length > 0) {
+      const file = files[0];
+      setFile(file);  // Save the file in state
+      setCurrentImage(URL.createObjectURL(file));
+    } else {
+      setForm(prev => ({ ...prev, [name]: value }));
     }
-    setForm(prev=>({...prev,[name]:value}))
-  }
+  };
+
   useEffect(() => {
-    if (user && isEditing===false) {
-      setForm(prev=> ({
-      ...prev,
-      name:user.name || '',
-      email:user.email || '',
-      mobile:user.mobile || '',
-      city:user.city || '',
-      district:user.district || '',
-      state:user.state || '',
-      country:user.country || '',
-      countryCode:user.countryCode || '',
-      profile_image:user.profile_image || prev.profile_image
-
-      }))
+    if (user && !isEditing) {
+      setForm(prev => ({
+        ...prev,
+        name: user.name || '',
+        email: user.email || '',
+        mobile: user.mobile || '',
+        city: user.city || '',
+        district: user.district || '',
+        state: user.state || '',
+        country: user.country || '',
+        image:user.profile_image || null
+      }));
     }
-  },[user])
+  }, [user, isEditing]);
 
-
-  const handleSubmit = useCallback(async() => {
-    if(isEditing){
-      console.log(form, 'check thiss')
-        dispatch(updateProfile(form))
-        setIsEditing(false)
-        setCurrentImage('')
-
-        
-
-    }else{
-      setIsEditing(true)
+  const handleSubmit = useCallback(async () => {
+    if (isEditing) {
+      const formData = new FormData();
+      for (const key in form) {
+        formData.append(key, form[key]);
+      }
+      if (file) {
+        formData.append('image', file);  // Append the file
+      }
+      dispatch(updateProfile(formData));
+      setIsEditing(false);
+      setCurrentImage(null);
+      await dispatch(getUser())
+    } else {
+      setIsEditing(true);
     }
-
-  },[isEditing,dispatch,user,form])
+  }, [isEditing, dispatch, form, file]);
 
 
   return (
@@ -89,7 +83,7 @@ const Profile = () => {
               <div className="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                 <div className="row align-items-center">
                   <div className="col-lg-6 mb-4 mb-lg-0 position-relative">
-                  {isEditing ? ( <img className='profileimg' src={currentImage || form.profile_image} alt="..." />) :( <img className='profileimg' src={form.profile_image ||' https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'} alt="..." />)}
+                  {isEditing ? ( <img className='profileimg' src={currentImage || form.image} alt="..." />) :( <img className='profileimg' src={form.image } alt="..." />)}
                   {isEditing &&  <div id='picture'
                     style={{ padding:'1rem 1rem' , backgroundColor:'yellow', width:'max-content' ,margin:'0px auto' ,zIndex:10, borderRadius:'50%'} }>
                            <label htmlFor="profile_image" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
@@ -198,20 +192,6 @@ const Profile = () => {
                           />
                         ) : (
                           <span>{user.country}</span>
-                        )}
-                      </li>
-                      <li className="mb-2 mb-xl-3 display-28">
-                        <span className="display-26 text-secondary me-2 font-weight-600">Pincode:</span>
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            name='countryCode'
-                            value={form.countryCode}
-                            onChange={handleInputChange}
-                            className="form-control"
-                          />
-                        ) : (
-                          <span>{user.countryCode}</span>
                         )}
                       </li>
                     </ul>

@@ -6,29 +6,39 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { API_URL } from "../../service/api";
 import { removeFromWishlist } from "../../action/wishListAciton";
+import { checkUser } from "../../assest/js/checker";
+import { useNavigate } from "react-router-dom";
 
 const HeartButton = ({ productId , check=false}) => {
     const dispatch = useDispatch();
     const products = useSelector(state=>state.productData?.data?.result);
     const [like, setLike] = useState(check);
+    const navigate = useNavigate()
     
+    
+
     const handleAddToWishlist = useCallback(() => {
-        console.count('calling add to wishlist');
         dispatch(addWishList(productId));
     }, [dispatch, productId,check]);
+    
+    const handleHeartButton = () => {  
+        
+        if(!checkUser()){
+            navigate('/wishlist')
+            return 
 
-    const handleHeartButton = () => {
+        }
         setLike(prevLike => {
             const newLike = !prevLike;
             if (newLike) {
                 handleAddToWishlist();
             }else{
-             dispatch( removeFromWishlist(productId))
+                dispatch( removeFromWishlist(productId))
             }
             return newLike;
         });
     };
-
+    
     return (
         <div className="heartbutton-container">
             {like ? (

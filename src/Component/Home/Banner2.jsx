@@ -2,7 +2,7 @@ import React from "react";
 
 const Banner2 = () => {
   return(
-    <section className="d-flex banner2-container mt-5">
+    <section className="d-flex banner2-container  " style={{marginTop:'3rem' ,marginBottom:'.5rem'}}>
     <div className="banner2-bg">
         <div className="banner2-bg-text">
             <img src='/img/after-products-banner-circle1.png' className="banner2-img" alt="" />

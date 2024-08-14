@@ -26,7 +26,7 @@ function Testimonial() {
   };
   return (
     <>
-      <section className="container py-4 testimonial" style={{ textAlign: "center" }}>
+      <section className=" py-4 testimonial" style={{ textAlign: "center" }}>
         <div>
           <h2 className='fw-bold fs-3 py-2' style={{ color: "#6B6363" }}>Our Happy Client</h2>
         </div>

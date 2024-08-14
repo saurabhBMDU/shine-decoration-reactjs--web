@@ -2,20 +2,36 @@ import { API_URL } from "../service/api";
 import { toast } from "react-toastify";
 import { FILTER_PRODUCTS } from "./actionType";
 
-export const filterProducts = (key,value,api='default') => {
+export const filterProducts = (base) => {
     return async dispatch => {
-        let endpoint;
-        if(api==='default'){
-            endpoint = `${key}=${value}`;
-        }else if(api ==='price'){
-            endpoint = `page=1&maxPrice=${key}&minPrice=${value}`
-        }else if ( api === 'Categories'){
-            const categories = Array.isArray(value) ? value.join(',') : value; // Handle multiple categories
-            endpoint = `page=1&${key}=${categories}`;
-        }else if  (api === 'color'){
-            const colors = Array.isArray(value) ? value.join(',') : value;
-            endpoint = `page=1&${key}=${colors}`
+        let endpoint  ;
+        console.log('base ',base)
+        if (base) {
+            // Convert the base object to a query string
+            endpoint = Object.entries(base)
+                .map(([key, value]) => {
+                    // Check if the value is an array
+                    if (Array.isArray(value)) {
+                        // Join the array into a comma-separated string
+                        value = value.join(',');
+                    }
+                    // Properly encode key and value
+                   const endcode =`${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+                   return decodeURIComponent(endcode)
+                }).join('&');
         }
+
+        // if(api==='default'){
+        //     endpoint += `${key}=${value}`;
+        // }else if(api ==='price'){
+        //     endpoint = `page=1&maxPrice=${key}&minPrice=${value}`
+        // }else if ( api === 'Categories'){
+        //     const categories = Array.isArray(value) ? value.join(',') : value; // Handle multiple categories
+        //     endpoint = `page=1&${key}=${categories}`;
+        // }else if  (api === 'color'){
+        //     const colors = Array.isArray(value) ? value.join(',') : value;
+        //     endpoint = `page=1&${key}=${colors}`
+        // }
         const token = localStorage.getItem('token');
         try {
             const response = await fetch(`${API_URL}/mobileApi/product/filter-product?${endpoint}`, {
@@ -39,7 +55,7 @@ export const filterProducts = (key,value,api='default') => {
                 payload: result
             });
             console.log(result,'from filter')
-            toast.success(message)
+            
         }
 
         } catch (error) {

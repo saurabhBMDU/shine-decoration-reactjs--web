@@ -56,7 +56,7 @@ function AppRouter() {
                 <Route path='/category/:id' element={<CategoryResult />} />
                 <Route path='/productdetail/:id' element={<Productdetail />} />
                 <Route path='/payment' element={<Payment />} />
-                <Route path='wishlist' element={<Whishlist />} />
+                <Route path='/wishlist' element={<Whishlist />} />
                 <Route path='/cart/ordersummary' element={<OrderSummary />} />
                 <Route path={`/user/orders/:id`} element={<OrderDetails/>}/>
                 <Route path='/product/review/:id' element={<ReviewandRatingsPage/>}/>

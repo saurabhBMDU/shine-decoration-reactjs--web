@@ -21,8 +21,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { API_URL } from '../../service/api';
 import MainCarousel from './MainCarousal';
-import { checkUser } from '../../assest/js/checker';
-import { combineSlices } from '@reduxjs/toolkit';
+import { useLocation } from 'react-router-dom';
+
 
 function Home() {
   const dispatch = useDispatch();
@@ -32,9 +32,7 @@ function Home() {
   const toaken = localStorage.getItem('token')
   // const recentProducts = useSelector(state => state.recentProducts?.products);
   const [recentProducts , setRecentProducts] = useState([])
-  
 
- 
 
   const getRecent = useCallback(async()=> {
 
@@ -93,22 +91,24 @@ useEffect(() => {
       {
         toaken && recentProducts.length > 0? (
           <section className="container-fluid py-4">
-          <h3>Recently Viewed Stores</h3>
+          <h3 className='h3Tag'>Recently Viewed Stores</h3>
           <Sliders products={recentProducts}/>
         </section>
         ) :(
           <section className="container-fluid py-2">
-          <h3>Latest Collection</h3>
+          <h3 className='h3Tag'>Latest Collection</h3>
           <Sliders products={products}/>
         </section>
 
         )
       }
-     
+   
+
       <Banner3/>
-      <section className="container-fluid " >
+  
+      <section className="container-fluid  "  >
         <div>
-          <h2 className="fw-bold fs-3" style={{ color: "#6B6363" }}>
+          <h2 className="fw-bold h3Tag">
             Shop by Occasion
           </h2>
         </div>
@@ -166,7 +166,7 @@ useEffect(() => {
         </div>
       </section>
       <Testimonial />
-      <section className="py-3">
+      <section className="pt-3">
         <div className="shipping">
           <div className="container">
             <div className="row pt-4">

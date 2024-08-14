@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { filterProducts } from '../../../action/filterAction';
 import PriceFilter from '../filter components/PriceFilter';
 import CategoryFilter from '../filter components/CategoryFilter';
 import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 
-const Sidebar = ({ Open, onClose }) => {
+const Sidebar = ({ Open, onClose ,query}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const [sortBy, setSortBy] = useState({});
@@ -20,6 +20,10 @@ const Sidebar = ({ Open, onClose }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
   const [selectedCategory ,setSelectedCategory] = useState('')
+  const [reqobj , setReqObj] = useState({})
+  const {pathname} = useLocation()
+  const [basekey , setBaseKey] = useState(null)
+  const lastSegment = pathname.substring(pathname.lastIndexOf('/') + 1);
   const filters = [
     'Categories',
     'Price',
@@ -27,6 +31,24 @@ const Sidebar = ({ Open, onClose }) => {
     'Color',
   
   ];  
+
+  useEffect(()=>{
+    const matchingRoute = (pattern) => {
+      const regex = new RegExp(pattern)
+      return regex.test(pathname)
+    }
+    if(matchingRoute('^/result/.+')){
+      dispatch(filterProducts({'productName':query}))
+      setBaseKey(prev=>({'productName':query}))
+      setReqObj({...reqobj,'productName':query})
+
+    }else if( matchingRoute('^/category/.+')){
+      dispatch(filterProducts({'category':lastSegment}))
+      setBaseKey(prev=>({'category':lastSegment}))
+      setReqObj({...reqobj,'category':lastSegment})
+    }
+    
+  },[pathname ,query])
 
   const handleFilterClick = (filter) => {
     
@@ -136,8 +158,10 @@ const Sidebar = ({ Open, onClose }) => {
         default:
           return;
       }
-      await dispatch(filterProducts(key, filterKey)).then(()=>{
-        navigate(`/filtered/${value}`);
+
+      setReqObj(prev=>({...prev,filter:filterKey}))
+      await dispatch(filterProducts({...reqobj,filter:filterKey})).then(()=>{
+       
       })
     } catch (error) {
       console.error('Error in filtering products:', error);
@@ -159,14 +183,16 @@ const Sidebar = ({ Open, onClose }) => {
       try {
        
         if (selectedFilter === 'Price') {
-          navigate('/filtered/price');
-          await dispatch(filterProducts(maxPrice, minPrice, 'price'));
+           setReqObj(prev=>({...prev,maxPrice,minPrice}))
+          await dispatch(filterProducts( {...reqobj,maxPrice,minPrice}));
         } else if ( selectedFilter === 'Categories'){
-          navigate('/filtered/category');        
-          await dispatch(filterProducts('category', categoryFilter, 'Categories'));
+          // navigate('/filtered/category');        
+          setReqObj(prev=>({...reqobj,category:categoryFilter}))
+          await dispatch(filterProducts({...reqobj,category:categoryFilter }));
         } else if (selectedFilter === 'Color'){
-          navigate('/filtered/color');
-          await dispatch(filterProducts('color', selectedColor, 'color'));
+          // navigate('/filtered/color');
+          setReqObj(prev=>({...reqobj,color:selectedColor}))
+          await dispatch(filterProducts({...reqobj,color:selectedColor}));
         }
       } catch (error) {
         console.error('Error in applying filters:', error);

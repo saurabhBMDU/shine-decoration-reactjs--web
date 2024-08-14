@@ -1,8 +1,8 @@
 import React, {  useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { NextArrow, PrevArrow } from "../../Home/Arrow";
 import { useSelector } from "react-redux";
+import { CatNextArrow, CatPrevArrow } from "../../Home/CatArrows";
 
 const HeaderEndBar = () => {
   const category = useSelector(state => state.categories)
@@ -12,13 +12,13 @@ const HeaderEndBar = () => {
     speed: 500,
     slidesToShow: 10,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <CatNextArrow/>,
+    prevArrow: <CatPrevArrow/>,
     responsive: [
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 12,
+          slidesToShow: 13,
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
@@ -27,7 +27,7 @@ const HeaderEndBar = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 10,
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
@@ -36,7 +36,7 @@ const HeaderEndBar = () => {
       {
         breakpoint: 900,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 6,
           slidesToScroll: 1,
           autoplay: true,
           infinite: true,
@@ -45,7 +45,7 @@ const HeaderEndBar = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
           slidesToScroll: 1,
           autoplay: true,
           initialSlide: 1,
@@ -101,8 +101,8 @@ const HeaderEndBar = () => {
                   />
                 </Link>
                 <p
-                 style={{fontSize:'.9rem' ,fontWeight:600}}
-                  className="dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-capitalize"
+                 style={{ fontWeight:600}}
+                  className="cat-title dropdown-arrow d-flex justify-content-center py-1 links text-dark font-weight-bold text-capitalize"
                 >
                   {cat.name}
                 </p>

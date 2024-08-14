@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { getSearchResult } from '../../../action/searchResultAction';
 import { useNavigate } from 'react-router-dom';
 
-const SuggestionsList = ({ suggestions, listSearch }) => {
+const SuggestionsList = ({ suggestions, listSearch ,setQuery}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -15,7 +15,9 @@ const SuggestionsList = ({ suggestions, listSearch }) => {
             suggestion.sub_category.toLowerCase().includes(lowercasedKeyword) ||
             suggestion.tag_keywords.toLowerCase().includes(lowercasedKeyword)
         );
+
         dispatch(getSearchResult(results));
+        setQuery(keyword)
         listSearch(keyword);
         navigate(`/result/${keyword}`);
     }, [dispatch, navigate, suggestions, listSearch]);

@@ -36,6 +36,7 @@ const CategoryFilter = ({ setCategoryFilter, searchQuery }) => {
     if (selectedCategories.includes(categoryName)) {
       updatedCategories = selectedCategories.filter(name => name !== categoryName);
     } else {
+      
       updatedCategories = [...selectedCategories, categoryName];
     }
     setSelectedCategories(updatedCategories);

@@ -19,16 +19,34 @@ function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [SidebarOpen, setSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const {pathname }= useLocation();
   const cartQuantity = useSelector(state=>state?.CartData?.data?.totalQuantity)
   const wishListQuantity = useSelector(state=>state?.WishlistData?.data?.totalItem)
-  const currentURL = location.pathname;
+  const currentURL = pathname;
   const user = useSelector(state => state?.getUser?.user)
   const dispatch = useDispatch();
-  const [users ,setUsers] = useState(false)
+  const [users ,setUsers] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(false);
   
 
-  
+  useEffect(()=>{
+    const matchDynamicRoute = (pattern) => {
+      const regex = new RegExp(pattern);
+      return regex.test(pathname);
+    };
+
+    if (
+      matchDynamicRoute('^/result/.+') ||
+      matchDynamicRoute('^/category/.+') ||
+      matchDynamicRoute('^/filtered/.+')
+    ) {
+      setActiveFilter(true);
+    } else {
+      setActiveFilter(false);
+      setSidebarOpen(false)
+    }
+  }, [pathname]);
+
   useEffect(()=>{
     if(checkUser()){
       setUsers(true)
@@ -71,8 +89,8 @@ function Header() {
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
-
-
+ 
+  
 
 
   return (
@@ -127,9 +145,9 @@ function Header() {
               <nav>
                 <ul>
                   <div className="category-dropdown px-2">
-                    <li className="d-flex justify-content-between text-black border-bottom" onClick={handleToggleSidebar}>Shop by Filter
+                  {activeFilter?( <li className="d-flex justify-content-between text-black border-bottom" onClick={handleToggleSidebar}>Shop by Filter
                       <span>{isOpen ? '+' : '+'}</span>
-                    </li>
+                    </li>):''}
                     {/* {isOpen && (
                       <div className="dropdown">
                         <ul>
@@ -243,13 +261,13 @@ function Header() {
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>
                     </Link>
-                    <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>      
+                   {activeFilter && <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>      
                       <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" ,cursor:"pointer" }} 
                         onClick={handleToggleSidebar}>
                         <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B", marginRight:'2px', fontSize:'.8rem' }}>FILTER</span>
                         <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative align-top ' style={{ width: "22px", top: "5px", height: "20px" }} />
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </div>
               </div>
@@ -259,7 +277,7 @@ function Header() {
 
 
       
-        <LoginPOP />
+     
       </header>
     </>
   )

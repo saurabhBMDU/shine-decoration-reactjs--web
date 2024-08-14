@@ -327,13 +327,11 @@ export const updateProfile = (form)=>{
       return
     }
     try {
-      const response = await fetch(`${API_URL}/mobileApi/profile`,{
-        method:'PUT',
-        headers:{
-          Authorization:`Bearer ${token}`,
-          'Content-Type':'multipart/form-data'
+      const response = await axios.put(`${API_URL}/mobileApi/profile`, form,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization':`Bearer ${token}`
         },
-        body:form
       })
 
       if(response.status===200){

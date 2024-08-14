@@ -13,6 +13,7 @@ import { addSingleToOrderSummary } from '../../action/orderSummaryAction';
 import HeartButton from '../Home/HeartButton';
 import { checkDelivery } from '../../action/Delivery';
 import ReviewComments from '../ReviewDisplay/Reviewcomments';
+import { checkUser } from '../../assest/js/checker';
 
 
 function Productdetail() {
@@ -59,10 +60,18 @@ function Productdetail() {
   }, []);
 
   const addToWishlist = useCallback((productId) => {
+    if(!checkUser()){
+      navigate('/wishlist')
+      return
+    }
     dispatch(addWishList(productId));
   }, [dispatch]);
 
   const handeaddtoCart = useCallback((productId) => {
+    if(!checkUser()){
+      navigate('/cart')
+      return
+    }
     setButtonLoader(prevState => ({
       ...prevState,
       addtocart: true
@@ -76,6 +85,11 @@ function Productdetail() {
   }, [quantity, dispatch]);
 
   const handleBuynow = useCallback(async () => {
+        
+    if(!checkUser()){
+      navigate('/login')
+      return
+    }
     setButtonLoader(prevState => ({
       ...prevState,
       buynow: true

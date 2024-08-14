@@ -11,7 +11,7 @@ import ProductSlider from "../product slider/ProductSlider";
 
 const SearchResult = () => {
     const param = useParams();
-    const resultProducts = useSelector(state => state.searchResult.searchResult);
+    const resultProducts = useSelector(state => state.filteredProducts?.products?.products || []);
     console.log(resultProducts)
    if(resultProducts.length<1){
     return(

@@ -49,12 +49,12 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
         dispatch(getSearchResult(filteredProducts));
         navigate(`/result/${searchQuery}`);
         setActive(false);
-        setQuery('');
+        
     }, [dispatch, navigate, filteredProducts, handleSearch]); // Include filteredProducts
 
     const listSearch = useCallback((search) => {
         handleSearch(search); // Update filteredProducts
-        setQuery('');
+        
         setActive(false);
     }, [handleSearch]);
 
@@ -82,8 +82,8 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
                     }}
                 ></i>
             </button>
-            {active && <SuggestionsList suggestions={filteredProducts} listSearch={listSearch} />}
-            <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
+            {active && <SuggestionsList suggestions={filteredProducts} listSearch={listSearch} setQuery={setQuery} />}
+            <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} query={query} />
         </form>
     );
 }
