@@ -36,7 +36,7 @@ function Excusivecategory() {
                 }
             },
             {
-                breakpoint: 1024,
+                breakpoint: 1294,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 1,
@@ -45,21 +45,21 @@ function Excusivecategory() {
             {
                 breakpoint: 900,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 600,
+                breakpoint: 675,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                 }
             }
@@ -140,6 +140,9 @@ const ProductCard = ({ product }) => {
                             <h5 className='fs-4 text-dark' style={{ fontWeight: 700 }}> ₹{product.selling_price}</h5>
                             <h6 className='text-secondary fs-6' style={{ textDecoration: 'line-through' }}> ₹{product.mrp_price} </h6>
                             <span className=' text-bg-warning text-center ' style={{fontSize:'.7rem' ,padding:'2px',borderRadius:'3px',fontWeight:'500'}}>{Math.ceil(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed()}% off</span>
+                        </div>
+                        <div className='mobile-badge'>
+                            <p>Trending</p>
                         </div>
                     </div>
                 </Link>

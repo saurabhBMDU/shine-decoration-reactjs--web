@@ -54,7 +54,7 @@ const HeaderEndBar = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           autoplay: true,
           slidesToScroll: 1,
         },

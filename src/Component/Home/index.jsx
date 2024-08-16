@@ -102,6 +102,14 @@ useEffect(() => {
 
         )
       }
+          <section className="container-fluid  "  >
+        <div>
+          <h2 className="fw-bold h3Tag pt-2">
+            Popular
+          </h2>
+        </div>
+       <Sliders products={products}/>
+      </section>
    
 
       <Banner3/>
@@ -110,6 +118,14 @@ useEffect(() => {
         <div>
           <h2 className="fw-bold h3Tag">
             Shop by Occasion
+          </h2>
+        </div>
+       <Sliders products={products}/>
+      </section>
+      <section className="container-fluid  "  >
+        <div>
+          <h2 className="fw-bold h3Tag pt-2">
+            New Launches
           </h2>
         </div>
        <Sliders products={products}/>

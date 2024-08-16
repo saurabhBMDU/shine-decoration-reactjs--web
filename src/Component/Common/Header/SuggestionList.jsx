@@ -17,7 +17,8 @@ const SuggestionsList = ({ suggestions, listSearch ,setQuery}) => {
         );
 
         dispatch(getSearchResult(results));
-        setQuery(keyword)
+        console.log('results from list' , results)
+        setQuery(results[0].product_name)
         listSearch(keyword);
         navigate(`/result/${keyword}`);
     }, [dispatch, navigate, suggestions, listSearch]);

@@ -3,9 +3,10 @@ import Sidebar from "./sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import SuggestionsList from "./SuggestionList";
 import { fetchProduct } from "../../../action";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getSearchResult } from "../../../action/searchResultAction";
 import UseTypewriterEffect from "../../UserTyperwriter/UseTypewriterEffect";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
     const dispatch = useDispatch();
@@ -15,6 +16,15 @@ export function SearchBar({ SidebarOpen, handleCloseSidebar }) {
     const [active, setActive] = useState(false);
     const navigate = useNavigate();
     const queryRef = useRef(query);
+    const {pathname} = useLocation()
+
+    useEffect(()=>{
+        if(pathname==='/'){
+            setQuery('')
+            setActive(false)
+        }
+
+    },[pathname])
 
     useEffect(() => {
         dispatch(fetchProduct());

@@ -79,6 +79,9 @@ const ProductCard = ({ product }) => {
                             <h6 className='text-secondary fs-6' style={{ textDecoration: 'line-through' }}>₹{product.mrp_price}</h6>
                             <span className=' text-bg-warning text-center ' style={{fontSize:'.7rem' ,padding:'2px',borderRadius:'3px',fontWeight:'500'}}>{Math.ceil(((product.mrp_price - product.selling_price) / product.mrp_price) * 100).toFixed()}% off</span>
                         </div>
+                        <div className='mobile-badge'>
+                            <p>Trending</p>
+                        </div>
                 
                     </div>
                 </Link>
