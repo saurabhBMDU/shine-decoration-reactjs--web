@@ -88,8 +88,8 @@ const CategoryResult = () => {
                         <div className="fs-5 ml-4">New arrivals of "{id}"</div>
                     </div>
                     <div className="s-container">
-                        {relatedProducts && relatedProducts.length > 0 ? (
-                            <ProductSlider products={relatedProducts}/>
+                        {products && products.length > 0 ? (
+                            <ProductSlider products={products}/>
                             // relatedProducts.map(product => (
                             //     <main key={product._id}>
                             //         <div className="s-pic-container">

@@ -31,24 +31,78 @@ const Sidebar = ({ Open, onClose ,query}) => {
     'Color',
   
   ];  
+  const handleClearAll = (action = 'half') => {
+    if (action === 'half') {
+      setSelectedFilter(null);
+      const newReqobj = { ...reqobj };
+      const keysToDelete = ['maxPrice', 'minPrice', 'color', 'category'];
+      keysToDelete.forEach((key) => delete newReqobj[key]);
+  
+      // Reset relevant state variables
+      setSelectedColor([]);
+      setCategoryFilter([]);
+      setSizeBy([]);
+      setMinPrice(0);
+      setMaxPrice(10000);
+      
+      // Update the request object
+      setReqObj(prev => ({ ...basekey, ...newReqobj }));
+  
+      // Dispatch the action to filter products based on the base key
+      dispatch(filterProducts({ ...basekey }));
+      
+    } else {
+      const newReqobj = { ...reqobj };
+      const keysToDelete = ['maxPrice', 'minPrice', 'color', 'category', 'filter'];
+      keysToDelete.forEach((key) => delete newReqobj[key]);
+  
+      // Reset all relevant states to initial
+      setSortBy({});
+      setSelectedFilter(null);
+      setSelectedColor([]);
+      setCategoryFilter([]);
+      setSizeBy([]);
+      setMinPrice(0);
+      setMaxPrice(10000);
+  
+      // Update the request object
+      setReqObj({});
+  
+      // Dispatch the action to filter products based on the base key
+      dispatch(filterProducts({ ...basekey }));
+    }
+  };
 
   useEffect(()=>{
+    handleClearAll('full')
     const matchingRoute = (pattern) => {
       const regex = new RegExp(pattern)
       return regex.test(pathname)
     }
     if(matchingRoute('^/result/.+')){
-      dispatch(filterProducts({'productName':query}))
+     
+      dispatch(filterProducts({'productName':query,...reqobj}))
       setBaseKey(prev=>({'productName':query}))
-      setReqObj({...reqobj,'productName':query})
+      setReqObj({...reqobj})
 
     }else if( matchingRoute('^/category/.+')){
-      dispatch(filterProducts({'category':lastSegment}))
-      setBaseKey(prev=>({'category':lastSegment}))
-      setReqObj({...reqobj,'category':lastSegment})
+      const newReq= {...reqobj}
+      delete newReq.productName
+      if(reqobj.category){
+        dispatch(filterProducts({...newReq}))
+        setBaseKey(prev=>({'category':lastSegment}))
+        setReqObj({...newReq})
+
+      }else{
+        dispatch(filterProducts({'category':lastSegment,...reqobj}))
+        setBaseKey(prev=>({'category':lastSegment}))
+        setReqObj({...reqobj,'category':lastSegment})
+
+
+      }
     }
     
-  },[pathname ,query])
+  },[pathname ])
 
   const handleFilterClick = (filter) => {
     
@@ -71,10 +125,8 @@ const Sidebar = ({ Open, onClose ,query}) => {
     }
   };
 
-  const handleClearAll = () => {
-    setSelectedFilter(null);
-  };
  
+  
  
   const colors = [
     { name: 'Beige', hex: '#f5f5dc' },
@@ -160,6 +212,7 @@ const Sidebar = ({ Open, onClose ,query}) => {
       }
 
       setReqObj(prev=>({...prev,filter:filterKey}))
+      console.log(reqobj,'check reqobj in radio')
       await dispatch(filterProducts({...reqobj,filter:filterKey})).then(()=>{
        
       })
@@ -181,7 +234,7 @@ const Sidebar = ({ Open, onClose ,query}) => {
     const handleApplyFunction = useCallback(async (e,filterName,value) => {
       e.preventDefault();
       try {
-       
+        
         if (selectedFilter === 'Price') {
            setReqObj(prev=>({...prev,maxPrice,minPrice}))
           await dispatch(filterProducts( {...reqobj,maxPrice,minPrice}));
@@ -194,6 +247,7 @@ const Sidebar = ({ Open, onClose ,query}) => {
           setReqObj(prev=>({...reqobj,color:selectedColor}))
           await dispatch(filterProducts({...reqobj,color:selectedColor}));
         }
+        setSelectedFilter(prev=>null)
       } catch (error) {
         console.error('Error in applying filters:', error);
       }
@@ -217,7 +271,7 @@ const Sidebar = ({ Open, onClose ,query}) => {
           <span className='' style={{ fontWeight: "500" }}>Filter</span>
         ) : (
           <div className='d-flex justify-content-start'>
-            <h6 style={{ fontSize: "15px", cursor: "pointer" }} onClick={handleClearAll}>
+            <h6 style={{ fontSize: "15px", cursor: "pointer" }} onClick={()=>handleClearAll('full')}>
               <i className="fa-solid fa-arrow-left"></i>
             </h6>
             <h6 className='px-3'>{selectedFilter}</h6>
@@ -268,7 +322,7 @@ const Sidebar = ({ Open, onClose ,query}) => {
             <div className="filter-section">
               <div className='d-flex justify-content-between py-2'>
                 <h6 className='fw-bold'>Filter by</h6>
-                <h6 style={{ fontSize: "15px", cursor: "pointer" }} onClick={handleClearAll}>Clear all</h6>
+                <h6 style={{ fontSize: "15px", cursor: "pointer" }} onClick={()=>handleClearAll('full')}>Clear all</h6>
               </div>
               <ul className="filter-options px-2">
                 {filters.map(filter => (

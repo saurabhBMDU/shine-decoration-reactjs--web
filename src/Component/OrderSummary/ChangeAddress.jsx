@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import css from './ordersummary.module.css';
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoClose, IoSettingsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const ChangeAddress = ({ userDetails, setModal, setSelectedAddress ,currentAdress}) => {
@@ -21,7 +21,10 @@ const ChangeAddress = ({ userDetails, setModal, setSelectedAddress ,currentAdres
       <section className={`position-absolute px-2 py-2 rounded shadow ${css.mainAddress}`}>
          <div className=" d-flex justify-content-between align-items-center py-1 px-4 ">
             <h5>Change your address </h5>
-         <IoSettingsOutline size={25} onClick={handleSettings} />
+            <div className="d-flex gap-4 ">
+             <IoSettingsOutline size={25} onClick={handleSettings} />
+             <IoClose size={30} onClick={()=>setModal(false)}/>
+            </div>
          </div>
         {userDetails.shipping_address.map((item, index) => (
           <div key={index} className={css.addresscard}>

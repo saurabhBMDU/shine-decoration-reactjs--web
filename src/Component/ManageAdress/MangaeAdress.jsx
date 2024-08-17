@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { addNewAdress, deleteAdress} from "../../action/authaction";
 import { useDispatch, useSelector } from "react-redux";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { IoIosAddCircleOutline, IoIosArrowDropdown } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,8 @@ const MangaeAdress = () => {
     state: "",
     city: "",
     district:"",
-    pincode: ""
+    pincode: "",
+    addressType:''
   });
 
   const handleChange = (e) => {
@@ -40,7 +41,8 @@ const MangaeAdress = () => {
       state: "",
       city: "",
       district:"",
-      pincode: ""
+      pincode: "",
+      addressType:"",
     })
 
   }
@@ -55,7 +57,8 @@ const MangaeAdress = () => {
         state:formData.state,
         city:formData.city,
         district:formData.district,
-        pinCode:formData.pincode
+        pinCode:formData.pincode,
+        addressType:formData.addressType
 
     }
     dispatch(addNewAdress(body))
@@ -231,6 +234,27 @@ const MangaeAdress = () => {
                         value={formData.pincode}
                         onChange={handleChange}
                       />
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="mb-3 d-flex flex-column justify-content-center align-items-start">
+                      <label className="form-label">Address Type</label>
+                      <div className=" position-relative " style={{width:'60%'}}>
+                      <IoIosArrowDropdown size={20} color="black" className='position-absolute'
+                    style={{ top: '7px', right: '12px', zIndex: 5, pointerEvents: 'none' }}/>
+                    
+                      <select 
+                      name="addressType" 
+                      id=""
+                      value={formData.addressType}
+                      onChange={handleChange}
+                       className=" form-control" 
+                        style={{ width: '100%', zIndex: 4 ,pointerEvents:"auto"}} required  >
+                        <option value="">select</option>
+                        <option value="home">Home</option>
+                        <option value="office">Office</option>
+                      </select>
+                      </div>
                     </div>
                   </div>
                 </div>

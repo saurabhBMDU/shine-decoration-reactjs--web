@@ -131,8 +131,7 @@ function Payment() {
         alert("payment Failed please try again");
         console.log("resp on failed", response);
         await dispatch(verifyPayment(response)).then(() => {
-          setDirect(true);
-          handleDirect();
+          
         });
       }
     },
@@ -379,13 +378,13 @@ function Payment() {
                       alt="UPI"
                       height="20"
                     />{" "}
-                    UPI
+                    UPI / Cards / Net-Banking / Wallets
                     <br />
                     <small>Pay by any UPI app</small>
                   </label>
                 </div>
               </div>
-
+{/* 
               <div className="form-check py-2">
                 <input
                   type="radio"
@@ -441,7 +440,7 @@ function Payment() {
                     experience
                   </small>
                 </label>
-              </div>
+              </div> */}
 
               <div className="form-check py-2">
                 <input
