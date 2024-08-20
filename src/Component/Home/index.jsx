@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from 'react-redux';
 import './index.css';
 // import PopularCategory from './PopularCategory';
-
 import { fetchImages, fetchProduct } from '../../action/index';
 import Excusivecategory from './Excusivecategory';
 import About from './About';
@@ -22,7 +21,9 @@ import axios from 'axios';
 import { API_URL } from '../../service/api';
 import MainCarousel from './MainCarousal';
 import { useLocation } from 'react-router-dom';
-import TopRatedproducts from './TopRatedproducts';
+import PopularProducts from './PopularProducts';
+import BestSellerProducts from './BestSellerProducts';
+
 
 
 function Home() {
@@ -92,7 +93,7 @@ useEffect(() => {
       {
         toaken && recentProducts.length > 0? (
           <section className="container-fluid py-4">
-          <h3 className='h3Tag'>Recently Viewed Stores</h3>
+          <h3 className='h3Tag'>Recently Viewed </h3>
           <Sliders products={recentProducts}/>
         </section>
         ) :(
@@ -103,19 +104,8 @@ useEffect(() => {
 
         )
       }
-          <section className="container-fluid  "  >
-        <div>
-          <h2 className="fw-bold h3Tag pt-2">
-            Popular
-          </h2>
-        </div>
-       <Sliders products={products}/>
-       <TopRatedproducts/>
-      </section>
-   
-
-      <Banner3/>
-  
+       <PopularProducts/>
+      <Banner3/> 
       <section className="container-fluid  "  >
         <div>
           <h2 className="fw-bold h3Tag">
@@ -124,14 +114,7 @@ useEffect(() => {
         </div>
        <Sliders products={products}/>
       </section>
-      <section className="container-fluid  "  >
-        <div>
-          <h2 className="fw-bold h3Tag pt-2">
-            New Launches
-          </h2>
-        </div>
-       <Sliders products={products}/>
-      </section>
+      <BestSellerProducts/>
       <PotteryEnd/>
       <section>
         <div className="why-shine">

@@ -197,13 +197,10 @@ export const newProducts = ()=>{
   return async dispatch => {
     try {
       const token = localStorage.getItem('token');
-      if(!token){
-        console.log('please login ');
-        return
-      }
+    
       const response = await axios.get(`${API_URL}/admin/product/best-product`,{
         headers:{
-          'Authorization':`Bearer ${token}`,
+         ...(token &&{'Authorization':`Bearer ${token}`}),
           'Content-Type':'application/json'
         }
       })

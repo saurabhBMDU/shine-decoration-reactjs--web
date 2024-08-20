@@ -261,10 +261,10 @@ const MangaeAdress = () => {
               </div>
             </div>
             <div className="hstack gap-3">
-            <button className="btn btn-light btn-sm btn-icon-text" onClick={()=>handleCancel()}>
+            <button style={{backgroundColor:'gray'}} className="btn  btn-sm btn-icon-text" onClick={()=>handleCancel()}>
               <i className="bi bi-x"></i> <span className="text">Cancel</span>
             </button>
-            <button className="btn btn-primary btn-sm btn-icon-text">
+            <button className="btn btn-black btn-sm btn-icon-text">
               <i className="bi bi-save"></i> <span className="text">Save</span>
             </button>
           </div>

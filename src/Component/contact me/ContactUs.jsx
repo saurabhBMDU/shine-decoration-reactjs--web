@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './contact.css'
 
 const ContactUs = () => {
@@ -9,6 +9,9 @@ const [form, setForm] = useState({
 	message: ""
 })
 
+useEffect(()=>{
+window.scroll(0,0)
+},[])
 const handleSubmit = (event) => {
 	event.preventDefault(); // Prevents the default form submission behavior
 	console.log(event.target); // Logs the form element to the console
