@@ -3,7 +3,7 @@ import { BEST_PRODUCTS } from "../action/actionType";
 
 const initialState = {
     products:{
-        topSellingProducts:null,
+       bestSellingProuducts:[]
     },
     loading:true,
     error:null
