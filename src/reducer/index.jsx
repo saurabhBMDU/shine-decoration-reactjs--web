@@ -18,6 +18,7 @@ import { checkDelivery } from '../action/Delivery';
 import { CheckDeliveryReducer } from './checkDelivery';
 import MyordersReducer from './myOrder';
 import singleOrder from './singleOrder';
+import newProductsReducer from './newProducts';
 
 
 
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
     checkDelivery:CheckDeliveryReducer,
     myOrder:MyordersReducer,
     singleOrder:singleOrder,
+    bestProducts:newProductsReducer,
 });
 
 export default rootReducer;

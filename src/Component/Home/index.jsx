@@ -22,6 +22,7 @@ import axios from 'axios';
 import { API_URL } from '../../service/api';
 import MainCarousel from './MainCarousal';
 import { useLocation } from 'react-router-dom';
+import TopRatedproducts from './TopRatedproducts';
 
 
 function Home() {
@@ -109,6 +110,7 @@ useEffect(() => {
           </h2>
         </div>
        <Sliders products={products}/>
+       <TopRatedproducts/>
       </section>
    
 

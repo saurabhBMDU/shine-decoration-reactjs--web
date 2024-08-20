@@ -67,7 +67,7 @@ function Excusivecategory() {
     };
 
     return (
-        <section className="container-fluid pt-1 card-container">
+        <section id='products' className="container-fluid pt-1 card-container">
             <div>
                 <h3 className='h3Tag'>Products</h3>
             </div>

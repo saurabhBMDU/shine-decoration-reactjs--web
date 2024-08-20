@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ADD_TO_CART,
   ADD_TO_WISHLIST,
+  BEST_PRODUCTS,
   GET_PRODUCT_DETAILS,
   GET_WISHLIST,
   UPDATE_CART,
@@ -190,3 +191,35 @@ export const getProductDetails = (id) => {
     }
   };
 };
+
+
+export const newProducts = ()=>{
+  return async dispatch => {
+    try {
+      const token = localStorage.getItem('token');
+      if(!token){
+        console.log('please login ');
+        return
+      }
+      const response = await axios.get(`${API_URL}/admin/product/best-product`,{
+        headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type':'application/json'
+        }
+      })
+      if(response.status ===200){
+        console.log(response)
+        const {data:{message,statusCode,result}}=response;
+        dispatch({
+          type:BEST_PRODUCTS,
+          payload:result
+        })
+      }else{
+        const err = response.data.message;
+        throw Error(err)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
