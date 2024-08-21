@@ -128,7 +128,7 @@ function Footer() {
               <div className="row">
                 <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine Lure </Link>
                   all
-                  rights reserved. Powered by  <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>BMDU </Link>.</div>
+                  rights reserved. Designed by  <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>BMDU </Link>.</div>
               </div>
             </div>
           </div>

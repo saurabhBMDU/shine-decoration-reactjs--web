@@ -11,13 +11,14 @@ import ChangeAddress from "./ChangeAddress";
 import { getOrderSummary, removeFromOrderSummary, updateOrderSummary } from "../../action/orderSummaryAction";
 import Productdetail from "../Productdetail/productdetail";
 import { retry } from "@reduxjs/toolkit/query";
+import { RiFontSize } from "react-icons/ri";
 
 const OrderSummary = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const userDetails = useSelector(state=>state?.getUser?.user)
     const user = checkUser()
-    const [selectedAddress, setSelectedAddress ]= useState({ })
+    const [selectedAddress, setSelectedAddress ]= useState(null)
     const [modal , setModal] = useState(false);
     const [addressModal , setAddressModal] = useState(false)
     const [quantity ,setQuantity] = useState(1)
@@ -46,7 +47,8 @@ const OrderSummary = () => {
   },[productDetails])
 
    useEffect(()=>{
-    if(userDetails){
+    if(userDetails?.shipping_address.length > 0 ){
+      console.log(userDetails,'user')
       setSelectedAddress(userDetails.shipping_address[0])
     }
    },[userDetails])
@@ -133,7 +135,24 @@ const OrderSummary = () => {
             <button onClick={handleAddress}>change</button>
           </div>
         </div>
-      ):(null)}
+      ):(
+        <div className={css.box}>
+        <main>
+          <div>
+            <p className="text-primary">2</p>
+          </div>
+          <div className={`${css.addresscontent}`}>
+            <h5 className="">DELIVERY ADDRESS</h5>
+            <p className={`${css.address} text-danger`} style={{fontWeight:500}}>
+              please add address 
+            </p>
+          </div>
+        </main>
+        <div className={css.buttonContent}>
+          <Link to={'/profile/address'} style={{fontSize:'.9rem',fontWeight:700,border:'solid lightgray 2px',padding:'3px 5px'}}>Add Address</Link>
+        </div>
+      </div>
+      )}
         <div className={css.summarybox}>
           <div>
             <p>3</p>
@@ -184,7 +203,7 @@ const OrderSummary = () => {
 
         <div className={css.continueSec}>
           <p>order confirmation will be sent to registered mobile number</p>
-          <button onClick={handleContinue}>continue</button>
+         {selectedAddress ? <button onClick={handleContinue}>continue</button> :<button onClick={()=>window.scroll(100,0)}>continue</button>}
         </div>
       </section>
       {productDetails && 

@@ -10,6 +10,7 @@ import {
   FORTGOT_OTP_FAILED,
   REGISTER_SUCCESS,
   VERIFIED_FORGOT_PASSWORD,
+  REGISTER_FAILED,
 } from './actionType';
 import { toast } from 'react-toastify';
 
@@ -21,24 +22,32 @@ export const doRegister = (form, callback) => {
       .then(response => {
         console.log("res--", response);
         const { data: { message, statusCode } = {} } = response;
+        
         if (statusCode === 200) {
           dispatch({
             type: REGISTER_SUCCESS,
-            payload: response.data.result
+            payload: response.data.result,
           });
-          // toast.success(message);
-          if (callback) callback();
+          toast.success(message);
+          if (callback) callback(); // Execute callback if provided
         } else {
+          dispatch({
+            type: REGISTER_FAILED,
+            payload: message,
+          });
           toast.error("Registration failed: " + message);
         }
       })
       .catch(error => {
-        if (error.response) {
-          const { data: { message } } = error.response;
-          toast.error(message);
-        } else {
-          return error
+        let errorMessage = "An error occurred during registration.";
+        if (error.response && error.response.data) {
+          errorMessage = error.response.data.message || errorMessage;
         }
+        dispatch({
+          type: REGISTER_FAILED,
+          payload: errorMessage,
+        });
+        toast.error(errorMessage);
       });
   };
 };

@@ -20,7 +20,7 @@ const HeaderEndBar = () => {
         settings: {
           slidesToShow: 13,
           slidesToScroll: 1,
-          autoplay: true,
+          autoplay: false,
           infinite: true,
         },
       },
@@ -29,7 +29,7 @@ const HeaderEndBar = () => {
         settings: {
           slidesToShow: 10,
           slidesToScroll: 1,
-          autoplay: true,
+          autoplay: false,
           infinite: true,
         },
       },
@@ -38,7 +38,7 @@ const HeaderEndBar = () => {
         settings: {
           slidesToShow: 6,
           slidesToScroll: 1,
-          autoplay: true,
+          autoplay: false,
           infinite: true,
         },
       },

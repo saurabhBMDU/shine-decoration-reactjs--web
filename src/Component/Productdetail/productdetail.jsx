@@ -154,11 +154,11 @@ function Productdetail() {
                           alt=""
                           onClick={() => handleImageClick(image)}
                           style={{ height: "80px", width: "80px" }}
-                          className='border d-flex justify-content-center p-2 my-1'
+                          className={`border d-flex justify-content-center p-2 my-1 `}
                         />
                       ))}
                     </div>
-                    <div className={css.imageMagnifyContainer} style={{ position: 'relative', height: "480px", width: "480px", display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
+                    <div className={css.imageMagnifyContainer} style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid #d0cece' }}>
                       <ReactImageMagnify {...{
                         smallImage: {
                           alt: 'e-commerce',
@@ -173,7 +173,7 @@ function Productdetail() {
                         },
                         enlargedImagePosition: 'beside',
                         enlargedImageContainerStyle: { zIndex: 20 },
-                        enlargedImageContainerDimensions: { width: '200%', height: '130%' }
+                        enlargedImageContainerDimensions: { width: '100%', height: '100%' }
                       }} />
                       <div style={{ position: 'absolute', top: '30px', right: '10px', color: 'gray', fontSize: '24px', cursor: 'pointer' }}>
                         <HeartButton productId={product._id} check={product.isWishlist} />
@@ -212,7 +212,7 @@ function Productdetail() {
               </div>
               <div className="col-lg-7 pl-1 ">
                 <div>
-                  <section className='px-4'>
+                  <section className='px-4' style={{position:'static'}}>
 
                     <div>
                     <h3>{product.product_name}</h3>
@@ -240,7 +240,7 @@ function Productdetail() {
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
                     </div>
-                    <section className="mt-2">
+                    <section className="mt-2 position-static">
                       <div className="delivery-section">
                         <h6 className={css.SubHeads}>Check Delivery</h6>
                         <div>

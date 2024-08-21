@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import './contact.css'
+import { contactUsForm } from "../../action/contactUs";
 
 const ContactUs = () => {
+
 const [form, setForm] = useState({
 	name: "",
 	email: "",
@@ -12,14 +14,15 @@ const [form, setForm] = useState({
 useEffect(()=>{
 window.scroll(0,0)
 },[])
-const handleSubmit = (event) => {
+const handleSubmit = useCallback(async(event) => {
 	event.preventDefault(); // Prevents the default form submission behavior
 	console.log(event.target); // Logs the form element to the console
 	const form = new FormData(event.target); // Creates a FormData object from the form element
 	const formObj = Object.fromEntries(form.entries()); // Converts FormData into a plain object
     setForm(formObj)
+	await contactUsForm(formObj)
 	event.target.reset()
-  };
+  },[form])
   
 
 
@@ -422,7 +425,7 @@ const handleSubmit = (event) => {
 	
 </div>
 <div className="d-flex align-items-center justify-content-center" >
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.431613191668!2d77.48487577549582!3d28.496659275739088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cea395d66fccb%3A0x48dd528d9324baff!2sMain%20Rd%2C%20Greater%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1724151450885!5m2!1sen!2sin" width="100%" height="400" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="map"></iframe>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.431613191668!2d77.48487577549582!3d28.496659275739088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cea395d66fccb%3A0x48dd528d9324baff!2sMain%20Rd%2C%20Greater%20Noida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1724151450885!5m2!1sen!2sin" width="100%" height="400" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="map mt-2"></iframe>
 </div>
   </>);
 };

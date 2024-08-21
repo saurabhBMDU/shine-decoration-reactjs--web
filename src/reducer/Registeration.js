@@ -1,4 +1,4 @@
-import { VERIFY_MOBILE_REGISTER } from "../action/actionType"
+import { REGISTER_SUCCESS, VERIFY_MOBILE_REGISTER } from "../action/actionType"
 
 
 const intialState = {

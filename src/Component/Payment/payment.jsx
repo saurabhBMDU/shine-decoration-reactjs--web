@@ -41,14 +41,15 @@ function Payment() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (userDetails) {
-      setSelectedAddress(userDetails.shipping_address[0]);
+    console.log(userDetails,'user detial')
+    if (userDetails ) {
+      setSelectedAddress(prev=>userDetails.shipping_address[0]);
     }
   }, [userDetails]);
 
   const handleAddress = useCallback(() => {
     setAddressModal(true);
-  }, []);
+  }, [selectedAddress]);
 
   const generateCaptcha = () => {
     const randomCaptcha = Math.random().toString().substring(2, 6);

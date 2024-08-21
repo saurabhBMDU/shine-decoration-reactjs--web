@@ -19,11 +19,13 @@ import { CheckDeliveryReducer } from './checkDelivery';
 import MyordersReducer from './myOrder';
 import singleOrder from './singleOrder';
 import newProductsReducer from './newProducts';
+import registeredUser from './registeredUser';
 
 
 
 const rootReducer = combineReducers({
     data: dataReducer,
+    registeredUser:registeredUser,
     registerVerify:registerReducer,
     forgotPasswordData:authreducer,
     productData: productReducer,

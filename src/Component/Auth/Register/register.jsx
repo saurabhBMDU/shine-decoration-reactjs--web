@@ -25,6 +25,22 @@ function Register() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const otpRef = useRef([]);
   const [timer, setTimer] = useState(30);
+  const registerError = useSelector(state=>state.registeredUser?.error);
+  const token = useSelector(state=>state.registeredUser?.data?.token);
+
+  useEffect(()=>{
+    if(registerError){
+      setOtpVerify(false)
+      setErrors(prev=>({error:String((registerError))}))
+      setShowModal(true)
+    }
+    setErrors({})
+    setShowModal(false)
+    if(token){
+      localStorage.setItem('token',token);
+      navigate('/')
+    }
+  },[registerError,token,dispatch])
 
   const validateForm = () => {
     const newErrors = {};
@@ -142,7 +158,11 @@ function Register() {
                 
                 if (response.status) {
                     dispatch(doRegister(form, () => {
-                        navigate("/login");
+                      if(token){
+                        localStorage.setItem('token',token)
+                        navigate('/')
+                      }
+                       
                     }));
                 } else {
                     console.log('OTP verification failed');

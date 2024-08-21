@@ -3,6 +3,12 @@
     font-size: 1rem;
 }
 
+.mainPicDet{
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
 .pbutton{
     border: solid rgba(20, 98, 223, 0) 2px ;
     cursor: pointer;;
@@ -88,8 +94,9 @@ input[type=number] {
   justify-content: center;
   align-items: center;
   border: 1px solid #d0cece;
-  height: 480px;
-  width: 480px;
+  width: 400px;
+  height:auto;
+  object-fit: cover;
 }
 
 @media (max-width: 768px) {

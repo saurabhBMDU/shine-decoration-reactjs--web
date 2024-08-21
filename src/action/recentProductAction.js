@@ -60,8 +60,6 @@ export const addRecentProduct = (productId) => {
                             type: GET_RECENT_PRODUCT,
                              payload: result});
                         // toast.success('recent products received');
-                    }else{
-                        toast.error(message);
                     }
                 }else{
                     throw Error ( response)
