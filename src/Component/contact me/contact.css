@@ -44,7 +44,7 @@
 	height: 85vh;
 }
 
-form {
+.form {
 	min-width: 25rem;
 	
 	.title {

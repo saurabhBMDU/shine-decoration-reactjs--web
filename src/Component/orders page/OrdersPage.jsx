@@ -21,7 +21,11 @@ const OrderPage = () => {
 
   useEffect(() => {
     dispatch(myOrderAction());
-  }, [dispatch]);
+  }, [dispatch,myOrders]);
+
+
+
+  
 
   return (
     <div className="container mt-5">
@@ -35,10 +39,10 @@ const OrderPage = () => {
               <div key={item.product._id} className="card-body">
                 <div className="row justify-content-between">
                   <div className="col-md-2">
-                    <img src={item.product.productImage} className="img-fluid" alt="Product" />
+                  {item.product.productImage && <img src={ item.product.productImage} className="img-fluid" alt="Product" />}
                   </div>
                   <div className="col-md-8">
-                    <h5 className="card-title">{item.product_name}</h5>
+                    <h5 className="card-title">{item.product.product_name}</h5>
                     <p className="card-text">Order Number: {order.orderNumber}</p>
                     <p className="card-text">Order Date: {order.createdAt}</p>
                     <p className="card-text d-flex align-items-center gap-2">
@@ -56,6 +60,8 @@ const OrderPage = () => {
               </div>
             ))}
           </div>
+         
+          
         ))
       ) : (
         !loading && <p>No orders found.</p>

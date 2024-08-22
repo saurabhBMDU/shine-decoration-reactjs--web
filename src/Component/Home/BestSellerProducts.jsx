@@ -5,7 +5,8 @@ import Sliders from "./Sliders";
 const BestSellerProducts = () => {
   const bestSellers = useSelector(state=>state.bestProducts?.products?.bestSellingProducts)
   
-  if(bestSellers){
+  console.log(bestSellers,'besssssssssty')
+  if(!bestSellers){
     return <div className="loader"></div>
   }
 

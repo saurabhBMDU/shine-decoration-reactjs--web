@@ -32,6 +32,7 @@ import ReviewandRatingsPage from '../Component/Reviews and ratings/ReviewandRati
 import Faq from '../Component/Faq/Faq';
 import Profile from '../Component/Profile/Profile';
 import ContactUs from '../Component/contact me/ContactUs';
+import ComaparePage from '../Component/Compare page/ComaparePage';
 
 function AppRouter() {
     return (
@@ -64,6 +65,7 @@ function AppRouter() {
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/faq' element={<Faq/>}/>
                 <Route path='/contact' element={<ContactUs/>}/>
+                <Route path='/compare' element={<ComaparePage/>}/>
                 {/* Protected route for resetting password */}
                 <Route path='/resetpassword' element={
                     <ProtectedRoute>

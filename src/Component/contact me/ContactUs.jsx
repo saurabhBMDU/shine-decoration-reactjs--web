@@ -387,7 +387,7 @@ const handleSubmit = useCallback(async(event) => {
 	
 	
 	
-	<form onSubmit={handleSubmit}>
+	<form className="form" onSubmit={handleSubmit}>
 		<h1 className="title text-center mb-4">Contact Us</h1>
 
 

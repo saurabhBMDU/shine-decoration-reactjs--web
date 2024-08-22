@@ -1,0 +1,65 @@
+.comp-box{
+    display: flex;
+    flex-direction: column;
+    width: 26%
+
+}
+.comp-index{
+    width:22%
+}
+
+.comp-index>span, .comp-index>div>span{
+    font-weight: 500;
+    color: gray;
+    text-transform: capitalize;
+}
+
+.comp-box-product-pricebox {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: .5rem;
+
+}
+.comp-box-product-pricebox span:first-child{
+    font-size: 1.2rem;
+    font-weight: 600;
+
+}
+
+.sticky{
+    position: sticky;
+    position: -webkit-sticky;
+}
+.comp-box-product-pricebox span:nth-child(2){
+    font-weight: 500;
+    text-decoration: line-through;
+    color: gray;
+
+}
+
+.comp-box-product-pricebox span:last-child{
+    font-size: .8rem;
+    color: rgb(11, 97, 11);
+    font-weight:600;
+}
+
+.comp-delivery{
+    color: black
+}
+.comp-delivery>span{
+    font-weight: 600;
+    font-size: 1rem;
+    color: black;
+
+}
+
+section{
+    position: static;
+}
+
+
+.comp-highlights>li{
+    list-style: disc;
+    color: gray;
+}

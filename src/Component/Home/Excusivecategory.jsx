@@ -71,7 +71,7 @@ function Excusivecategory() {
             <div>
                 <h3 className='h3Tag'>Products</h3>
             </div>
-            <Slider ref={slider} {...setting} className="sliders">
+            <Slider ref={slider} {...setting} className="sliders ">
                 {products && products.result.products &&
                     products.result.products.map((product, index) => (
                         <ProductCard key={index} product={product} />
@@ -123,7 +123,7 @@ const ProductCard = ({ product }) => {
     }, [intervalId]);
 
     return (
-        <div className="px-2">
+        <div className="px-md-4">
             <div className="card-custom">
                 <div className='position-relative' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link to={`/productdetail/${product._id}`}>
