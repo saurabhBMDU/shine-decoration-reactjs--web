@@ -33,7 +33,7 @@ const ComparisonPage = () => {
         </section>
       </main>
 
-      <main className='d-flex justify-content-start align-item-center rowz sticky px-4' style={{top:'0rem'}}>
+      <main className='d-flex justify-content-start align-item-center rowz sticky px-4 ' style={{top:'0rem',zIndex:10}}>
         <section className="comp-index">
 
         </section>
