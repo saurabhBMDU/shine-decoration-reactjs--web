@@ -1,6 +1,9 @@
+*:root{
+    font-family: 'Lato',sans-serif;
+}
 .slide-sec {
     position: relative;
-}
+}g
 
 .slide-sec img {
     width: 100%;
@@ -17,6 +20,7 @@
 }
 
 .slide-text p {
+    font-family: 'Lato',sans-serif;
     font-weight: 500;
     margin: 0;
     font-size: 16px;
@@ -54,10 +58,10 @@
 
 .arrow {
     position: absolute;
-    top: 50%;
+    top: 40%;
     transform: translateY(-50%);
     z-index: 2;
-    background: rgba(71, 70, 70, 0.46);
+    background: rgb(0, 0, 0);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -65,16 +69,20 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    margin: 0px -1rem;
 }
 
 .arrow.prev {
-    left: 13px;
+    left: 0px;
 }
 
 .arrow.next {
-    right: 13px;
+    right: 5px;
 }
 
+.slick-list{
+    padding: 0 !important;
+}
 
 /* quantity */
 .qty-container {
@@ -166,6 +174,7 @@
     padding: 0px 170px;
 }
 
+
 .shipping {
     background-color: #EFF8F2;
     padding: 0px 300px;
@@ -185,12 +194,22 @@
         padding: 0px 10px;
     }
 }
-
-.card-custom {
-    border: none;
+.card-img-top{
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
 }
 
-.card-custom img {
+.card-custom div .card-img-top {
+    border: none;
+    
+    transition: all 2s ease-in-out;
+}
+
+/* .card-custom:hover div .card-img-top{
+    transform: scaleX(1.1);
+} */
+
+.card-custom div img {
     width: 100%;
     height: auto;
 }
@@ -203,10 +222,17 @@
 .card-custom .card-body {
     padding: 1rem;
     border-right: 1px solid #D5D1D1;
-    border-bottom: 1px solid #D5D1D1;
+    border-bottom: 1px solid #a7a3a3;
     border-left: 1px solid #D5D1D1;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.card-title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
 }
 
 .card-custom .btn-heart {
@@ -219,19 +245,356 @@
 .fixed-right {
     position: fixed;
     right: -60px;
-    top: 290px;
+    top: 270px;
+    height: 44px;
     z-index: 1000;
     transform: rotate(270deg);
+    font-size: 1rem;
 
     /* Ensure it stays above other content */
 }
 
 .feedback-right {
     position: fixed;
-    right: -43px;
-    top: 440px;
+    right: -34px;
+    top: 420px;
+    font-size: 1rem;
     z-index: 1000;
     transform: rotate(270deg);
 
     /* Ensure it stays above other content */
+}
+
+.slider1{
+    z-index: 100;
+}
+
+.slide-discription{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; 
+}
+
+
+@media (max-width:768px) {
+    .fixed-right{
+        top: 200px;
+        font-size: 1rem;
+        right: -65px;
+    }
+
+    .feedback-right{
+        font-size: 1rem;
+        top: 380px;
+        right: -35px;
+    }
+    
+}
+
+.card-container{
+    height: auto;
+}
+
+.sliders{
+    min-height: 350px;
+}
+
+.banner-img{
+    transition: all 2s ease-in-out;
+}
+
+
+
+.banner2-container{
+    width: 100%;
+    height: 85vh;
+
+   
+}
+
+.banner2-bg2{
+    background-image: url(/public/img/banner2-bg2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: inherit;
+    
+
+}
+
+@media (max-width:860px) {
+    .banner2-bg2{
+        background-image: url(/public/img/banner2-bg2.jpg);
+         display: none;
+        
+    
+    }
+    .banner-bg{
+        height: 30%;
+    }
+
+    .banner2-bg-text{
+        width: 70%;
+        margin: 5px auto;
+        text-align: center;
+        
+        
+    }
+}
+
+
+.banner2-bg-text h3{
+ font-size: 300%;
+ word-break: break-all;
+ font-style: italic;
+ font-family: "Cormorant Garamond", serif;
+ font-weight: 500;
+ font-style: italic;
+ margin: 1rem auto;
+ 
+}
+.banner2-bg-text{
+ color: #17403c !important;
+}
+.banner2-bg-text p{
+   width: 95%;
+   margin: 1rem auto;
+}
+.banner2-bg {
+    background-image: url(/public/img/banner2bg1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+
+.banner2-bg-text p:last-child {
+ font-family: "Cormorant Garamond", serif;
+ font-size: 150%;
+ line-height: 1em;
+ font-style: italic;
+ font-weight: 500;
+}
+
+.banner2-bg-text p:last-child:hover span {
+    transform: scale(1.2); /* Applying scale transformation */
+}
+
+
+.banner3-container {
+    width: 100%;
+    height: 0;
+    margin-top: 30rem;
+    margin-bottom: 5rem;
+
+}
+
+.banner3-container div img {
+    width: 100%;
+    height: 100%;
+}
+
+
+@media (max-width:870px) {
+    .banner3-container{
+        width: 100%;
+        height: 100%;
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+    }
+    
+}
+
+.banner3-container p:last-child:hover span {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+.text-overlay {
+   
+    top: 30px;
+    left: 40px;
+    width: 60%;
+   font-family: "Cormorant Garamond", serif !important;
+    color: white;
+    margin: 20px; /* Optional margin */
+}
+
+.text-overlay p:first-child{
+    font-size: 200%;
+    line-height: 200%;
+    font-weight: 700;
+    letter-spacing: .3rem;
+    font-family: "Cormorant Garamond", serif;
+    text-align: start;
+}
+
+@media (max-width:860px) {
+    .text-overlay p:first-child{
+        font-size: 1rem;
+        margin:0;
+    }
+    
+}
+
+
+
+.text-overlay p:last-child{
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-style: italic!important;
+    font-weight: 700 !important;
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: .3rem;
+    text-align: start;
+}
+
+.heartbutton-container{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgba(255, 253, 253, 0.546);
+    /* box-shadow: 2px 1px 10px gray; */
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    
+
+}
+.pottery-main {
+    width: 92% !important;
+    margin: 0rem auto;
+  
+}
+
+.pottery-main h3{
+    font-size: 300%;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.pottery-container{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    overflow:hidden;    
+}
+
+.pottery-container img{
+    width: 90%;
+    object-fit: contain;
+    transition: all .8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.pottery-container:hover img{
+    transform: scaleX(1.1);
+}
+
+.slider{
+    width: 100%;
+}
+
+.slider-container {
+    width: 100%;
+    overflow: hidden; /* Prevents content from overflowing the container */
+    position: relative; /* For arrow positioning */
+  }
+  
+  .b-arrow {
+    position: absolute;
+    top: 50%;
+    width: 35px;
+    height: 35px;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .b-arrow.next {
+    right: 30px;
+  }
+  
+  .b-arrow.prev {
+    left: 30px;
+  }
+  
+  .slick-slide img {
+    width: 100%; /* Ensure images take up full width of the slide */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .slick-list {
+    width: 100%;
+  }
+  
+  .slick-track {
+    display: flex;
+    overflow-x: hidden;
+    width: 100%; 
+  }
+
+.product-badge{
+    position: absolute;
+    top: 0;
+    height: max-content;
+    height: 8rem;
+    width: 8rem;
+    left: -.8rem;
+    top: -1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+.banner2-img{
+    width: 40%;
+}
+
+.product-badge::before{
+    position: absolute;
+    content: attr(data-badge);
+    height: 2rem;
+    font-weight: 700;
+    width: 145%;
+    text-align: center;
+    line-height: 2rem;
+    color: black;
+   
+    background: linear-gradient(285deg, rgba(180,115,58,1) 0%, rgba(252,253,29,1) 50%, rgba(252,69,69,1) 100%);
+    transform: rotate(-45deg) translateY(-1rem);
+}
+
+
+.product-badge::after{
+    position: absolute;
+    width: .8rem;
+    height: .8rem;
+    content: '';
+    left: 0;
+    bottom: 0;
+    background: rgb(116, 72, 30);
+    box-shadow: 7rem 7rem rgb(116, 72, 30);
+    z-index: -100;
+}
+
+@media (min-width: 702px) and (max-width: 870px) {
+    .banner2-img {
+        width: 30% !important;
+    }
 }

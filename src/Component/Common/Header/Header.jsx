@@ -1,19 +1,52 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { SearchBar } from './SearchBar';
+import React, { useEffect, useState } from 'react';
+import { Link, useAsyncError } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import './header.css';
-import Sidebar from './sidebar'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart } from '../../../action/getCartAction';
+import { getWishlist } from '../../../action/wishListAciton';
+import { getUser } from '../../../action/authaction';
+import { FaRegUserCircle } from 'react-icons/fa';
+import LoginPOP from '../../Loginbutton/LoginPOP';
+import { checkUser } from '../../../assest/js/checker';
+
+
+
+
 
 function Header() {
-
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [SidebarOpen, setSidebarOpen] = useState(false);
-
   const [isOpen, setIsOpen] = useState(false);
-
   const location = useLocation();
+  const cartQuantity = useSelector(state=>state?.CartData?.data?.totalQuantity)
+  const wishListQuantity = useSelector(state=>state?.WishlistData?.data?.totalItem)
   const currentURL = location.pathname;
+  const user = useSelector(state => state?.getUser?.user)
+  const dispatch = useDispatch();
+  const [users ,setUsers] = useState(false)
+  
+
+  
+  useEffect(()=>{
+    if(checkUser()){
+      setUsers(true)
+    }else{
+      setUsers(false)
+    }
+    dispatch(getCart())
+    dispatch(getWishlist())
+  },[dispatch ,wishListQuantity,cartQuantity])
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUser());
+    }
+  
+  }, [dispatch, user]); 
+  
+
   if (
     currentURL === '/login' ||
     currentURL === '/register' ||
@@ -31,12 +64,16 @@ function Header() {
   };
 
   const handleToggleSidebar = () => {
+    setIsOpen(false)
     setSidebarOpen(!SidebarOpen);
   };
 
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
+
+
+
 
   return (
     <>
@@ -56,8 +93,8 @@ function Header() {
               </div>
               <div className="col header-top-right d-none d-lg-block">
                 <div className="header-top-right-inner d-flex justify-content-end">
-                  <Link className="gi-help" to="faq.html">Help?</Link>
-                  <Link className="gi-help" to="track-order.html">Track Order?</Link>
+                  <Link className="gi-help" to="/faq">Help?</Link>
+                  <Link className="gi-help" to="/user/orders">Track Order?</Link>
                 </div>
               </div>
               <div className="col header-top-res d-lg-none">
@@ -66,15 +103,15 @@ function Header() {
                     <Link to="login.html" className="gi-header-btn gi-header-user">
                       <div className="header-icon"><i className="fa-regular fa-user"></i></div>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-wish-toggle">
+                    <Link to="/wishlist" className="gi-header-btn gi-wish-toggle">
                       <div className="header-icon"><i className="fa-regular fa-heart"></i></div>
-                      <span className="gi-header-count gi-wishlist-count">3</span>
+                      <span className="gi-header-count gi-wishlist-count">{wishListQuantity || 0}</span>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-cart-toggle">
+                    <Link to="/cart" className="gi-header-btn gi-cart-toggle">
                       <div className="header-icon"><i className="fa-solid fa-cart-shopping"></i>
                         <span className="main-label-note-new"></span>
                       </div>
-                      <span className="gi-header-count gi-cart-count">3</span>
+                      <span className="gi-header-count gi-cart-count">{cartQuantity? cartQuantity :0}</span>
                     </Link>
                     <button onClick={toggleSidebar} className="gi-header-btn gi-site-menu-icon d-lg-none">
                       <i className="fa-solid fa-bars"></i>
@@ -90,10 +127,10 @@ function Header() {
               <nav>
                 <ul>
                   <div className="category-dropdown px-2">
-                    <li className="d-flex justify-content-between text-black border-bottom" onClick={toggleDropdown}>Shop by category
-                      <span>{isOpen ? '−' : '+'}</span>
+                    <li className="d-flex justify-content-between text-black border-bottom" onClick={handleToggleSidebar}>Shop by Filter
+                      <span>{isOpen ? '+' : '+'}</span>
                     </li>
-                    {isOpen && (
+                    {/* {isOpen && (
                       <div className="dropdown">
                         <ul>
                           <li><Link to="/">Bone China</Link></li>
@@ -101,17 +138,38 @@ function Header() {
                           <li><Link to="/">Ceramic</Link></li>
                         </ul>
                       </div>
-                    )}
+                    )} */}
                   </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Profile</Link></li>
-                  </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Order</Link></li>
-                  </div>
-                  <div className="px-2">
-                    <li className="border-bottom"><Link to="/profile">Logout</Link></li>
-                  </div>
+                  {/* <div className="px-2">
+                    <li className="border-bottom"><Link to="/user/orders">Orders</Link></li>
+                    </div> */}
+                  { user ? (
+                    <>
+                    <div className="px-2">
+                      <li className="border-bottom"><Link to="/profile">Profile</Link></li>
+                    </div>
+                      <div className="px-2">
+                      <li className="border-bottom"><Link to="/user/orders">Orders</Link></li>
+                      </div>
+                      <div className="px-2">
+                        <li className="border-bottom"><Link to="/logout">Logout</Link></li>
+                      </div>
+                    </>
+
+                  ) :(
+                    <section>
+
+                      <div className="px-2">
+                      <li className="border-bottom"><Link to="/login">Login</Link></li>
+                     </div>
+                      <div className="px-2">
+                      <li className="border-bottom"><Link to="/register">Register</Link></li>
+                     </div>
+                    </section>
+                    
+                     
+                  )}
+             
                 </ul>
               </nav>
             </div>
@@ -129,54 +187,71 @@ function Header() {
                 </div>
                 <div className="align-self-center gi-header-search">
                   <div className="header-search ">
-                    <form className="gi-search-group-form">
-                      <input className="form-control gi-search-bar px-5" placeholder="Search Products..." type="text" />
-                      <div className='position-absolute' style={{ left: "1px" }}>
-                        <i className="fa-solid fa-magnifying-glass px-3" style={{ color: "#EDB70B" }}></i>
-                      </div>
-                      <div>
-                        <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>
-                          <div onClick={handleToggleSidebar} className="gi-header-btn gi-wish-toggle d-flex justify-content-center" title="Filter" style={{ border: "1px solid #EDB70B" }}>
-                            <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" }}>
-                              <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative' style={{ width: "22px", top: "5px", height: "20px" }} />
-                              <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B" }}>FILTER</span>
-                            </div>
-                          </div>
-                        </div>
-                        <Sidebar Open={SidebarOpen} onClose={handleCloseSidebar} />
-                      </div>
-                    </form>
+              <SearchBar   SidebarOpen={SidebarOpen} handleCloseSidebar={handleCloseSidebar}  />
 
                   </div>
                 </div>
                 <div className="gi-header-action align-self-center">
                   <div className="gi-header-bottons">
                     {/* <!-- Header User Start --> */}
+                  {/* {user?(
+                     <Link to="/" className="gi-header-btn gi-wish-toggle" title="home">
+                     <div className="gi-btn-desc d-flex flex-col align-items-end py-2 justify-content-center " style={{gap:'8px', }}>
+                     <FaRegUserCircle color=' #EDB70B ' size={23}  className='text-center align-self-center'/>
+                       <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>{user.name}</span>
+                     </div>
+                   </Link>
+                  ):(
+                    null
+                  )} */}
                     <div className="gi-acc-drop">
                       <Link to="/" className="gi-header-btn mt-1 gi-header-user dropdown-toggle gi-user-toggle"
                         title="Account">
                         <div className="gi-btn-desc">
                           <i className="fa-regular fa-user text-center py-2" style={{ color: "#EDB70B" }}></i>
-                          <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Profile</span>
+                          <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>{user ? user.name : 'Profile'}</span>
                         </div>
                       </Link>
+                      
                       <ul className="gi-dropdown-menu">
-                        <li><Link className="dropdown-item" to="/register">Register</Link></li>
-                        <li><Link to={"/login"}>Login</Link></li>
+                        {user ? (
+                          <>
+                             <li><Link className="dropdown-item" to="/user/orders">Orders</Link></li>
+                             <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                             <li><Link className="dropdown-item" to="/logout">logout</Link></li>
+                          </>
+
+                        ):(
+                          <>
+                          <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                          <li><Link to={"/login"}>Login</Link></li>
+                          </>
+                        )}
+                     
                       </ul>
                     </div>
-                    <Link to="/" className="gi-header-btn gi-wish-toggle" title="Wishlist">
+                   
+                    <Link to="/wishlist" className="gi-header-btn gi-wish-toggle" title="Wishlist">
                       <div className="gi-btn-desc">
-                        <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B" }}></i>
+                      <span className=" badge-ab ">{wishListQuantity || 0}</span>
+                        <i className="fa-regular fa-heart text-center py-2" style={{ color: "#EDB70B", }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>wishlilst</span>
                       </div>
                     </Link>
-                    <Link to="/" className="gi-header-btn gi-cart-toggle" title="Cart">
+                    <Link to="/cart" className="gi-header-btn gi-cart-toggle" title="Cart">
                       <div className="gi-btn-desc">
+                      <span className=" badge-ab ab-2 ">{cartQuantity? cartQuantity :0}</span>
                         <i className="fa-solid fa-bag-shopping text-center py-2" style={{ color: "#EDB70B" }}></i>
                         <span className="gi-btn-stitle" style={{ color: "#EDB70B" }}>Cart</span>
                       </div>
                     </Link>
+                    <div className="gi-header-action align-self-center" style={{cursor:"pointer"}}>      
+                      <div className="px-2 d-flex justify-content-center px-3" style={{ padding: "5px 0px" ,cursor:"pointer" }} 
+                        onClick={handleToggleSidebar}>
+                        <span className="gi-btn-stitle text-center p-1" style={{ color: "#EDB70B", marginRight:'2px', fontSize:'.8rem' }}>FILTER</span>
+                        <img src="/img/Vector.png" alt="" className='d-flex justify-content-center position-relative align-top ' style={{ width: "22px", top: "5px", height: "20px" }} />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -184,54 +259,9 @@ function Header() {
           </div>
         </div>
 
-        <div className="gi-header-cat d-none d-lg-block">
-          <div className="container-fluid">
-            <div className="gi-nav-bar">
-              <div id="gi-main-menu-desk" className="d-none d-lg-block sticky-nav">
-                <div className="nav-desk">
-                  <div className="row">
-                    <div className="col-md-12 align-self-center">
-                      <div className="gi-main-menu">
-                        <ul className='my-2' >
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list position-static" style={{ width: "140px", borderRight: "1px solid #EDB70B" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Bone China</Link>
-                          </li>
-                          <li className="dropdown drop-list" style={{ width: "140px", borderRight: "1px solid #EDB70B" }} >
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Wooden</Link>
-                          </li>
-                          <li className="dropdown drop-list " style={{ width: "140px" }}>
-                            <div className='d-flex justify-content-center'>
-                              <img src="/img/Ellipse 53.png" alt="" style={{ width: "70px" }} />
-                            </div>
-                            <Link to="/" className="dropdown-arrow d-flex justify-content-center py-1">Ceramic</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      
+        <LoginPOP />
       </header>
     </>
   )

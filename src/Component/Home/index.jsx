@@ -1,226 +1,214 @@
-import React, { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, {  useCallback, useEffect, useState } from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from 'react-redux';
-import Slider from "react-slick";
 import './index.css';
 // import PopularCategory from './PopularCategory';
-import { NextArrow, PrevArrow } from './Arrow';
+
 import { fetchImages, fetchProduct } from '../../action/index';
 import Excusivecategory from './Excusivecategory';
-import PopularCategory from './PopularCategory';
 import About from './About';
 import Offer from './Offer';
 import Testimonial from './Testimonial';
+import PotteryEnd from './PotteryEnd';
+import Banner2 from './Banner2';
+import Sliders from './Sliders';
+import Banner3 from './Banner3';
+import HeaderEndBar from '../Common/Header/HeaderEndBar';
+import { getCategory } from '../../action/categoryAction';
+import { getUser } from '../../action/authaction';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { API_URL } from '../../service/api';
+import MainCarousel from './MainCarousal';
+import { checkUser } from '../../assest/js/checker';
+import { combineSlices } from '@reduxjs/toolkit';
 
 function Home() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.data.data);
-  const products = useSelector(state => state.productData.data);
-  console.log("dsf", data);
-  console.log("dsf__________", products);
+  const products = useSelector(state => state.productData?.data?.result?.products);
+  const category = useSelector(state => state.categories);
+  const toaken = localStorage.getItem('token')
+  // const recentProducts = useSelector(state => state.recentProducts?.products);
+  const [recentProducts , setRecentProducts] = useState([])
+  
 
-  useEffect(() => {
-    dispatch(fetchProduct());
-  }, [dispatch])
+ 
 
-  useEffect(() => {
-    dispatch(fetchImages());
-  }, [dispatch]);
+  const getRecent = useCallback(async()=> {
 
-
-  const sliderone = useRef();
-  const settingone = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    autoplaySpeed: 3000,
-  };
-
-
-  const slider = useRef();
-  const setting = {
-    infinite: true,
-    speed: 400,
-    autoplay: true,
-    slidesToShow: 5,
-    arrows: false,
-    slidesToScroll: 1,
-
-
-    responsive: [
-      {
-        breakpoint: 1440,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-          autoplay: true,
-          infinite: true,
-        }
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          autoplay: true,
-          infinite: true,
-        }
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          autoplay: true,
-          infinite: true,
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          autoplay: true,
-          initialSlide: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          autoplay: true,
-          slidesToScroll: 1
-        }
+   try {
+      const token = localStorage.getItem('token');
+      if(!token) {
+          // toast.error('please login');
+          return ;
       }
-    ]
-  };
+      const response = await axios.get(`${API_URL}/mobileApi/product/recently-view-product`, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+      }});
+      const { statusCode, message, result } = response.data;
+      
+      if (statusCode === 200) {
+          setRecentProducts(result);
+          // toast.success('Recent products received');
+      } else {
+          toast.error(message);
+      }
+  } catch (error) {
+      console.log('Error:',error ,'from jsx');
+      toast.error('An error occurred while fetching recent products');
+  }
+}, []);
+
+useEffect(() => {
+
+  
+  getRecent();
+    dispatch(getUser());
+    dispatch(getCategory());
+    dispatch(fetchImages());
+    
+  }, [dispatch, getRecent]);
+
+
+ 
+  
 
   return (
     <>
-      <section className='container-fluid py-2'>
-        <div>
-          <Slider ref={sliderone} {...settingone} className="">
-            {data && data.result &&
-              data.result.images.map((data, index) => (
-                <img key={index} src={data.image} alt={`Banner ${index + 1}`} />
-              )
-              )}
-          </Slider>
+     <HeaderEndBar  />
+      <section className=" pb-0 pt-0" >
+        <div className='slider-container'>
+
+        <MainCarousel data={data}/>
         </div>
       </section>
 
       {/* <PopularCategory /> */}
       <Excusivecategory />
+      <Banner2/>
+      {
+        toaken && recentProducts.length > 0? (
+          <section className="container-fluid py-4">
+          <h3>Recently Viewed Stores</h3>
+          <Sliders products={recentProducts}/>
+        </section>
+        ) :(
+          <section className="container-fluid py-2">
+          <h3>Latest Collection</h3>
+          <Sliders products={products}/>
+        </section>
 
-      <section className="container-fluid py-4">
-        <h3>Recently Viewed Stores</h3>
-        <div className="row">
-          {products && products.result.products &&
-            products.result.products.map((product, index) => (
-              <div className="col-md-3 mt-4">
-                <div key={index} className="px-2">
-                  <div className=" card-custom">
-                    <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
-                    <Link to={`/productdetail/${product._id}`}>
-                      <div className="card-body">
-                        <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
-                        <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
-                        <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-      </section>
-
-      <section className='container-fluid py-4'>
+        )
+      }
+     
+      <Banner3/>
+      <section className="container-fluid " >
         <div>
-          <h2 className='fw-bold fs-3' style={{ color: "#6B6363" }}>Shop by Occasion</h2>
+          <h2 className="fw-bold fs-3" style={{ color: "#6B6363" }}>
+            Shop by Occasion
+          </h2>
         </div>
-        <div>
-          <Slider ref={slider} {...setting} className="">
-            {products && products.result.products &&
-              products.result.products.map((product, index) => (
-                <div key={index} className="px-2">
-                  <div className=" card-custom">
-                    <img src={product.productImage} className="card-img-top" alt="Product" style={{ height: "200px" }} />
-                    <div className="card-body">
-                      <h6 className="card-title" style={{ color: "#626161", fontSize: "14px" }}>{product.category}</h6>
-                      <span className="text-danger" style={{ fontSize: "12px" }}>{product.description}</span>
-                      <p className="price" style={{ color: "#626161" }}>₹ {product.mrp_price}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </Slider>
-        </div>
+       <Sliders products={products}/>
       </section>
+      <PotteryEnd/>
       <section>
-        <div className='why-shine'>
-          <div className='container'>
-            <h2 className='text-center'>Why Shine Decoration</h2>
+        <div className="why-shine">
+          <div className="container">
+            <h2 className="text-center">Why Shine Decoration</h2>
           </div>
           <div className="container">
             <div className="row pt-4">
               <div className="col-lg-4">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+                <p className="text-center">
+                  Secure and Recyclable <br />
+                  Packaging
+                </p>
               </div>
               <div className="col-lg-4">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+                <p className="text-center">
+                  Secure and Recyclable <br />
+                  Packaging
+                </p>
               </div>
               <div className="col-lg-4">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>Secure and Recyclable  <br />Packaging</p>
+                <p className="text-center">
+                  Secure and Recyclable <br />
+                  Packaging
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
       <Testimonial />
-      <section className='py-3'>
-        <div className='shipping'>
+      <section className="py-3">
+        <div className="shipping">
           <div className="container">
             <div className="row pt-4">
               <div className="col-lg-3">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>FREE SHIPPING</p>
+                <p className="text-center">FREE SHIPPING</p>
               </div>
               <div className="col-lg-3">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>SAFE PAYMENT</p>
+                <p className="text-center">SAFE PAYMENT</p>
               </div>
               <div className="col-lg-3">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://www.ugaoo.com/cdn/shop/files/Packaging_2x_48553436-be2f-4d7a-a08e-495c8665abae_small.png?v=1656421502"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>ONTIME DELIVERY</p>
+                <p className="text-center">ONTIME DELIVERY</p>
               </div>
               <div className="col-lg-3">
-                <div className='d-flex justify-content-center'>
-                  <img src="https://as1.ftcdn.net/v2/jpg/04/57/48/44/1000_F_457484457_VI3coEQISDa7zu2WuG5PhYF1Bkrla2Pt.jpg" alt="" style={{ width: "70px" }} />
+                <div className="d-flex justify-content-center">
+                  <img
+                    src="https://as1.ftcdn.net/v2/jpg/04/57/48/44/1000_F_457484457_VI3coEQISDa7zu2WuG5PhYF1Bkrla2Pt.jpg"
+                    alt=""
+                    style={{ width: "70px" }}
+                  />
                 </div>
-                <p className='text-center'>MADE IN INDIA</p>
+                <p className="text-center">MADE IN INDIA</p>
               </div>
             </div>
           </div>

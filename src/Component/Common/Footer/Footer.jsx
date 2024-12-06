@@ -23,7 +23,7 @@ function Footer() {
                 <div className="col-sm-12 col-lg-3 gi-footer-cat wow fadeInUp">
                   <div className="gi-footer-widget gi-footer-company">
                     <img src="/img/shinedecoration-logo.png" className="gi-footer-logo" alt="footer logo" />
-                    <p className="gi-footer-detail">Shine-decoration is the biggest market of grocery products. Get your
+                    <p className="gi-footer-detail">Shine Lure is the biggest market of grocery products. Get your
                       daily
                       needs from our store.</p>
                     {/* <div className="gi-app-store">
@@ -55,7 +55,7 @@ function Footer() {
                         <li className="gi-footer-link"><Link to="/">About us</Link></li>
                         <li className="gi-footer-link"><Link to="/">Delivery</Link></li>
                         <li className="gi-footer-link"><Link to="/productdetail">Product</Link></li>
-                        <li className="gi-footer-link"><Link to="/">Terms & conditions</Link>
+                        <li className="gi-footer-link"><Link to="/termsandcondition">Terms & conditions</Link>
                         </li>
                         <li className="gi-footer-link"><Link to="/">Secure payment</Link></li>
                         <li className="gi-footer-link"><Link to="/">Contact us</Link></li>
@@ -69,8 +69,8 @@ function Footer() {
                     <div className="gi-footer-links gi-footer-dropdown">
                       <ul className="align-itegi-center">
                         <li className="gi-footer-link"><Link to="/">Sign In</Link></li>
-                        <li className="gi-footer-link"><Link to="/">View Cart</Link></li>
-                        <li className="gi-footer-link"><Link to="/">Return Policy</Link></li>
+                        <li className="gi-footer-link"><Link to="/cart">View Cart</Link></li>
+                        <li className="gi-footer-link"><Link to="/privacy">Return Policy</Link></li>
                         <li className="gi-footer-link"><Link to="/">Become a Vendor</Link></li>
                         <li className="gi-footer-link"><Link to="/">Affiliate Program</Link></li>
                         <li className="gi-footer-link"><Link to="/">Payments</Link></li>
@@ -88,19 +88,19 @@ function Footer() {
                             <span className='mt-3'>
                               <i className="fa-solid fa-location-dot"></i>
                             </span>
-                            <p>2548 Broaddus Maple Court, Madisonville KY 4783, USA.</p>
+                            <p>0490D /7/13 main road surajpur greater Noida  Uttar Pradesh.</p>
                           </li>
                           <li className="gi-footer-link gi-foo-call">
                             <span>
                               <i className="fa-brands fa-whatsapp"></i>
                             </span>
-                            <Link to="tel:+009876543210">+00 9876543210</Link>
+                            <Link to="tel:+009876543210">+91 7428689188</Link>
                           </li>
                           <li className="gi-footer-link gi-foo-mail">
                             <span>
                               <i className="fa-regular fa-envelope"></i>
                             </span>
-                            <Link to="mailto:example@email.com">example@email.com</Link>
+                            <Link to="mailto:example@email.com">shinelure3@gmail.com</Link>
                           </li>
                         </ul>
                       </div>
@@ -126,7 +126,7 @@ function Footer() {
           <div className="footer-bottom">
             <div className="container-fluid">
               <div className="row">
-                <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine decoration </Link>
+                <div className="gi-copy">Copyright © <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>Shine Lure </Link>
                   all
                   rights reserved. Powered by  <Link className="site-name" to="/" style={{ color: "#E1AB0A", fontWeight: "500" }}>BMDU </Link>.</div>
               </div>

@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { filterProducts } from '../../../action/filterAction';
+import PriceFilter from '../filter components/PriceFilter';
+import CategoryFilter from '../filter components/CategoryFilter';
+import { getMouseEventOptions } from '@testing-library/user-event/dist/utils';
 
 const Sidebar = ({ Open, onClose }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [sortBy, setSortBy] = useState({});
   const [SizeBy, setSizeBy] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [showSizeFilter, setShowSizeFilter] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState([])
   const [selectedColor, setSelectedColor] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(10000);
+  const [selectedCategory ,setSelectedCategory] = useState('')
   const filters = [
     'Categories',
-    'Designers',
     'Price',
-    'Size',
+    // 'Size',
     'Color',
-    'Shipping Time',
-    'Occasion'
-  ];
+  
+  ];  
 
   const handleFilterClick = (filter) => {
+    
+    
     setSelectedFilter(selectedFilter === filter ? null : filter);
-
+    
     // Check if the clicked filter is 'Size', then show size filter
     if (filter === 'Size') {
       setShowSizeFilter(true);
@@ -40,11 +52,12 @@ const Sidebar = ({ Open, onClose }) => {
   const handleClearAll = () => {
     setSelectedFilter(null);
   };
-
+ 
+ 
   const colors = [
     { name: 'Beige', hex: '#f5f5dc' },
     { name: 'White', hex: '#fff' },
-    { name: 'Off White', hex: '#fff' },
+    { name: 'OffWhite', hex: '#fff' },
     { name: 'Yellow', hex: '#FFFF00' },
     { name: 'Black', hex: '#000000' },
     { name: 'Blue', hex: '#0000ff' },
@@ -101,7 +114,64 @@ const Sidebar = ({ Open, onClose }) => {
     }
   };
 
+  const handleRadioFilter = useCallback(async (key, value) => {
+    try {
+      let filterKey;
+      switch(value) {
+        case 'Popularity':
+          filterKey = 'popular';
+          break;
+        case 'New Arrivals':
+          filterKey = 'arrival';
+          break;
+        case 'Price Low to High':
+          filterKey = 'low';
+          break;
+        case 'Price High to Low':
+          filterKey = 'high';
+          break;
+        case 'Discount Products':
+         filterKey = 'discount';
+         break;
+        default:
+          return;
+      }
+      await dispatch(filterProducts(key, filterKey)).then(()=>{
+        navigate(`/filtered/${value}`);
+      })
+    } catch (error) {
+      console.error('Error in filtering products:', error);
+    }
+  }, [dispatch, navigate]);
+   
+  const handleSubFilter = useCallback(async(filterName, value)=>{
+      try {
+        await dispatch(filterProducts(filterName, value)).then(() => {
+          navigate(`/filtered/${value}`);
+        });
+      } catch (error) {
+        console.error('Error in subfiltering products:', error);
+      }
+    },[dispatch,navigate])
 
+    const handleApplyFunction = useCallback(async (e,filterName,value) => {
+      e.preventDefault();
+      try {
+       
+        if (selectedFilter === 'Price') {
+          navigate('/filtered/price');
+          await dispatch(filterProducts(maxPrice, minPrice, 'price'));
+        } else if ( selectedFilter === 'Categories'){
+          navigate('/filtered/category');        
+          await dispatch(filterProducts('category', categoryFilter, 'Categories'));
+        } else if (selectedFilter === 'Color'){
+          navigate('/filtered/color');
+          await dispatch(filterProducts('color', selectedColor, 'color'));
+        }
+      } catch (error) {
+        console.error('Error in applying filters:', error);
+      }
+    }, [dispatch, selectedFilter, maxPrice, minPrice, navigate, categoryFilter ,selectedColor]);
 
 
   return (
@@ -110,7 +180,7 @@ const Sidebar = ({ Open, onClose }) => {
       left: Open ? '0' : '-320px',
       top: '0',
       width: '320px',
-      zIndex: 1,
+      zIndex: 3,
       height: '100%',
       backgroundColor: '#fff',
       boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
@@ -130,9 +200,10 @@ const Sidebar = ({ Open, onClose }) => {
         <p onClick={onClose}><i className="fa-solid fa-xmark"></i></p>
       </div>
       <div className='justify-content-between px-3 mt-2'>
-        {selectedFilter === null ? (
+        {selectedFilter === null || selectedFilter ==='Price' || selectedFilter === 'Size' ? (
           ""
         ) : (
+          
           <div className="search-container mb-1">
             <input
               type="text"
@@ -151,7 +222,7 @@ const Sidebar = ({ Open, onClose }) => {
             <div className="sort-section">
               <h6 className='fw-bold'>Sort by</h6>
               <div className="sort-options px-2">
-                {['Popularity', 'New Arrivals', 'Price Low to High', 'Price High to Low', 'Discount High to Low'].map(option => (
+                {['Popularity', 'New Arrivals', 'Price Low to High', 'Price High to Low', 'Discount Products'].map(option => (
                   <div key={option} className="sort-option">
                     <input
                       type="radio"
@@ -160,6 +231,7 @@ const Sidebar = ({ Open, onClose }) => {
                       value={option}
                       checked={sortBy === option}
                       onChange={() => setSortBy(option)}
+                      onClick={() => handleRadioFilter('filter', String(option))}
                     />
                     <label htmlFor={option}>{option}</label>
                   </div>
@@ -190,9 +262,9 @@ const Sidebar = ({ Open, onClose }) => {
             </div>
           </div>
         ) : (
-          // Size filter section
+          // Dynamic filter content based on selected filter
           <div className="filter-content">
-            {showSizeFilter ? (
+            {selectedFilter === 'Size' && (
               // Size filter section
               <div className="sort-options px-2">
                 {['S', 'M', 'L'].map(option => (
@@ -202,7 +274,7 @@ const Sidebar = ({ Open, onClose }) => {
                       id={option}
                       name="size"
                       value={option}
-                      checked={SizeBy.includes(option)}
+                      checked={SizeBy}
                       onChange={() => handleSizeSelection(option)}
                       className="large-checkbox"
                     />
@@ -210,7 +282,8 @@ const Sidebar = ({ Open, onClose }) => {
                   </div>
                 ))}
               </div>
-            ) : (
+            )}
+            {selectedFilter === 'Color' && (
               // Color filter section
               <div className="color-filter-container">
                 <div className="color-list">
@@ -231,6 +304,12 @@ const Sidebar = ({ Open, onClose }) => {
                 </div>
               </div>
             )}
+            {selectedFilter === 'Price' && (
+              <PriceFilter maxPrice={maxPrice} setMaxPrice={setMaxPrice} setMinPrice={setMinPrice} minPrice={minPrice} />
+            )}
+            {selectedFilter === 'Categories' && (
+              <CategoryFilter setCategoryFilter={setCategoryFilter}  searchQuery={searchQuery}/>
+            )}
           </div>
         )}
       </div>
@@ -238,14 +317,16 @@ const Sidebar = ({ Open, onClose }) => {
         {selectedFilter === null ? (
           ''
         ) : (
-          <>
+          <section>
+
             <button className="clear-button" onClick={handleClearAll}>
               CLEAR ALL
             </button>
-            <button className="apply-button">
-              APPLY
+            <button  onClick={(e)=>handleApplyFunction(e)} className='apply-button'>
+              Apply
             </button>
-          </>
+          </section>           
+          
         )}
       </div>
     </div>

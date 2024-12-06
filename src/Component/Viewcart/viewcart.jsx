@@ -1,80 +1,244 @@
-import React, { useState } from 'react';
-import './viewcart.css';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useCallback, useEffect, useState } from "react";
+import "./viewcart.css";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCart } from "../../action/productdetailaction";
+import { getCart, removeFromCart } from "../../action/getCartAction";
+import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
+import { Card } from "react-bootstrap";
+import { CartToOrderSummary } from "../../action/orderSummaryAction";
+import { checkUser } from "../../assest/js/checker";
+import { CheckUserComponent } from "../Auth/checkComponent/CheckUserComponent";
 
 export default function Viewcart() {
+  const [loggedIn ,setLoggedIn] =  useState(checkUser())
+  const cartData = useSelector((state) => state.CartData?.data);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  const [quantities, setQuantities] = useState({});
+  const navigate = useNavigate()
+  const [updateq, setUpdateQ] = useState({});
 
-  const [quantity, setQuantity] = useState(1);
+  const fetchCartData = useCallback(async () => {
+    try {
+      await dispatch(getCart());
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      toast.error("Failed to fetch cart data");
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch]);
 
-  const handleIncrease = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
+  const removeCartProduct = useCallback(
+    async (productId, quantity) => {
+      try {
+        await dispatch(removeFromCart({ productId, quantity }));
+        fetchCartData(); // Fetch the updated cart data
+      } catch (error) {
+        console.error("Error removing product from cart:", error);
+      }
+    },
+    [dispatch, fetchCartData]
+  );
+
+  useEffect(() => {
+    fetchCartData();
+  }, [fetchCartData]);
+
+  useEffect(() => {
+    if (cartData?.cartItems) {
+      const initialQuantities = {};
+      cartData.cartItems.forEach((item) => {
+        if (item.product) {
+          initialQuantities[item.product._id] = item.quantity;
+        }
+      });
+      setQuantities(initialQuantities);
+    }
+  }, [cartData]);
+
+  const handleIncrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] + 1,
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
   };
 
-  const handleDecrease = () => {
-    setQuantity(prevQuantity => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+  const handleDecrease = (productId) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: prevQuantities[productId] > 1 ? prevQuantities[productId] - 1 : 1,
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
   };
+
+  const handleUpdateCart = (productId) => {
+    const quantity = quantities[productId];
+    dispatch(updateCart({ productId, quantity })).then(() => {
+      fetchCartData();
+    }).then(() => {
+      setUpdateQ((prevUpdateQ) => ({
+        ...prevUpdateQ,
+        [productId]: false,
+      }));
+    });
+  };
+
+  const handleQuantityChange = (productId, value) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Number(value),
+    }));
+    setUpdateQ((prevUpdateQ) => ({
+      ...prevUpdateQ,
+      [productId]: true,
+    }));
+  };
+
+  const handleContinue =async () =>{
+   await dispatch(CartToOrderSummary()).then(()=>{
+    navigate('/cart/ordersummary')
+   })
+
+  }
+
+  const handleNavigate = useCallback(()=>{
+    navigate('/login')
+  })
+  
+
   return (
-    <div>
-      <div className="container-fluid py-3">
-        <div className="row">
-          <div className="col-md-8">
-            <div style={{ border: "1px solid #F1F3F6" }}>
-              <div className="mb-3">
-                <div className="row px-4">
-                  <div className="col-md-2 d-flex justify-content-center">
-                    <div className='d-flex justify-content-center' style={{ position: "relative" }}>
-                      <img src="https://rukminim2.flixcart.com/image/224/224/xif0q/shopsy-jacket/s/y/g/m-o-black-fluffy-fullsleeve-jacket-fashlook-men-original-imagsjntvhgfttfv.jpeg?q=90" className="d-flex justify-content-center" alt="Product" style={{ height: "130px", position: "absolute", top: "40px" }} />
-                    </div>
-                  </div>
-                  <div className="col-md-9">
-                    <div className="card-body">
-                      <h6 className="card-title">BenQ GW2490T 24 inch Full HD LED Backlit IPS Panel with...</h6>
-                      <p className="card-text">Seller: MTAILMODEECOM</p>
-                      <p className="card-text"><small className="text-muted">Response Time: 5 ms, 100 Hz Refresh Rate</small></p>
-                      <p className="card-text"> <span className="fw-bold">₹11,250</span> <span className="text-decoration-line-through px-2">₹14,990</span> <span className="discount" style={{ fontSize: "12px", fontWeight: "500" }}>24% Off</span></p>
-                    </div>
-                  </div>
-                  <div className='d-flex justify-content-start align-items-center'>
-                    <div className="qty-container d-flex align-items-center">
-                      <button className="qty-btn-minus btn-light rounded bg-light" type="button" onClick={handleDecrease}>
-                        <FontAwesomeIcon icon={faMinus} />
-                      </button>
-                      <input
-                        type="text"
-                        value={quantity}
-                        className="input-qty text-center mx-2"
-                        readOnly
-                      />
-                      <button className="qty-btn-plus btn-light rounded bg-light" type="button" onClick={handleIncrease}>
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                    </div>
-                    <p className='px-4 m-0 text-danger' style={{ cursor: 'pointer', fontWeight: "600" }}>REMOVE</p>
-                  </div>
+    <>
+      {    loading ? (
+        <div className="loader"></div>
+      ) : (
+        loggedIn ?(
+        <section className="containerCart">
+          <>
+            <div className="cards">
+              {cartData?.cartItems && cartData.cartItems.length > 0 ? (
+                cartData.cartItems.map((item) => (
+                  item.product && (
+                    <section className="cartcard-container" key={item.product._id}>
+                      <div className="cartcard">
+                        <div className="cartcartImgContainer">
+                          <img src={item.product.productImage} alt={item.product.product_name} />
+                        </div>
+                        <div className="cartcard-textPart">
+                          <div>
+                            <div>
+                              <h5 style={{lineHeight:2}}>{item.product.product_name}</h5>
+                              <p>delivery in 5pm | <span className="text-success">FREE</span></p>
+                            </div>
+                            <p className="text-muted text-capitalize m-0">{item.product.category}</p>
+                          </div>
+                          <div className="cartcardPrice-sec">
+                            <p>₹{item.product.mrp_price}</p>
+                            <p>₹{item.product.selling_price}</p>
+                            <p>{(((item.product.mrp_price - item.product.selling_price) / item.product.mrp_price) * 100).toFixed(0)}% off</p>
+                          </div>
+                          <div className="cartcard-buttons visible-lg">
+                        <div className="quantity-buttons">
+                          <CiCircleMinus size={35} onClick={() => handleDecrease(item.product._id)} />
+                          <div>
+                            <input
+                              type="number"
+                              value={quantities[item.product._id] || item.quantity}
+                              onChange={(e) => handleQuantityChange(item.product._id, e.target.value)}
+                              onFocus={() => setUpdateQ((prevUpdateQ) => ({
+                                ...prevUpdateQ,
+                                [item.product._id]: true,
+                              }))}
+                              min="1"
+                              style={{ width: "3rem", padding: "3px 4px", textAlign: "center" }}
+                            />
+                          </div>
+                          <CiCirclePlus size={35} onClick={() => handleIncrease(item.product._id)} />
+                        </div>
+                        <button onClick={() => removeCartProduct(item.product._id, item.quantity)}>Remove</button>
+                        {updateq[item.product._id] && <button className="card-button" onClick={() => handleUpdateCart(item.product._id)}>Update</button>}
+                      </div>
+                        </div>
+                      </div>
+                      <div className="cartcard-buttons visible-sm">
+                        <div className="quantity-buttons">
+                          <CiCircleMinus size={35} onClick={() => handleDecrease(item.product._id)} />
+                          <div>
+                            <input
+                              type="number"
+                              value={quantities[item.product._id] || item.quantity}
+                              onChange={(e) => handleQuantityChange(item.product._id, e.target.value)}
+                              onFocus={() => setUpdateQ((prevUpdateQ) => ({
+                                ...prevUpdateQ,
+                                [item.product._id]: true,
+                              }))}
+                              min="1"
+                              style={{ width: "3rem", padding: "3px 4px", textAlign: "center" }}
+                            />
+                          </div>
+                          <CiCirclePlus size={35} onClick={() => handleIncrease(item.product._id)} />
+                        </div>
+                        <button onClick={() => removeCartProduct(item.product._id, item.quantity)}>Remove</button>
+                        {updateq[item.product._id] && <button className="card-button" onClick={() => handleUpdateCart(item.product._id)}>Update</button>}
+                      </div>
+                    </section>
+                  )
+                ))
+              ) : (
+                <div className="cards mx-auto" style={{ width: '50%', textAlign: 'center', marginTop: '3rem', fontSize: '1rem' }}>
+                  <p style={{ fontWeight: 500, fontSize: '140%' }} className="--bs-warning">No Products in Cart</p>
+                  <Link className="text-center badge text-bg-warning fs-3 mt-4" to={'/'}>shop now</Link>
                 </div>
-              </div>
-              <div className="cad mb-3">
-              </div>
-              <div className='d-flex justify-content-end card-button'>
-                <Link to="/checkout"><button className='btn btn-warning'>PLACE ORDER</button></Link>
-              </div>
+              )}
+            { cartData?.cartItems && cartData.cartItems.length > 0 && <div className="placeorder">
+                <button onClick={()=>handleContinue()}>Place order</button>
+              </div>}
             </div>
-          </div>
-          <div className="col-md-4">
+          </>
+          {cartData?.cartItems && cartData.cartItems.length > 0 && <div className=" col-md-4">
             <div className="price-details">
               <h5 className="product-title border-bottom py-2">Price Details</h5>
-              <div className='py-1'>Price (1 item): <span className='float-end'>₹14,990</span></div>
-              <div className='py-1'>Discount: <span className="text-success float-end"> ₹3,740</span></div>
-              <div className='py-1 mb-3'>Delivery Charges: <span className="text-success float-end">Free</span></div>
-              <div className="total-amount py-1 border-bottom border-top py-3">Total Amount<span className="text-success float-end">₹11,250</span></div>
-              <div className="save-amount py-1">You will save ₹3,740 on this order</div>
-              {/* <button className="btn btn-warning w-100">PLACE ORDER</button> */}
+              <div className="py-1">
+                Price ({cartData?.totalQuantity || 0} items):{" "}
+                <span className="float-end">₹{cartData?.totalPrice || 0}</span>
+              </div>
+              <div className="py-1">
+                Discount:{" "}
+                <span className="text-success float-end"> ₹{cartData?.totalDiscountedPrice || 0}</span>
+              </div>
+              <div className="py-1 mb-3">
+                Delivery Charges: <span className="text-success float-end">Free</span>
+              </div>
+              <div className="total-amount py-1 border-bottom border-top py-3">
+                Total Amount
+                <span className="text-success float-end"> ₹{cartData?.totalPayablePrice || 0}</span>
+              </div>
+              <div className="save-amount py-1">
+                You will save ₹{cartData?.totalDiscountedPrice || 0} on this order
+              </div>
             </div>
+          </div>}
+        </section>
+        ):(
+          <CheckUserComponent    >
+          <div className='mt-4 d-flex flex-column  justify-center' style={{color:'black'}}>
+          <p  className='text-center' style={{fontWeight:500}}>Missing Cart items?</p>
+          <p className='text-center' style={{fontWeight:300}}>Login to see the items you added previously</p>
+          <button className='btn  px-4' onClick={handleNavigate}> login</button>
           </div>
-        </div>
-      </div>
-    </div>
-  )
+  
+        </CheckUserComponent>
+        )
+      )}
+    </>
+  );
 }

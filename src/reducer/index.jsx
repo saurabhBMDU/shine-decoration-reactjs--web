@@ -2,11 +2,43 @@ import { combineReducers } from 'redux';
 import dataReducer from './dataReducer';
 import productReducer from './productReducer';
 import productdetailReducer from './productdetailReducer';
+import categoryReducer from './categoryReducer';
+import getCartReducer from './getCart';
+import SearchResultReducer from './searchlistReducer';
+import getWhishlistReducer from './getWishlistReducer';
+import getUserReducer from './getUserDetailsReducer';
+import recentProuductsReducer from './recentProductsReducer';
+import filterReducer from './filterReducer';
+import orderSummaryReducer from './orderSummary';
+import orderDetailsReducer from './orderedDetails';
+import authreducer from './authreducer';
+import { forgotPassword } from '../action/authaction';
+import registerReducer from './Registeration';
+import { checkDelivery } from '../action/Delivery';
+import { CheckDeliveryReducer } from './checkDelivery';
+import MyordersReducer from './myOrder';
+import singleOrder from './singleOrder';
+
+
 
 const rootReducer = combineReducers({
     data: dataReducer,
+    registerVerify:registerReducer,
+    forgotPasswordData:authreducer,
     productData: productReducer,
     productDetails: productdetailReducer,
+    categories:categoryReducer,
+    CartData : getCartReducer,
+    searchResult:SearchResultReducer,
+    WishlistData:getWhishlistReducer,
+    getUser:getUserReducer,
+    recentProducts:recentProuductsReducer,
+    filteredProducts:filterReducer,
+    OrderSummary:orderSummaryReducer,
+    orderDetails:orderDetailsReducer,
+    checkDelivery:CheckDeliveryReducer,
+    myOrder:MyordersReducer,
+    singleOrder:singleOrder,
 });
 
 export default rootReducer;

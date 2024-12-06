@@ -1,0 +1,103 @@
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%; /* Change to the percentage you want to show */
+    display: flex;
+    justify-content: space-around; /* Adjust spacing between products */
+}
+
+.slide-inner {
+    display: flex;
+    gap: 1rem; /* Adjust this for space between product cards */
+}
+
+.prev-arrow,
+.next-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.prev-arrow {
+    left: 10px;
+}
+
+.next-arrow {
+    right: 10px;
+}
+
+.card-custom{
+    width: 18rem;
+    margin-top: 2rem;
+    z-index: -1;
+}
+
+.cart-container{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+
+
+
+
+.product-badge{
+    position: absolute;
+    top: 0;
+    height: max-content;
+    height: 7rem;
+    width: 7rem;
+    left: -.9rem;
+    top: -.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 2;
+    
+}
+
+
+
+.product-badge::before{
+    position: absolute;
+    content: attr(data-badge);
+    height: 1.5rem;
+    font-weight: 600;
+    width: 145%;
+    text-align: center;
+    line-height: 1.5rem;
+    color: black;
+   
+    background: linear-gradient(285deg, rgba(180,115,58,1) 0%, rgba(252,253,29,1) 50%, rgba(252,69,69,1) 100%);
+    transform: rotate(-45deg) translateY(-1rem);
+}
+
+
+.product-badge::after{
+    position: absolute;
+    width: 1.1rem;
+    height: 1.1rem;
+    content: '';
+    left: 0px;
+    bottom: 5px;
+    background: rgb(116, 72, 30);
+    box-shadow: 7rem 7rem 5rem rgb(116, 72, 30);
+    z-index: -1;
+}

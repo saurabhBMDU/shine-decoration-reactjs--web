@@ -20,7 +20,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Muli", sans-serif;
+    font-family: "Lato",sans-serif;
     font-weight: 400;
     letter-spacing: 0.01rem;
 }
@@ -2291,7 +2291,7 @@ Tools sidebar
 
 .gi-header-bottom {
     background-color: black;
-    padding: 10px 0;
+    padding: 1px 0;
 }
 
 .gi-flex {
@@ -3285,14 +3285,14 @@ div#gi-main-menu-desk {
 .header-search .form-control {
     display: block;
     width: 100%;
-    min-height: 46px;
-    height: 40px;
+    min-height: 35px;
+    height: 39px;
     padding: 0 15px;
     font-size: 13px;
     font-weight: 400;
     line-height: 1;
     color: #777;
-    border-radius: 0;
+    border-radius: 30px;
     border: none;
     letter-spacing: 0.6px;
 }
@@ -3626,6 +3626,10 @@ body.gi-menu-open:before {
     .header-search {
         min-width: 500px;
     }
+    .header-search .form-control {
+        border-radius: 30px;
+    }
+
 
     .gi-main-menu {
         position: unset;
@@ -3635,6 +3639,11 @@ body.gi-menu-open:before {
 @media (max-width: 1199px) {
     .header-search {
         min-width: 400px;
+        border-radius: 20%;
+    }
+    
+    .header-search .form-control {
+        border-radius: 30px;
     }
 
     .header-logo img {
@@ -3671,13 +3680,13 @@ body.gi-menu-open:before {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1041px) {
     .header-top {
         padding: 10px 0;
     }
 
     .gi-header-bottom {
-        padding: 15px 0;
+        padding: 2px 0;
         border-bottom: 1px solid #eee;
     }
 
@@ -3690,8 +3699,9 @@ body.gi-menu-open:before {
     }
 
     .header-search .form-control {
-        height: 40px;
-        min-height: 40px;
+        height: 33px;
+        min-height: 30px;
+        border-radius: 20px;
     }
 
     .gi-header-action {
